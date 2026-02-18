@@ -310,4 +310,9 @@ INSERT INTO reserva_producto (reserva_id, producto_id, precio_total) VALUES
 (1, 1, 4.50),
 (2, 2, 2.50);
 
+-- Insertar opinión
+INSERT INTO opinion (pelicula_id, usuario_id, comentario) VALUES
+(1, 2, 'Excelente película'),
+(3, 3, 'Muy buena actuación');
+
 
