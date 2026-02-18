@@ -181,7 +181,15 @@ CREATE TABLE if not exists opinion (
 );
 
 
-
+-- -------------------------------
+-- GENERO
+-- -------------------------------
+INSERT INTO genero (nombre) VALUES 
+('Acción'),
+('Comedia'),
+('Drama'),
+('Terror'),
+('Ciencia Ficción');
 
 
 
