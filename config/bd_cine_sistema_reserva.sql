@@ -64,7 +64,7 @@ CREATE TABLE if not exists usuario (
     rol_id INT NOT NULL,
     nombre varchar(50),
     email varchar(50) NOT NULL UNIQUE,
-    contrasena varchar(255) UNIQUE NOT NULL,
+    contrasena varchar(255) NOT NULL,
     ciudad varchar(50),
     provincia varchar(50),
     create_time timestamp DEFAULT current_timestamp,
