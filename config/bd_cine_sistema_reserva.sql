@@ -222,3 +222,15 @@ INSERT INTO estado (nombre) VALUES
 ('pendiente'),
 ('pagado'),
 ('cancelado');
+
+-- -------------------------------
+-- PELICULA
+-- -------------------------------
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
+('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 13.50, TRUE, 'https://example.com/inception.jpg'),
+('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 14.00, TRUE, 'https://example.com/interstellar.jpg'),
+('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 12.00, TRUE, 'https://example.com/joker.jpg'),
+('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 11.50, TRUE, 'https://example.com/titanic.jpg'),
+('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 12.50, TRUE, 'https://example.com/gladiator.jpg'),
+('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 14.00, TRUE, 'https://example.com/avatar.jpg');
+
