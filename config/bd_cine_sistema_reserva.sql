@@ -206,3 +206,11 @@ INSERT INTO sala (numero) VALUES
 (1),
 (2),
 (3);
+
+-- -------------------------------
+-- TIPO PRODUCTO
+-- -------------------------------
+INSERT INTO tipo (nombre, descripcion) VALUES
+('Snack', 'Comida para el cine'),
+('Bebida', 'Refrescos y bebidas'),
+('Combo', 'Combinación de snacks y bebida');
