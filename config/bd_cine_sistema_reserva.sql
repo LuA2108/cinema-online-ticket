@@ -191,5 +191,12 @@ INSERT INTO genero (nombre) VALUES
 ('Terror'),
 ('Ciencia Ficción');
 
+-- -------------------------------
+-- ROL
+-- -------------------------------
+INSERT INTO rol (tipo, descripcion) VALUES
+('admin', 'Administrador del sistema'),
+('cliente', 'Usuario que compra entradas'),
+('empleado', 'Personal del cine');
 
 
