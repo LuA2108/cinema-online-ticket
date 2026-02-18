@@ -39,7 +39,8 @@ CREATE TABLE if not exists estado (
     nombre ENUM('pendiente', 'pagado', 'cancelado') DEFAULT 'pendiente'
 );
 
--- ------------------------
+-- -----------------------------------
+-- Tablas principales ----------------
 
 -- PELICULA --------------------------
 DROP table if exists pelicula;
@@ -56,18 +57,6 @@ CREATE TABLE if not exists pelicula (
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de creacion
 );
 
--- PELICULA-GENERO --------------------------
-DROP TABLE if exists pelicula_genero;
-CREATE TABLE if not exists pelicula_genero (
-    pelicula_id INT NOT NULL,
-    genero_id INT NOT NULL,
-    PRIMARY KEY (pelicula_id, genero_id),
-    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
-    FOREIGN KEY (genero_id) REFERENCES genero(id) ON DELETE CASCADE
-);
-
-
-
 -- USUARIO --------------------------
 DROP table if exists usuario;
 CREATE TABLE if not exists usuario (
@@ -82,6 +71,33 @@ CREATE TABLE if not exists usuario (
     
     FOREIGN KEY (rol_id) REFERENCES rol(id) ON DELETE CASCADE
 );
+
+-- PRODUCTO ---------------------------
+DROP TABLE if exists producto;
+CREATE TABLE if not exists producto (
+	id int auto_increment primary key,
+    tipo_id INT NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    comentario VARCHAR(400) NOT NULL,
+    create_time timestamp DEFAULT current_timestamp,
+    
+    foreign key (tipo_id) references tipo(id) ON DELETE CASCADE
+);
+
+
+
+-- PELICULA-GENERO --------------------------
+DROP TABLE if exists pelicula_genero;
+CREATE TABLE if not exists pelicula_genero (
+    pelicula_id INT NOT NULL,
+    genero_id INT NOT NULL,
+    PRIMARY KEY (pelicula_id, genero_id),
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
+    FOREIGN KEY (genero_id) REFERENCES genero(id) ON DELETE CASCADE
+);
+
+
 
 
 
@@ -157,18 +173,7 @@ CREATE TABLE if not exists opinion (
     foreign key (usuario_id) references usuario(id) ON DELETE CASCADE
 );
 
--- PRODUCTO ---------------------------
-DROP TABLE if exists producto;
-CREATE TABLE if not exists producto (
-	id int auto_increment primary key,
-    tipo_id INT NOT NULL,
-	nombre VARCHAR(50) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    comentario VARCHAR(400) NOT NULL,
-    create_time timestamp DEFAULT current_timestamp,
-    
-    foreign key (tipo_id) references tipo(id) ON DELETE CASCADE
-);
+
 
 
 
