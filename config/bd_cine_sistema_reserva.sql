@@ -245,3 +245,13 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (6, 3), -- Gladiator -> Drama
 (7, 5); -- Avatar -> Ciencia Ficción
 
+-- -------------------------------
+-- FUNCION
+-- -------------------------------
+INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado) VALUES
+(4, 2, '20:00:00', '2026-02-22', '2026-02-22', TRUE), -- Joker en sala 2
+(5, 3, '18:30:00', '2026-02-22', '2026-02-22', TRUE), -- Titanic en sala 3
+(6, 2, '21:00:00', '2026-02-23', '2026-02-23', TRUE), -- Gladiator en sala 2
+(7, 3, '19:00:00', '2026-02-23', '2026-02-23', TRUE), -- Avatar en sala 3
+(1, 1, '22:00:00', '2026-02-23', '2026-02-23', TRUE), -- Inception en sala 1
+(2, 1, '16:00:00', '2026-02-24', '2026-02-24', TRUE); -- Interstellar en sala 1
