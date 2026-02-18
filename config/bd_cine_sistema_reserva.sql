@@ -204,9 +204,9 @@ INSERT INTO rol (tipo, descripcion) VALUES
 -- SALA
 -- -------------------------------
 INSERT INTO sala (numero) VALUES
-(1),
-(2),
-(3);
+(1, 100),
+(2, 100),
+(3, 100);
 
 -- -------------------------------
 -- TIPO PRODUCTO
