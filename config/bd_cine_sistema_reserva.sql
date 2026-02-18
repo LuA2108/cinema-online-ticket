@@ -305,3 +305,9 @@ INSERT INTO reserva_butaca (butaca_id, reserva_id, funcion_id, precio) VALUES
 (1, 1, 1, 8.50),
 (51, 2, 3, 7.50);
 
+-- Insertar reserva producto
+INSERT INTO reserva_producto (reserva_id, producto_id, precio_total) VALUES
+(1, 1, 4.50),
+(2, 2, 2.50);
+
+
