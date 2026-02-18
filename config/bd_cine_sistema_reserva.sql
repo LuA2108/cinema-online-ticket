@@ -300,3 +300,8 @@ INSERT INTO reserva (usuario_id, funcion_id, estado_id, total) VALUES
 (2, 1, 2, 8.50),
 (3, 3, 1, 7.50);
 
+-- Insertar reserva butaca
+INSERT INTO reserva_butaca (butaca_id, reserva_id, funcion_id, precio) VALUES
+(1, 1, 1, 8.50),
+(51, 2, 3, 7.50);
+
