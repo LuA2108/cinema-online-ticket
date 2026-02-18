@@ -234,3 +234,14 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, dis
 ('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 12.50, TRUE, 'https://example.com/gladiator.jpg'),
 ('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 14.00, TRUE, 'https://example.com/avatar.jpg');
 
+-- -------------------------------
+-- PELICULA-GENERO
+-- -------------------------------
+INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
+(4, 3), -- Joker -> Drama
+(5, 1), -- Titanic -> Acción (aunque es más drama/romance, puedes asignar Drama también)
+(5, 3), -- Titanic -> Drama
+(6, 1), -- Gladiator -> Acción
+(6, 3), -- Gladiator -> Drama
+(7, 5); -- Avatar -> Ciencia Ficción
+
