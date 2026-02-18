@@ -85,9 +85,9 @@ CREATE TABLE if not exists producto (
     foreign key (tipo_id) references tipo(id) ON DELETE CASCADE
 );
 
+-- TABLAS DEPENDIENTES
 
-
--- PELICULA-GENERO --------------------------
+-- PELICULA-GENERO (Muchos a muchos) --------------------------
 DROP TABLE if exists pelicula_genero;
 CREATE TABLE if not exists pelicula_genero (
     pelicula_id INT NOT NULL,
@@ -97,11 +97,7 @@ CREATE TABLE if not exists pelicula_genero (
     FOREIGN KEY (genero_id) REFERENCES genero(id) ON DELETE CASCADE
 );
 
-
-
-
-
--- BUTACA --------------------------
+-- BUTACA (depende de sala) ------------------
 DROP table if exists butaca;
 CREATE TABLE if not exists butaca (
 	id INT auto_increment primary key,
@@ -114,7 +110,7 @@ CREATE TABLE if not exists butaca (
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
 
--- FUNCION --------------------------
+-- FUNCION ( Proyeccion: Pelicula + sala + hora )----------------   
 DROP table if exists funcion;
 CREATE TABLE if not exists funcion (
 	id INT auto_increment primary key,
@@ -129,7 +125,22 @@ CREATE TABLE if not exists funcion (
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
 
--- RESERVA-BUTACA --------------------------
+-- RESERVA (Depende de Usuario, Funcion y estado) ---------------------------
+DROP TABLE if exists reserva;
+CREATE TABLE if not exists reserva (
+	id int auto_increment primary key,
+	usuario_id INT NOT NULL,
+    funcion_id INT NOT NULL,
+    estado_id INT NOT NULL,
+    fecha_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10, 2) NOT NULL,
+    
+    foreign key (usuario_id) references usuario(id) ON DELETE CASCADE,
+    foreign key (funcion_id) references funcion(id) ON DELETE CASCADE,
+    foreign key (estado_id) references estado(id) ON DELETE CASCADE
+);
+
+-- RESERVA-BUTACA (Detalle de la reserva: Qué asientos son) ----------
 DROP table if exists reserva_butaca;
 CREATE TABLE if not exists reserva_butaca (
 	butaca_id INT NOT NULL,
@@ -143,21 +154,17 @@ CREATE TABLE if not exists reserva_butaca (
     FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE
 );
 
-
-
--- RESERVA ---------------------------
-DROP TABLE if exists reserva;
-CREATE TABLE if not exists reserva (
-	id int auto_increment primary key,
-	usuario_id INT NOT NULL,
-    funcion_id INT NOT NULL,
-    estado_id INT NOT NULL,
-    fecha_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
-    total DECIMAL(10, 2) NOT NULL,
+-- RESERVA-PRODUCTO (Si compran palomitas con la entrada) ---------------
+DROP TABLE if exists reserva_producto;
+CREATE TABLE if not exists reserva_producto (
+	reserva_id INT NOT NULL,
+    producto_id INT NOT NULL,
+	precio_total DECIMAL(10,2) NOT NULL,
     
-    foreign key (usuario_id) references usuario(id) ON DELETE CASCADE,
-    foreign key (funcion_id) references funcion(id) ON DELETE CASCADE,
-    foreign key (estado_id) references estado(id) ON DELETE CASCADE
+    PRIMARY KEY(reserva_id, producto_id),
+    
+    foreign key (reserva_id) references reserva(id) ON DELETE CASCADE,
+    foreign key (producto_id) references producto(id) ON DELETE CASCADE
 );
 
 -- OPINION ---------------------------
@@ -177,15 +184,4 @@ CREATE TABLE if not exists opinion (
 
 
 
--- RESERVA-PRODUCTO ---------------------------
-DROP TABLE if exists reserva_producto;
-CREATE TABLE if not exists reserva_producto (
-	reserva_id INT NOT NULL,
-    producto_id INT NOT NULL,
-	precio_total DECIMAL(10,2) NOT NULL,
-    
-    PRIMARY KEY(reserva_id, producto_id),
-    
-    foreign key (reserva_id) references reserva(id) ON DELETE CASCADE,
-    foreign key (producto_id) references producto(id) ON DELETE CASCADE
-);
+
