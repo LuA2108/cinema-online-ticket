@@ -295,3 +295,8 @@ INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado
 (2, 1, '21:00:00', '2026-02-20', '2026-02-20', TRUE),
 (3, 2, '19:00:00', '2026-02-21', '2026-02-21', TRUE);
 
+-- Insertar reserva
+INSERT INTO reserva (usuario_id, funcion_id, estado_id, total) VALUES
+(2, 1, 2, 8.50),
+(3, 3, 1, 7.50);
+
