@@ -289,3 +289,9 @@ INSERT INTO producto (tipo_id, nombre, precio, comentario) VALUES
 (1, 'Palomitas', 4.50, 'Tamaño grande'),
 (2, 'Refresco', 2.50, '500ml');
 
+-- Insertar Funcion
+INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado) VALUES
+(1, 1, '18:00:00', '2026-02-20', '2026-02-20', TRUE),
+(2, 1, '21:00:00', '2026-02-20', '2026-02-20', TRUE),
+(3, 2, '19:00:00', '2026-02-21', '2026-02-21', TRUE);
+
