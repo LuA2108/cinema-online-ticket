@@ -278,3 +278,8 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, dis
 ('Interstellar', 'Viaje espacial.', 'Christopher Nolan', 2014, 169, 9.00, TRUE, 'interstellar.jpg'),
 ('Joker', 'Origen del Joker.', 'Todd Phillips', 2019, 122, 7.50, TRUE, 'joker.jpg');
 
+-- Insertar producto
+INSERT INTO producto (tipo_id, nombre, precio, comentario) VALUES
+(1, 'Palomitas', 4.50, 'Tamaño grande'),
+(2, 'Refresco', 2.50, '500ml');
+
