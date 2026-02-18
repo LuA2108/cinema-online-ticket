@@ -272,4 +272,9 @@ INSERT INTO butaca (sala_id, fila, numero) VALUES
 (2,4,1),(2,4,2),(2,4,3),(2,4,4),(2,4,5),(2,4,6),(2,4,7),(2,4,8),(2,4,9),(2,4,10),
 (2,5,1),(2,5,2),(2,5,3),(2,5,4),(2,5,5),(2,5,6),(2,5,7),(2,5,8),(2,5,9),(2,5,10);
 
+-- Insertar pelicula
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
+('Inception', 'Sueños dentro de sueños.', 'Christopher Nolan', 2010, 148, 8.50, TRUE, 'inception.jpg'),
+('Interstellar', 'Viaje espacial.', 'Christopher Nolan', 2014, 169, 9.00, TRUE, 'interstellar.jpg'),
+('Joker', 'Origen del Joker.', 'Todd Phillips', 2019, 122, 7.50, TRUE, 'joker.jpg');
 
