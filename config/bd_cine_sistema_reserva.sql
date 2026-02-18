@@ -199,4 +199,10 @@ INSERT INTO rol (tipo, descripcion) VALUES
 ('cliente', 'Usuario que compra entradas'),
 ('empleado', 'Personal del cine');
 
-
+-- -------------------------------
+-- SALA
+-- -------------------------------
+INSERT INTO sala (numero) VALUES
+(1),
+(2),
+(3);
