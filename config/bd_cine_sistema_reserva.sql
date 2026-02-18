@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS rol (
 DROP table if exists sala;
 CREATE TABLE if not exists sala (
 	id INT auto_increment primary key,
-    numero INT UNIQUE NOT NULL
+    numero INT UNIQUE NOT NULL,
+    capacidad INT NOT
 );
 
 -- TIPO PRODUCTO ---------------------------
@@ -255,3 +256,4 @@ INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado
 (7, 3, '19:00:00', '2026-02-23', '2026-02-23', TRUE), -- Avatar en sala 3
 (1, 1, '22:00:00', '2026-02-23', '2026-02-23', TRUE), -- Inception en sala 1
 (2, 1, '16:00:00', '2026-02-24', '2026-02-24', TRUE); -- Interstellar en sala 1
+
