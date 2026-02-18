@@ -214,3 +214,11 @@ INSERT INTO tipo (nombre, descripcion) VALUES
 ('Snack', 'Comida para el cine'),
 ('Bebida', 'Refrescos y bebidas'),
 ('Combo', 'Combinación de snacks y bebida');
+
+-- -------------------------------
+-- ESTADO RESERVA
+-- -------------------------------
+INSERT INTO estado (nombre) VALUES
+('pendiente'),
+('pagado'),
+('cancelado');
