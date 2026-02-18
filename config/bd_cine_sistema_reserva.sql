@@ -272,6 +272,12 @@ INSERT INTO butaca (sala_id, fila, numero) VALUES
 (2,4,1),(2,4,2),(2,4,3),(2,4,4),(2,4,5),(2,4,6),(2,4,7),(2,4,8),(2,4,9),(2,4,10),
 (2,5,1),(2,5,2),(2,5,3),(2,5,4),(2,5,5),(2,5,6),(2,5,7),(2,5,8),(2,5,9),(2,5,10);
 
+-- Insertar pelicula genero
+INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
+(1,5),(1,1),
+(2,5),
+(3,2);
+
 -- Insertar pelicula
 INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
 ('Inception', 'Sueños dentro de sueños.', 'Christopher Nolan', 2010, 148, 8.50, TRUE, 'inception.jpg'),
