@@ -119,7 +119,7 @@ CREATE TABLE if not exists funcion (
     hora TIME NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    estado BOOLEAN,
+    estado ENUM('activa','cancelada','finalizada'),
     
     FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
@@ -148,7 +148,7 @@ CREATE TABLE if not exists reserva_butaca (
     funcion_id INT NOT NULL,
     precio DECIMAL(10,2),
     
-    PRIMARY KEY (butaca_id, funcion_id),
+    PRIMARY KEY (butaca_id, reserva_id, funcion_id),
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
     FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE,
     FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE
