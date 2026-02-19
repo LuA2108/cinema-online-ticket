@@ -229,7 +229,7 @@ INSERT INTO estado_reserva (nombre) VALUES
 ('pagado'),
 ('cancelado');
 
--------------------------
+-- -----------------------
 -- ESTADO FUNCION
 INSERT INTO estado_funcion (nombre) VALUES
 ('activa'),
