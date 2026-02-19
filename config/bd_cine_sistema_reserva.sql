@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS bd_sistema_reserva_cine;
 CREATE DATABASE IF NOT EXISTS bd_sistema_reserva_cine;
 USE bd_sistema_reserva_cine;
 
@@ -22,7 +23,7 @@ DROP table if exists sala;
 CREATE TABLE if not exists sala (
 	id INT auto_increment primary key,
     numero INT UNIQUE NOT NULL,
-    capacidad INT NOT
+    capacidad INT NOT NULL
 );
 
 -- TIPO PRODUCTO ---------------------------
@@ -34,12 +35,16 @@ CREATE TABLE if not exists tipo (
 );
 
 -- ESTADO RESERVA ---------------------------
-DROP TABLE if exists estado;
-CREATE TABLE if not exists estado (
+DROP TABLE if exists estado_reserva;
+CREATE TABLE if not exists estado_reserva (
 	id int auto_increment primary key,
-    nombre ENUM('pendiente', 'pagado', 'cancelado') DEFAULT 'pendiente'
+    nombre VARCHAR(28) NOT NULL
 );
 
+CREATE TABLE estado_funcion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL
+);
 -- -----------------------------------
 -- Tablas principales ----------------
 
@@ -106,7 +111,6 @@ CREATE TABLE if not exists butaca (
     numero INT NOT NULL,
     fila INT NOT NULL,
 
-    
     UNIQUE (sala_id, fila, numero),
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
@@ -120,10 +124,12 @@ CREATE TABLE if not exists funcion (
     hora TIME NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    estado ENUM('activa','cancelada','finalizada'),
+    estado_id INT NOT NULL,
     
-    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
-    FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
+    UNIQUE (sala_id, fecha_inicio, hora),
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
+    FOREIGN KEY (sala_id) REFERENCES sala(id),
+    FOREIGN KEY (estado_id) REFERENCES estado_funcion(id)
 );
 
 -- RESERVA (Depende de Usuario, Funcion y estado) ---------------------------
@@ -138,7 +144,7 @@ CREATE TABLE if not exists reserva (
     
     foreign key (usuario_id) references usuario(id) ON DELETE CASCADE,
     foreign key (funcion_id) references funcion(id) ON DELETE CASCADE,
-    foreign key (estado_id) references estado(id) ON DELETE CASCADE
+    foreign key (estado_id) references estado_reserva(id) ON DELETE CASCADE
 );
 
 -- RESERVA-BUTACA (Detalle de la reserva: Qué asientos son) ----------
@@ -149,7 +155,7 @@ CREATE TABLE if not exists reserva_butaca (
     funcion_id INT NOT NULL,
     precio DECIMAL(10,2),
     
-    PRIMARY KEY (butaca_id, reserva_id, funcion_id),
+    PRIMARY KEY (funcion_id, butaca_id),
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
     FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE,
     FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE
@@ -203,9 +209,9 @@ INSERT INTO rol (tipo, descripcion) VALUES
 -- -------------------------------
 -- SALA
 -- -------------------------------
-INSERT INTO sala (numero) VALUES
+INSERT INTO sala (numero, capacidad) VALUES
 (1, 50),
-(2, 50),
+(2, 50);
 
 -- -------------------------------
 -- TIPO PRODUCTO
@@ -218,10 +224,17 @@ INSERT INTO tipo (nombre, descripcion) VALUES
 -- -------------------------------
 -- ESTADO RESERVA
 -- -------------------------------
-INSERT INTO estado (nombre) VALUES
+INSERT INTO estado_reserva (nombre) VALUES
 ('pendiente'),
 ('pagado'),
 ('cancelado');
+
+-------------------------
+-- ESTADO FUNCION
+INSERT INTO estado_funcion (nombre) VALUES
+('activa'),
+('cancelada'),
+('finalizada');
 
 -- -------------------------------
 -- PELICULA
@@ -238,23 +251,23 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, dis
 -- PELICULA-GENERO
 -- -------------------------------
 INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
-(4, 3), -- Joker -> Drama
-(5, 1), -- Titanic -> Acción (aunque es más drama/romance, puedes asignar Drama también)
-(5, 3), -- Titanic -> Drama
-(6, 1), -- Gladiator -> Acción
-(6, 3), -- Gladiator -> Drama
-(7, 5); -- Avatar -> Ciencia Ficción
+(3, 3), -- Joker -> Drama
+(4, 1), -- Titanic -> Acción (aunque es más drama/romance, puedes asignar Drama también)
+(4, 3), -- Titanic -> Drama
+(5, 1), -- Gladiator -> Acción
+(5, 3), -- Gladiator -> Drama
+(6, 5); -- Avatar -> Ciencia Ficción
 
 -- -------------------------------
 -- FUNCION
 -- -------------------------------
-INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado) VALUES
-(4, 2, '20:00:00', '2026-02-22', '2026-02-22', TRUE), -- Joker en sala 2
-(5, 1, '18:30:00', '2026-02-22', '2026-02-22', TRUE), -- Titanic en sala 3
-(6, 2, '21:00:00', '2026-02-23', '2026-02-23', TRUE), -- Gladiator en sala 2
-(7, 2, '19:00:00', '2026-02-23', '2026-02-23', TRUE), -- Avatar en sala 3
-(1, 1, '22:00:00', '2026-02-23', '2026-02-23', TRUE), -- Inception en sala 1
-(2, 1, '16:00:00', '2026-02-24', '2026-02-24', TRUE); -- Interstellar en sala 1
+INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
+(3, 2, '20:00:00', '2026-02-22', '2026-02-22', 1), -- Joker en sala 2
+(4, 1, '18:30:00', '2026-02-22', '2026-02-22', 1), -- Titanic en sala 1
+(5, 2, '21:00:00', '2026-02-23', '2026-02-23', 1), -- Gladiator en sala 2
+(6, 2, '19:00:00', '2026-02-23', '2026-02-23', 1), -- Avatar en sala 2
+(1, 1, '22:00:00', '2026-02-23', '2026-02-23', 1), -- Inception en sala 1
+(2, 1, '16:00:00', '2026-02-24', '2026-02-24', 1); -- Interstellar en sala 1
 
 -- Insertar Butacas en sala 1
 INSERT INTO butaca (sala_id, fila, numero) VALUES
@@ -278,22 +291,23 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (2,5),
 (3,2);
 
--- Insertar pelicula
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
-('Inception', 'Sueños dentro de sueños.', 'Christopher Nolan', 2010, 148, 8.50, TRUE, 'inception.jpg'),
-('Interstellar', 'Viaje espacial.', 'Christopher Nolan', 2014, 169, 9.00, TRUE, 'interstellar.jpg'),
-('Joker', 'Origen del Joker.', 'Todd Phillips', 2019, 122, 7.50, TRUE, 'joker.jpg');
-
 -- Insertar producto
 INSERT INTO producto (tipo_id, nombre, precio, comentario) VALUES
 (1, 'Palomitas', 4.50, 'Tamaño grande'),
 (2, 'Refresco', 2.50, '500ml');
 
 -- Insertar Funcion
-INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado) VALUES
-(1, 1, '18:00:00', '2026-02-20', '2026-02-20', TRUE),
-(2, 1, '21:00:00', '2026-02-20', '2026-02-20', TRUE),
-(3, 2, '19:00:00', '2026-02-21', '2026-02-21', TRUE);
+INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
+(1, 1, '18:00:00', '2026-02-20', '2026-02-20', 1),
+(2, 1, '21:00:00', '2026-02-20', '2026-02-20', 1),
+(3, 2, '19:00:00', '2026-02-21', '2026-02-21', 1);
+
+INSERT INTO usuario (rol_id, nombre, email, contrasena)
+VALUES
+(2, 'Juan Perez', 'juan@mail.com', 'juan'),
+(2, 'Maria Lopez', 'maria@mail.com', 'maria'),
+(2, 'Carlos Solaz', 'carlos@mail.com', 'carlos'),
+(2, 'Sara Vega', 'sara@mail.com', 'sara');
 
 -- Insertar reserva
 INSERT INTO reserva (usuario_id, funcion_id, estado_id, total) VALUES
