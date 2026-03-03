@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $bg-header-footer;
+    align-items: center;
+    
+    a { color: $text-nav; font-size: 22px; padding: 5px;}
+}
+
+.icono {
+    width: 32px;
+    height: 32px;
+}
+.icono-sesion { width: 42; height: 42px;}
+
+.menu ul {
+    display: flex;
+}
+
+.buscador {
+    display: flex;
+}
+
+.menu-sesion {
+    position: relative;
+
+    ul { padding: 0; margin: 0;}
+    .submenu {
+        position: absolute;
+        display: none;
+    }
+}
