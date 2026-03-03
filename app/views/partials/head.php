@@ -6,15 +6,16 @@
     <meta name="description" content="<?= $descripcion ?? 'Cinema Online Ticket'?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSS global -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-
-    <!-- CSS específico por página -->
-    <?php if (isset($extraCSS)): ?>
-        <link rel="stylesheet" href="/public/assets/css/<?= $extraCSS ?>.css">
-    <?php endif; ?>
-
     <!-- BootStrap y Font Awesome-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/TUCODIGO.js" crossorigin="anonymous"></script>
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="public/assets/css/main.css">
+
+    <!-- CSS específico por página -->
+    <?php if (isset($extraCSS)): ?>
+        <link rel="stylesheet" href="public/assets/css/<?= $extraCSS ?>.css">
+    <?php endif; ?>
+
 </head>
