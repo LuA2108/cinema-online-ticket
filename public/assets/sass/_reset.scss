@@ -1,12 +1,16 @@
-
+// Estilo general para todo
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
+// Asignar la fuente a los textos
 h1 { font-family: $fuente-h1;}
 h2{ font-family: $fuente-h2;}
 h3{ font-family: $fuente-otros-titulos;}
 p { font-family: $fuente-texto;}
 
+// Quitar el estilo por defecto a enlaces y listas
+li { list-style-type: none;}
+a { text-decoration: none;}
