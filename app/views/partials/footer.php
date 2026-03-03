@@ -51,9 +51,9 @@
         <h2>Cuenta</h2>
         <ul>
             <li><a href="#">Iniciar sesion</a></li>
-            <li><a href="#"></a>Registrarse</li>
-            <li><a href="#"></a>Mi perfil</li>
-            <li><a href="#"></a>Mi lista</li>
+            <li><a href="#">Registrarse</a></li>
+            <li><a href="#">Mi perfil</a></li>
+            <li><a href="#">Mi lista</a></li>
         </ul>
     </section>
     <section>
@@ -76,6 +76,6 @@
 
     <div>
         <hr>
-        <p>&copy2026 <span>CineToon</span>. Todos los derechos reservados.</p>
+        <p>&copy; 2026 <span>CineToon</span>. Todos los derechos reservados.</p>
     </div>
 </footer>
