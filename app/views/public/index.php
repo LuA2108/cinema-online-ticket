@@ -28,5 +28,4 @@
             <i class="fa-solid fa-envelope"></i>Suscribirse
         </button>
     </form>
-
 </section>
