@@ -10,7 +10,7 @@
         <div class="buscador">
             <form action="#" method="get">
                 <img src="public/assets/imgs/iconos/buscar.png" alt="Icono buscador" width="30px" height="30px">
-                <input type="search" name="buscador" placeholder="Buscar...">
+                <input type="search" name="buscador" placeholder="Buscar película...">
             </form>
         </div>
 
@@ -30,22 +30,36 @@
                             </a>
                         </li>
                         <li class="">
-                            <a class="" href="#">Peliculas</a>
+                            <a class="" href="#"> <img class="icono" src="public/assets/imgs/iconos/cartelera.png" alt="Icono cartelera"> Cartelera</a>
                         </li>
                         <li class="">
-                            <a class="" href="#">Cartelera</a>
+                            <a class="" href="#"> <img class="icono" src="public/assets/imgs/iconos/film.png" alt="Icono film"> Peliculas</a>
                         </li>
                         <li class="">
-                            <a class="" href="#">Reservar</a>
+                            <a class="" href="#"> <img class="icono" src="public/assets/imgs/iconos/boletos-reserva.png" alt="Icono de reserva"> Reservar</a>
                         </li>
                         <li class="">
-                            <a class="" href="#">
-                                Sobre Nosotros
-                            </a>
+                            <a class="" href="#"> <img class="icono" src="public/assets/imgs/iconos/palomitas-de-maiz.png" alt="Icono de palomitas"> Servicios</a>
+                        </li>
+                        <li class="">
+                            <a class="" href="#"> <img src="public/assets/imgs/iconos/informacion.png" alt="Icono de información"> Sobre Nosotros</a>
                         </li>
                     </ul>
                 </div>
             </div>
+        </nav>
+
+        <!-- SUBMENU para SESION-->
+        <nav>
+            <ul>
+                <li>
+                    <a href="#"> <img src="public/assets/imgs/iconos/perfil.png" alt=""></a>
+                    <ul>
+                        <li><a href="">Iniciar sesión</a></li>
+                        <li><a href="">Registrarse</a></li>
+                    </ul>
+                </li>
+            </ul>
         </nav>
         <hr>
     </header>
