@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <!-- HEAD -->
-    <?php require __DIR__ . "/../partials/head.php"; ?>
+<!-- HEAD -->
+<?php require __DIR__ . "/../partials/head.php"; ?>
 
-    <!-- CABECERA -->
-    <?php require __DIR__ . "/../partials/cabecera.php"; ?>
+<!-- CABECERA -->
+<?php require __DIR__ . "/../partials/cabecera.php"; ?>
 
-    <body>
-        <main class="container">
-            <?= $content; ?> <!-- Aquí se inserta la vista que prepara el controlador -->
-        </main>
-    
-        <?php require __DIR__ . "/../partials/footer.php"; ?>
-        <script src="" async defer></script>
-    </body>
+<body>
+
+    <main class="container">
+        <?= $content; ?> <!-- Aquí se inserta la vista que prepara el controlador -->
+    </main>
+
+    <?php require __DIR__ . "/../partials/footer.php"; ?>
+    <script src="" async defer></script>
+</body>
 
 </html>
