@@ -1,32 +1,68 @@
+// ESTILO CABECERA ======================================
 header {
     display: flex;
     justify-content: space-between;
     background-color: $bg-header-footer;
     align-items: center;
     
+    // Estilo del enlace dentro del header -------------
     a { color: $text-nav; font-size: 22px; padding: 5px;}
 }
 
-.icono {
-    width: 32px;
-    height: 32px;
-}
-.icono-sesion { width: 42; height: 42px;}
+// ICONOS =================================
+.icono { width: 32px; height: 32px; } // Estilo icono general
+.icono-sesion { width: 42; height: 42px; margin: 0px 20px 15px 0px;} // Estilo icono sesion
 
+// MENU PRINCIPAL =========================
 .menu ul {
     display: flex;
+    gap: 10px;
+    
+    a { display: flex; gap: 3px; }
 }
 
-.buscador {
+// BUSCADOR ===============================
+.buscador > form {
     display: flex;
+    gap: 10px;
+
+    input {
+        border: none;
+        border-radius: 5px;
+        padding: 2px;
+        background-color: rgb(255, 248, 205);
+    }
 }
 
+// MENU SESION ============================
 .menu-sesion {
     position: relative;
 
     ul { padding: 0; margin: 0;}
+    
+    .dropdown { position: relative;}
+
     .submenu {
         position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: rgb(254, 254, 240);
+        padding: 10px 0px;
+        min-width: 150px;
+        border-radius: 5px;
         display: none;
+        z-index: 2;
     }
+
+    .submenu li { 
+        padding: 8px 15px; 
+        
+        a { color: rgb(0, 0, 0); display: block; font-size: 18px;}
+    }
+
+    .submenu li:hover {display: block;}
+
+    .dropdown:hover .submenu { display: block; }
+    
+
 }
