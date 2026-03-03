@@ -6,12 +6,23 @@ header {
     align-items: center;
     
     // Estilo del enlace dentro del header -------------
-    a { color: $text-nav; font-size: 22px; padding: 5px;}
+    a { 
+        color: $text-nav; 
+        font-size: 22px; 
+        padding: 5px;
+        transition: color 0.8s linear;
+        
+        &:hover {
+            color: rgb(167, 139, 0);
+        }
+    }
+
+    
 }
 
 // ICONOS =================================
 .icono { width: 32px; height: 32px; } // Estilo icono general
-.icono-sesion { width: 42; height: 42px; margin: 0px 20px 15px 0px;} // Estilo icono sesion
+.icono-sesion { width: 43px; height: 43px; margin: 0px 20px 15px 0px;} // Estilo icono sesion
 
 // MENU PRINCIPAL =========================
 .menu ul {
@@ -57,7 +68,16 @@ header {
     .submenu li { 
         padding: 8px 15px; 
         
-        a { color: rgb(0, 0, 0); display: block; font-size: 18px;}
+        a { 
+            color: rgb(0, 0, 0); 
+            display: block; 
+            font-size: 18px; 
+            transition: text-shadow 0.8s ease-out;
+
+            &:hover {
+                text-shadow: 0 0 2px rgb(4, 4, 4);
+            }
+        }
     }
 
     .submenu li:hover {display: block;}
