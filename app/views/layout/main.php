@@ -11,8 +11,8 @@
             <?= $content; ?> <!-- Aquí se inserta la vista que prepara el controlador -->
         </main>
     
+        <?php require __DIR__ . "/../partials/footer.php"; ?>
         <script src="" async defer></script>
     </body>
 
-    <?php require __DIR__ . "/../partials/footer.php"; ?>
 </html>
