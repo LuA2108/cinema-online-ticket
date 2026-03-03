@@ -32,6 +32,11 @@ a {
   text-decoration: none;
 }
 
+hr {
+  border: 2px solid rgb(143, 143, 143);
+  margin: 5px 25px;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -52,14 +57,27 @@ header a {
 .icono-sesion {
   width: 42;
   height: 42px;
+  margin: 0px 20px 15px 0px;
 }
 
 .menu ul {
   display: flex;
+  gap: 10px;
+}
+.menu ul a {
+  display: flex;
+  gap: 3px;
 }
 
-.buscador {
+.buscador > form {
   display: flex;
+  gap: 10px;
+}
+.buscador > form input {
+  border: none;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: rgb(255, 248, 205);
 }
 
 .menu-sesion {
@@ -69,7 +87,31 @@ header a {
   padding: 0;
   margin: 0;
 }
+.menu-sesion .dropdown {
+  position: relative;
+}
 .menu-sesion .submenu {
   position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgb(254, 254, 240);
+  padding: 10px 0px;
+  min-width: 150px;
+  border-radius: 5px;
   display: none;
+  z-index: 2;
+}
+.menu-sesion .submenu li {
+  padding: 8px 15px;
+}
+.menu-sesion .submenu li a {
+  color: rgb(0, 0, 0);
+  display: block;
+  font-size: 18px;
+}
+.menu-sesion .submenu li:hover {
+  display: block;
+}
+.menu-sesion .dropdown:hover .submenu {
+  display: block;
 }/*# sourceMappingURL=main.css.map */
