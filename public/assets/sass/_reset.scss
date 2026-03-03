@@ -14,3 +14,5 @@ p { font-family: $fuente-texto;}
 // Quitar el estilo por defecto a enlaces y listas
 li { list-style-type: none;}
 a { text-decoration: none;}
+
+hr { border: 2px solid rgb(143, 143, 143); margin: 5px 25px;}
