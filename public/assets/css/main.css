@@ -47,6 +47,10 @@ header a {
   color: rgb(255, 249, 232);
   font-size: 22px;
   padding: 5px;
+  transition: color 0.8s linear;
+}
+header a:hover {
+  color: rgb(167, 139, 0);
 }
 
 .icono {
@@ -55,8 +59,8 @@ header a {
 }
 
 .icono-sesion {
-  width: 42;
-  height: 42px;
+  width: 43px;
+  height: 43px;
   margin: 0px 20px 15px 0px;
 }
 
@@ -108,6 +112,10 @@ header a {
   color: rgb(0, 0, 0);
   display: block;
   font-size: 18px;
+  transition: text-shadow 0.8s ease-out;
+}
+.menu-sesion .submenu li a:hover {
+  text-shadow: 0 0 2px rgb(4, 4, 4);
 }
 .menu-sesion .submenu li:hover {
   display: block;
