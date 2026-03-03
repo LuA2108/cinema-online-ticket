@@ -1,22 +1,22 @@
-<?php 
+<?php
 
-    class MainController {
+class MainController
+{
+    public function index()
+    {
+        $title = "Inicio - Cinema Online Ticket";
 
-        public function index() {
-            $title = "Inicio - Cinema Online Ticket";
+        // Captura la vista en un buffer
+        $viewPath = __DIR__ . '/../views/public/index.php';
+        if (!file_exists($viewPath)) die("Vista no encontrada: $viewPath");
 
-            // Capturamos la vista en un buffer
-            ob_start();
+        ob_start();
+        require $viewPath;
+        $content = ob_get_clean();
 
-            //Capturar la vista en un buffer
-            require __DIR__ . '/public/index.php';
-            $content = ob_get_clean();
-
-            // Se carga el layout, que incluye los partials
-            require __DIR__ . '/../views/layout/main.php';
-
-        }
-
+        // Carga el layout
+        $layoutPath = __DIR__ . '/../views/layout/main.php';
+        if (!file_exists($layoutPath)) die("Layout no encontrado: $layoutPath");
+        require $layoutPath;
     }
-
-?>
+}
