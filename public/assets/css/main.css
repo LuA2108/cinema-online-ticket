@@ -34,5 +34,42 @@ a {
 
 header {
   display: flex;
+  justify-content: space-between;
   background-color: black;
+  align-items: center;
+}
+header a {
+  color: rgb(255, 249, 232);
+  font-size: 22px;
+  padding: 5px;
+}
+
+.icono {
+  width: 32px;
+  height: 32px;
+}
+
+.icono-sesion {
+  width: 42;
+  height: 42px;
+}
+
+.menu ul {
+  display: flex;
+}
+
+.buscador {
+  display: flex;
+}
+
+.menu-sesion {
+  position: relative;
+}
+.menu-sesion ul {
+  padding: 0;
+  margin: 0;
+}
+.menu-sesion .submenu {
+  position: absolute;
+  display: none;
 }/*# sourceMappingURL=main.css.map */
