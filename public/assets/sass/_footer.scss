@@ -1,9 +1,13 @@
 footer {
     display: flex;
     flex-direction: column;
+    background-color: black ;
+    color: $text-secundario;
+    padding: 8px 0px;
 
     .container-main {
         display: flex;
+        padding: 2px 45px;
         justify-content: space-between;
     }
 
@@ -11,11 +15,31 @@ footer {
         text-align: center;
 
     }
+
+    // Se formatea el padding del las listas
+    ul { padding: 0;}
+    a { color: $text-nav}
+
+    .subtitulo {
+        font-size: 24px;
+        color: $text-principal;
+        text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
+    }
 }
 
 .iconos-redes-sociales {
     display: flex;
+    gap: 30px;
     .icon {
         font-size: 32px;
     }
+}
+
+.titulo-logo {
+    text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
+    font-size: 35px;
+}
+
+.footer-titulo {
+    color: $text-principal;
 }
