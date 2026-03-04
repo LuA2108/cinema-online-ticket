@@ -15,6 +15,7 @@
     }
 }
 
+// Mixin para mover elementos a la derecha
 @mixin hover-move-right($distance: 4px, $duration: 0.3s) {
     transition: transform $duration ease;
 
