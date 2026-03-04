@@ -1,0 +1,6 @@
+// MIXINS ======================================================
+
+// Mixin para cualquier propiedad animable ---------------------
+@mixin transition($properties, $duration: 0.3s, $ease: ease) {
+    transition: $properties $duration $ease;
+}
