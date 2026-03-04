@@ -127,18 +127,43 @@ header a:hover {
 footer {
   display: flex;
   flex-direction: column;
+  background-color: black;
+  color: #ffffff;
+  padding: 8px 0px;
 }
 footer .container-main {
   display: flex;
+  padding: 2px 45px;
   justify-content: space-between;
 }
 footer .copy {
   text-align: center;
 }
+footer ul {
+  padding: 0;
+}
+footer a {
+  color: rgb(255, 249, 232);
+}
+footer .subtitulo {
+  font-size: 24px;
+  color: #D4AF37;
+  text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
+}
 
 .iconos-redes-sociales {
   display: flex;
+  gap: 30px;
 }
 .iconos-redes-sociales .icon {
   font-size: 32px;
+}
+
+.titulo-logo {
+  text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
+  font-size: 35px;
+}
+
+.footer-titulo {
+  color: #D4AF37;
 }/*# sourceMappingURL=main.css.map */
