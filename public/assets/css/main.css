@@ -122,4 +122,23 @@ header a:hover {
 }
 .menu-sesion .dropdown:hover .submenu {
   display: block;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+footer .container-main {
+  display: flex;
+  justify-content: space-between;
+}
+footer .copy {
+  text-align: center;
+}
+
+.iconos-redes-sociales {
+  display: flex;
+}
+.iconos-redes-sociales .icon {
+  font-size: 32px;
 }/*# sourceMappingURL=main.css.map */
