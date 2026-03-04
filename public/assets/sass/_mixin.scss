@@ -1,18 +1,8 @@
 // MIXINS ======================================================
 
 // Mixin para cualquier propiedad animable ---------------------
-@mixin transition($properties, $duration: 0.3s, $ease: ease) {
-    transition: $properties $duration $ease;
-}
-
-
-// Mixin para cambiar el color en enlaces ----------------------
-@mixin link-hover($color) {
-    @include transition(color 0.3s ease);
-
-    &:hover {
-        color: $color;
-    }
+@mixin transition($properties, $duration: 0.8s, $type: linear) {
+    transition: $properties $duration $type;
 }
 
 // Mixin para mover elementos a la derecha
