@@ -11,14 +11,22 @@ footer {
         justify-content: space-between;
     }
 
-    .copy {
-        text-align: center;
-
-    }
+    .copy { text-align: center; }
 
     // Se formatea el padding del las listas
     ul { padding: 0;}
-    a { color: $text-nav}
+
+    //Estilo para enlaces
+    a { 
+        color: $text-nav;
+        display: inline-block;
+        @include transition(all 0.3s ease);
+        @include hover-move-right(4px); // se moverán al pasar el mouse
+
+        &:hover {
+            color: #fffab9; // cambio de color en hover
+        }
+    }
 
     .subtitulo {
         font-size: 24px;
@@ -27,11 +35,18 @@ footer {
     }
 }
 
+// Estilo para iconos: posicionamiento y transiciones
 .iconos-redes-sociales {
     display: flex;
     gap: 30px;
+
     .icon {
         font-size: 32px;
+
+        // Animación suave para iconos
+        @include transition(transform 0.3s ease);
+
+        &:hover { transform: scale(1.10); }
     }
 }
 
@@ -40,6 +55,4 @@ footer {
     font-size: 35px;
 }
 
-.footer-titulo {
-    color: $text-principal;
-}
+.footer-titulo { color: $text-principal; }
