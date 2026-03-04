@@ -144,6 +144,15 @@ footer ul {
 }
 footer a {
   color: rgb(255, 249, 232);
+  display: inline-block;
+  transition: all 0.3s ease 0.8s linear;
+  transition: transform 0.3s ease;
+}
+footer a:hover {
+  transform: translateX(4px);
+}
+footer a:hover {
+  color: #fffab9;
 }
 footer .subtitulo {
   font-size: 24px;
@@ -157,6 +166,10 @@ footer .subtitulo {
 }
 .iconos-redes-sociales .icon {
   font-size: 32px;
+  transition: transform 0.3s ease 0.8s linear;
+}
+.iconos-redes-sociales .icon:hover {
+  transform: scale(1.1);
 }
 
 .titulo-logo {
