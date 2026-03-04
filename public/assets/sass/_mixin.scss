@@ -15,6 +15,14 @@
     }
 }
 
+@mixin hover-move-right($distance: 4px, $duration: 0.3s) {
+    transition: transform $duration ease;
+
+    &:hover {
+        transform: translateX($distance);
+    }
+}
+
 // Mixin para centrar horizontalmente y verticalmente ----------
 @mixin flex-center {
     display: flex;
