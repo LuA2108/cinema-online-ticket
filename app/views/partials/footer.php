@@ -1,11 +1,12 @@
 <footer>
+    <hr>
     <div class="container-main">
         <section class="container-redes-sociales">
-            <h2>CineToon</h2>
-            <p>Disfruta de las mejores películas y estrenos exclusivos.</p>
+            <h2 class="footer-titulo titulo-logo">CineToon</h2>
+            <p>"Disfruta de las mejores películas y estrenos exclusivos"</p>
 
             <div class="container-icons-redes">
-                <h3>Siguenos en redes sociales:</h3>
+                <h3 class="subtitulo">Siguenos en redes sociales:</h3>
                 <ul class="iconos-redes-sociales">
                     <li>
                         <a href="#">
@@ -37,7 +38,7 @@
         </section>
 
         <section>
-            <h2>Explorar</h2>
+            <h2 class="footer-titulo">Explorar</h2>
             <ul>
                 <li><a href="#">Inicio</a></li>
                 <li><a href="#">Peliculas</a></li>
@@ -47,7 +48,7 @@
             </ul>
         </section>
         <section>
-            <h2>Cuenta</h2>
+            <h2 class="footer-titulo">Cuenta</h2>
             <ul>
                 <li><a href="#">Iniciar sesion</a></li>
                 <li><a href="#">Registrarse</a></li>
@@ -56,7 +57,7 @@
             </ul>
         </section>
         <section>
-            <h2>Información</h2>
+            <h2 class="footer-titulo">Información</h2>
             <ul>
                 <li><a href="#">Sobre nosotros</a></li>
                 <li><a href="#">Blog</a></li>
@@ -65,7 +66,7 @@
             </ul>
         </section>
         <section>
-            <h2>Legal</h2>
+            <h2 class="footer-titulo">Legal</h2>
             <ul>
                 <li><a href="#">Términos y condiciones</a></li>
                 <li><a href="#">Política de privacidad</a></li>
