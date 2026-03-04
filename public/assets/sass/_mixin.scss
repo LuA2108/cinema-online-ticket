@@ -15,3 +15,9 @@
     }
 }
 
+// Mixin para centrar horizontalmente y verticalmente ----------
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
