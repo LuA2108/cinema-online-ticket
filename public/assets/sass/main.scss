@@ -1,6 +1,6 @@
 // Se importa los scss al scss principal
-@import "variables";
-@import "mixin";
-@import "reset";
-@import "cabecera";
-@import "footer";
+@import "base/variables";
+@import "utilidades/";
+@import "base/reset";
+@import "maquetacion/cabecera";
+@import "maquetacion/footer";
