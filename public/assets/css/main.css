@@ -43,7 +43,7 @@ header a {
   color: rgb(255, 249, 232);
   font-size: 22px;
   padding: 5px;
-  transition: color 0.8s linear;
+  transition: color 0.8s ease;
 }
 header a:hover {
   color: rgb(167, 139, 0);
@@ -108,7 +108,7 @@ header a:hover {
   color: rgb(0, 0, 0);
   display: block;
   font-size: 18px;
-  transition: text-shadow 0.8s ease-out;
+  transition: text-shadow 0.8s linear;
 }
 .menu-sesion .submenu li a:hover {
   text-shadow: 0 0 2px rgb(4, 4, 4);
