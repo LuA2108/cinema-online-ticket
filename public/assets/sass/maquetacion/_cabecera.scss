@@ -10,14 +10,12 @@ header {
         color: $text-nav; 
         font-size: 22px; 
         padding: 5px;
-        transition: color 0.8s linear;
+        @include transition(color, 0.8s, ease);
         
         &:hover {
             color: rgb(167, 139, 0);
         }
     }
-
-    
 }
 
 // ICONOS =================================
@@ -50,7 +48,6 @@ header {
     position: relative;
 
     ul { padding: 0; margin: 0;}
-    
     .dropdown { position: relative;}
 
     .submenu {
@@ -72,7 +69,7 @@ header {
             color: rgb(0, 0, 0); 
             display: block; 
             font-size: 18px; 
-            transition: text-shadow 0.8s ease-out;
+            @include transition(text-shadow, 0.8s, linear);
 
             &:hover {
                 text-shadow: 0 0 2px rgb(4, 4, 4);
@@ -81,8 +78,5 @@ header {
     }
 
     .submenu li:hover {display: block;}
-
     .dropdown:hover .submenu { display: block; }
-    
-
 }
