@@ -44,9 +44,9 @@ footer {
         font-size: 32px;
 
         // Animación suave para iconos
-        @include transition(transform 0.3s ease);
+        @include transition(transform 1.8s ease);
 
-        &:hover { transform: scale(1.10); }
+        &:hover { transform: scale(1.1); }
     }
 }
 

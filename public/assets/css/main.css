@@ -166,7 +166,7 @@ footer .subtitulo {
 }
 .iconos-redes-sociales .icon {
   font-size: 32px;
-  transition: transform 0.3s ease 0.8s linear;
+  transition: transform 1.8s ease 0.8s linear;
 }
 .iconos-redes-sociales .icon:hover {
   transform: scale(1.1);
