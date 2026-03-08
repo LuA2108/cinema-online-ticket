@@ -1,8 +1,10 @@
 // Se importa los scss al scss principal
-@use "base/variables";
-@use "utilidades/mixin";
-@use "base/reset";
-@use "maquetacion/cabecera";
-@use "maquetacion/footer";
-@use "componentes/carousel";
-@use "base/tipografia";
+@use 'base/reset';
+@use 'base/tipografia';
+
+@use 'maquetacion/cabecera';
+@use 'maquetacion/footer';
+
+@use 'componentes/carousel';
+@use 'componentes/button';
+@use 'paginas/index';
