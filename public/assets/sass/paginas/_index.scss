@@ -1,0 +1,16 @@
+// Diseño especifo del contenido del indice 
+
+.carousel-item {
+    position: relative;
+}
+
+.capa {
+    position: absolute;
+    top: 40px;
+    left: 12%;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+}
+
+body {
+    background-color: #030016;
+}
