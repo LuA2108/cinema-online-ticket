@@ -14,15 +14,40 @@ a {
 }
 
 hr {
-  border: 2px solid rgb(143, 143, 143);
+  border: 2px solid rgb(255, 255, 255);
   margin: 5px 25px;
+}
+
+h1 {
+  font-family: "Oswald", sans-serif;
+  color: #ffffff;
+  font-size: 50px;
+  text-align: center;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+}
+
+h3 {
+  font-family: "Poppins", sans-serif;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+}
+
+.titulo-pelicula {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 180px;
+  color: #ffffff;
 }
 
 header {
   display: flex;
   justify-content: space-between;
-  background-color: black;
   align-items: center;
+  background-color: black;
 }
 header a {
   color: rgb(255, 249, 232);
@@ -35,14 +60,14 @@ header a:hover {
 }
 
 .icono {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
 
 .icono-sesion {
   width: 43px;
   height: 43px;
-  margin: 0px 20px 15px 0px;
+  margin: 0 20px 15px 0;
 }
 
 .menu ul {
@@ -80,7 +105,7 @@ header a:hover {
   top: 100%;
   right: 0;
   background-color: rgb(254, 254, 240);
-  padding: 10px 0px;
+  padding: 10px 0;
   min-width: 150px;
   border-radius: 5px;
   display: none;
@@ -98,9 +123,6 @@ header a:hover {
 .menu-sesion .submenu li a:hover {
   text-shadow: 0 0 2px rgb(4, 4, 4);
 }
-.menu-sesion .submenu li:hover {
-  display: block;
-}
 .menu-sesion .dropdown:hover .submenu {
   display: block;
 }
@@ -110,12 +132,12 @@ footer {
   flex-direction: column;
   background-color: black;
   color: #ffffff;
-  padding: 8px 0px;
+  padding: 8px 0;
 }
 footer .container-main {
   display: flex;
-  padding: 2px 45px;
   justify-content: space-between;
+  padding: 2px 45px;
 }
 footer .copy {
   text-align: center;
@@ -126,7 +148,7 @@ footer ul {
 footer a {
   color: rgb(255, 249, 232);
   display: inline-block;
-  transition: all 0.3s ease 0.8s linear;
+  transition: all 0.3s ease;
   transition: transform 0.3s ease;
 }
 footer a:hover {
@@ -147,15 +169,15 @@ footer .subtitulo {
 }
 .iconos-redes-sociales .icon {
   font-size: 32px;
-  transition: transform 1.8s ease 0.8s linear;
+  transition: transform 1.8s ease;
 }
 .iconos-redes-sociales .icon:hover {
   transform: scale(1.1);
 }
 
 .titulo-logo {
-  text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
   font-size: 35px;
+  text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
 }
 
 .footer-titulo {
@@ -171,4 +193,39 @@ footer .subtitulo {
   max-height: 500px; /* altura máxima */
   -o-object-fit: cover;
      object-fit: cover; /* Mantiene la proporción sin distorsionar */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.btn-reservar {
+  background-color: rgba(0, 0, 0, 0.414);
+  text-shadow: 2px 2px 15px black;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  border: 2px solid rgb(255, 255, 255);
+  font-size: 22px;
+  transition: color 0.8s linear;
+}
+.btn-reservar:hover {
+  color: rgb(249, 238, 169);
+}
+
+.carousel-item {
+  position: relative;
+}
+
+.capa {
+  position: absolute;
+  top: 40px;
+  left: 12%;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+body {
+  background-color: #030016;
 }/*# sourceMappingURL=main.css.map */
