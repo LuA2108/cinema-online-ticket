@@ -1,0 +1,20 @@
+@use '../utilidades/mixin' as m;
+
+// Estilo definido para los botones de las paginas del proyecto
+
+.btn-reservar {
+    background-color: rgba(0, 0, 0, 0.414);
+    text-shadow: 2px 2px 15px black;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    border: 2px solid rgb(255, 255, 255);
+    font-size: 22px;
+
+    @include m.transition(color, 0.8s, linear);
+
+    &:hover {
+        color: rgb(249, 238, 169);
+    }
+}
+
