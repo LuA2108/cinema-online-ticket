@@ -1,8 +1,7 @@
 <h1> ¡Vive la magia de <span>CineToon</span>!</h1>
 
 <section id="carrousel-principal">
-    <h2>Ahora en Pantalla</h2>
-    
+
     <div class="container mt-5">
         <div id="carousel-peliculas" class="carousel slide" data-bs-ride="carousel">
 
@@ -16,19 +15,26 @@
             <!-- CarruselImg -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <h3 class="titulo-pelicula">Inception</h3>
-                    <img src="public/assets/imgs/films/banner/inception_hor.jpg" class="d-block w-100" alt="Portada Inception">
-                    <a href="#" type="button">Reservar</a>
+                    <img src="public/assets/imgs/films/banner/inception_hor.jpg" class="d-block w-100 img-carousel" alt="Portada Inception">
+                    <!-- Contenedor para el título y el enlace -->
+                    <section class="capa">
+                        <h2 class="titulo-pelicula">Inception</h2>
+                        <a href="#" class="btn-reservar">¡Compra ya tus entradas!</a>
+                    </section>
                 </div>
                 <div class="carousel-item">
-                    <h3 class="titulo-pelicula">Avatar</h3>
                     <img src="public/assets/imgs/films/banner/avatarBanner.jpg" class="d-block w-100" alt="Portada Avatar">
-                    <a href="#" type="button">Reservar</a>
+                    <section class="capa">
+                        <h2 class="titulo-pelicula">Avatar</h2>
+                        <a href="#" class="btn-reservar">¡Compra ya tus entradas!</a>
+                    </section>
                 </div>
                 <div class="carousel-item">
-                    <h3 class="titulo-pelicula">Jocker</h3>
                     <img src="public/assets/imgs/films/banner/jocker_hor.png" class="d-block w-100 h-50" alt="Portada Jocker">
-                    <a href="#" type="button">Reservar</a>
+                    <section class="capa">
+                        <h2 class="titulo-pelicula">Jocker</h2>
+                        <a href="#" class="btn-reservar">¡Compra ya tus entradas!</a>
+                    </section>
                 </div>
             </div>
 
