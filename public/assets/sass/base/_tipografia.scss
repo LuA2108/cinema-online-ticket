@@ -1,22 +1,26 @@
-@use 'variables' as *;
+@use 'variables' as v;
 
-// Asignar la fuente a los textos
 h1 {
-    font-family: $fuente-h1;
+    font-family: v.$fuente-h1;
+    color: v.$text-secundario;
+    font-size: 50px;
+    text-align: center;
 }
 
 h2 {
-    font-family: $fuente-h2;
+    font-family: v.$fuente-h2;
 }
 
 h3 {
-    font-family: $fuente-otros-titulos;
+    font-family: v.$fuente-otros-titulos;
 }
 
 p {
-    font-family: $fuente-texto;
+    font-family: v.$fuente-texto;
 }
 
 .titulo-pelicula {
-    font-family: $fuente-peliculas;
+    font-family: v.$fuente-peliculas;
+    font-size: 180px;
+    color: v.$text-secundario;
 }
