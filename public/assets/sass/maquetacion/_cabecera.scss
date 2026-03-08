@@ -1,37 +1,51 @@
-// ESTILO CABECERA ======================================
+@use '../base/variables' as v;
+@use '../utilidades/mixin' as m;
+
+// ======================= ESTILO CABECERA =========================
 header {
     display: flex;
     justify-content: space-between;
-    background-color: $bg-header-footer;
     align-items: center;
-    
-    // Estilo del enlace dentro del header -------------
-    a { 
-        color: $text-nav; 
-        font-size: 22px; 
+    background-color: v.$bg-header-footer;
+
+    // Enlaces dentro del header
+    a {
+        color: v.$text-nav;
+        font-size: 22px;
         padding: 5px;
-        @include transition(color, 0.8s, ease);
-        
+        @include m.transition(color, 0.8s, ease);
+
         &:hover {
             color: rgb(167, 139, 0);
         }
     }
 }
 
-// ICONOS =================================
-.icono { width: 32px; height: 32px; } // Estilo icono general
-.icono-sesion { width: 43px; height: 43px; margin: 0px 20px 15px 0px;} // Estilo icono sesion
+// ======================= ICONOS =========================
+.icono {
+    width: 28px;
+    height: 28px;
+}
 
-// MENU PRINCIPAL =========================
+.icono-sesion {
+    width: 43px;
+    height: 43px;
+    margin: 0 20px 15px 0;
+}
+
+// ======================= MENU PRINCIPAL =========================
 .menu ul {
     display: flex;
     gap: 10px;
-    
-    a { display: flex; gap: 3px; }
+
+    a {
+        display: flex;
+        gap: 3px;
+    }
 }
 
-// BUSCADOR ===============================
-.buscador > form {
+// ======================= BUSCADOR =========================
+.buscador>form {
     display: flex;
     gap: 10px;
 
@@ -43,33 +57,39 @@ header {
     }
 }
 
-// MENU SESION ============================
+// ======================= MENU SESIÓN =========================
 .menu-sesion {
     position: relative;
 
-    ul { padding: 0; margin: 0;}
-    .dropdown { position: relative;}
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdown {
+        position: relative;
+    }
 
     .submenu {
         position: absolute;
         top: 100%;
         right: 0;
         background-color: rgb(254, 254, 240);
-        padding: 10px 0px;
+        padding: 10px 0;
         min-width: 150px;
         border-radius: 5px;
         display: none;
         z-index: 2;
     }
 
-    .submenu li { 
-        padding: 8px 15px; 
-        
-        a { 
-            color: rgb(0, 0, 0); 
-            display: block; 
-            font-size: 18px; 
-            @include transition(text-shadow, 0.8s, linear);
+    .submenu li {
+        padding: 8px 15px;
+
+        a {
+            color: rgb(0, 0, 0);
+            display: block;
+            font-size: 18px;
+            @include m.transition(text-shadow, 0.8s, linear);
 
             &:hover {
                 text-shadow: 0 0 2px rgb(4, 4, 4);
@@ -77,6 +97,8 @@ header {
         }
     }
 
-    .submenu li:hover {display: block;}
-    .dropdown:hover .submenu { display: block; }
+    // Mostrar submenu al hacer hover
+    .dropdown:hover .submenu {
+        display: block;
+    }
 }

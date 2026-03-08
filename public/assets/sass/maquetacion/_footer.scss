@@ -1,58 +1,68 @@
+@use '../base/variables' as v;
+@use '../utilidades/mixin' as m;
+
 footer {
     display: flex;
     flex-direction: column;
-    background-color: black ;
-    color: $text-secundario;
-    padding: 8px 0px;
+    background-color: black;
+    color: v.$text-secundario;
+    padding: 8px 0;
 
     .container-main {
         display: flex;
-        padding: 2px 45px;
         justify-content: space-between;
+        padding: 2px 45px;
     }
 
-    .copy { text-align: center; }
+    .copy {
+        text-align: center;
+    }
 
-    // Se formatea el padding del las listas
-    ul { padding: 0;}
+    // Listas sin padding
+    ul {
+        padding: 0;
+    }
 
-    //Estilo para enlaces
-    a { 
-        color: $text-nav;
+    // Enlaces
+    a {
+        color: v.$text-nav;
         display: inline-block;
-        @include transition(all 0.3s ease);
-        @include hover-move-right(4px); // se moverán al pasar el mouse
+        @include m.transition(all, 0.3s, ease);
+        @include m.hover-move-right(4px);
 
         &:hover {
-            color: #fffab9; // cambio de color en hover
+            color: #fffab9;
         }
     }
 
     .subtitulo {
         font-size: 24px;
-        color: $text-principal;
+        color: v.$text-principal;
         text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
     }
 }
 
-// Estilo para iconos: posicionamiento y transiciones
+// Iconos de redes sociales
 .iconos-redes-sociales {
     display: flex;
     gap: 30px;
 
     .icon {
         font-size: 32px;
+        @include m.transition(transform, 1.8s, ease);
 
-        // Animación suave para iconos
-        @include transition(transform 1.8s ease);
-
-        &:hover { transform: scale(1.1); }
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 }
 
+// Títulos del footer
 .titulo-logo {
-    text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
     font-size: 35px;
+    text-shadow: 1px 1px 1px rgba(254, 255, 238, 0.996);
 }
 
-.footer-titulo { color: $text-principal; }
+.footer-titulo {
+    color: v.$text-principal;
+}
