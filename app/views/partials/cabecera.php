@@ -3,7 +3,7 @@
 
     <!-- LOGO -->
     <div class="logo">
-        <img src="public/assets/imgs/iconos/logo_cine.png" alt="" width="180px" height="130px">
+        <img src="public/assets/imgs/iconos/logo_cine.png" alt="Icono logo cine" width="150px" height="100px">
     </div>
 
     <!-- BUSCADOR -->
