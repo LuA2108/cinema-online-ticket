@@ -1,8 +1,9 @@
+
 <h1> ¡Vive la magia de <span>CineToon</span>!</h1>
 
 <section id="carrousel-principal">
 
-    <div class="container mt-5">
+    <div class="container">
         <div id="carousel-peliculas" class="carousel slide" data-bs-ride="carousel">
 
             <!-- Indicadores -->
@@ -40,11 +41,11 @@
 
             <!-- Controladores - Anterior & Siguiente -->
             <button class="carousel-control-prev" type="button" data-bs-target="#carousel-peliculas" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
+                <span class="carousel-control-prev-icon hexagono"></span>
                 <span class="visually-hidden">Anterior</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carousel-peliculas" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
+                <span class="carousel-control-next-icon hexagono"></span>
                 <span class="visually-hidden">Siguiente</span>
             </button>
         </div>
@@ -53,7 +54,7 @@
 </section>
 
 <section id="proximas-peliculas">
-    <h2>Proximos estrenos</h2>
+    <h2 class="titulo">Proximos estrenos</h2>
     <div class="carousel-item">
         <img src="#" alt="Pelicula estreno A">
         <h3>Nombre pelicula</h3>
