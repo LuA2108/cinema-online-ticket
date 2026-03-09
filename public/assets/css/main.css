@@ -15,14 +15,22 @@ a {
 
 hr {
   border: 2px solid rgb(255, 255, 255);
-  margin: 5px 25px;
+  margin: 0px 25px;
 }
 
 h1 {
   font-family: "Oswald", sans-serif;
   color: #ffffff;
-  font-size: 50px;
+  font-size: 3rem;
   text-align: center;
+  margin: 20px 0;
+}
+h1 span {
+  color: #f5c518;
+  transition: text-shadow 0.8s linear;
+}
+h1 span:hover {
+  text-shadow: 2px 2px 20px rgb(255, 229, 97);
 }
 
 h2 {
@@ -39,7 +47,7 @@ p {
 
 .titulo-pelicula {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 180px;
+  font-size: 170px;
   color: #ffffff;
 }
 
@@ -134,7 +142,7 @@ footer {
   color: #ffffff;
   padding: 8px 0;
 }
-footer .container-main {
+footer .container-footer {
   display: flex;
   justify-content: space-between;
   padding: 2px 45px;
@@ -190,15 +198,38 @@ footer .subtitulo {
 
 .carousel-item img {
   width: 100%;
-  max-height: 500px; /* altura máxima */
+  max-height: 500px;
   -o-object-fit: cover;
-     object-fit: cover; /* Mantiene la proporción sin distorsionar */
+     object-fit: cover;
+  /* Mantiene la proporción sin distorsionar */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  bottom: auto;
+  margin: 0 40px 0 40px;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  display: block;
+  color: white;
+}
+
+.hexagono {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(174, 173, 173, 0.5); /* color de la flecha */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background-size: 50% 50%; /* opcional si quieres usar icono dentro */
 }
 
 .btn-reservar {
@@ -222,7 +253,7 @@ footer .subtitulo {
 .capa {
   position: absolute;
   top: 40px;
-  left: 12%;
+  left: 17%;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
 }
 
