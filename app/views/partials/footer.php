@@ -1,6 +1,6 @@
 <footer>
     <hr>
-    <div class="container-main">
+    <div class="container-footer">
         <section class="container-redes-sociales">
             <h2 class="footer-titulo titulo-logo">CineToon</h2>
             <p>"Disfruta de las mejores películas y estrenos exclusivos"</p>
