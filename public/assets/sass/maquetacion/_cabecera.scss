@@ -4,9 +4,10 @@
 // ======================= ESTILO CABECERA =========================
 header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     background-color: v.$bg-header-footer;
+    padding-top: 15px;
+    gap: 10px;
 
     // Enlaces dentro del header
     a {
@@ -16,15 +17,30 @@ header {
         @include m.transition(color, 0.8s, ease);
 
         &:hover {
-            color: rgb(167, 139, 0);
+            color: v.$text-hover;
         }
     }
 }
 
+// ====================
+.contenedor-logo-sesion {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    min-height: 50px;
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+}
+
 // ======================= ICONOS =========================
 .icono {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
 }
 
 .icono-sesion {
@@ -36,23 +52,33 @@ header {
 // ======================= MENU PRINCIPAL =========================
 .menu ul {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
 
     a {
         display: flex;
-        gap: 3px;
+        align-items: center; /* centra verticalmente icono y texto */
+        gap: 6px;           /* espacio entre icono y texto */
     }
 }
 
-// ======================= BUSCADOR =========================
-.buscador>form {
+// ============ CONTENEDOR de BUSCADOR Y MENU ===============
+.container-menu-buscador {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+}
 
+// ======================= BUSCADOR =========================
+.buscador { 
+    display: flex; 
+    gap: 10px;
+    
     input {
+        display: none;
         border: none;
         border-radius: 5px;
-        padding: 2px;
+        padding-left: 10px;
         background-color: rgb(255, 248, 205);
     }
 }
@@ -60,6 +86,7 @@ header {
 // ======================= MENU SESIÓN =========================
 .menu-sesion {
     position: relative;
+    margin-left: auto; // lo empuja a la derecha
 
     ul {
         padding: 0;
@@ -101,4 +128,53 @@ header {
     .dropdown:hover .submenu {
         display: block;
     }
+}
+
+// ==== Diseño de Iconos de Font Google ===============
+.menu i{
+    color: v.$text-nav;
+}
+
+.menu-item:last-child{
+    margin-left:40px;
+}
+
+// ======== EFECTO DEL ITEM RESERVA:MENU-SESION ========
+.item-reserva {
+    background: transparent; /* color de fondo */
+    color: v.$text-nav;
+    /* color de fuente */
+    border: 3px double #48006f;  /* tamaño y color de borde */
+    padding: 3px 13px;
+    border-radius: 5px; /* redondear bordes */
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-block;
+    left: 40px;
+}
+
+.item-reserva::after {
+    content: "";
+    background: #48006f;
+    /* color de fondo hover */
+    position: absolute;
+    z-index: -1;
+    padding: 16px 20px;
+    display: block;
+    left: -20%;
+    right: -20%;
+    top: 0;
+    bottom: 0;
+    transform: skewX(-45deg) scale(0, 1);
+    transition: all 0.3s ease;
+}
+
+.item-reserva:hover::after {
+    transition: all 0.3s ease-out;
+    transform: skewX(-45deg) scale(1, 1);
+}
+
+.item-reserva:hover {
+    color: #fff;
 }
