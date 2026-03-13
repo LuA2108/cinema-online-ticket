@@ -240,12 +240,20 @@ INSERT INTO estado_funcion (nombre) VALUES
 -- PELICULA
 -- -------------------------------
 INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
-('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 13.50, TRUE, 'https://example.com/inception.jpg'),
-('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 14.00, TRUE, 'https://example.com/interstellar.jpg'),
-('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 12.00, TRUE, 'https://example.com/joker.jpg'),
-('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 11.50, TRUE, 'https://example.com/titanic.jpg'),
-('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 12.50, TRUE, 'https://example.com/gladiator.jpg'),
-('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 14.00, TRUE, 'https://example.com/avatar.jpg');
+('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 8.00, TRUE, 'https://example.com/inception.jpg'),
+('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 8.00, TRUE, 'https://example.com/interstellar.jpg'),
+('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 8.00, TRUE, 'https://example.com/joker.jpg'),
+('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 8.00, TRUE, 'https://example.com/titanic.jpg'),
+('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 8.00, TRUE, 'https://example.com/gladiator.jpg'),
+('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 8.00, TRUE, 'https://example.com/avatar.jpg');
+
+-- Peliculas no disponibles
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
+('Dune: Parte 2', 'Continúa la saga de Paul Atreides en el planeta Arrakis.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE, 'https://example.com/dune2.jpg'),
+('The Marvels', 'Superhéroes del universo Marvel se unen.', 'Nia DaCosta', 2026, 120, 8.00, FALSE, 'https://example.com/themarvels.jpg'),
+('Oppenheimer', 'La historia del creador de la bomba atómica.', 'Christopher Nolan', 2026, 180, 8.00, FALSE, 'https://example.com/oppenheimer.jpg'),
+('Barbie', 'Una aventura divertida en el mundo de Barbie.', 'Greta Gerwig', 2026, 115, 8.00, FALSE, 'https://example.com/barbie.jpg'),
+('The Hunger Games: Rebellion', 'Katniss lidera la revolución en Panem.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg');
 
 -- -------------------------------
 -- PELICULA-GENERO
@@ -258,6 +266,14 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (5, 3), -- Gladiator -> Drama
 (6, 5); -- Avatar -> Ciencia Ficción
 
+INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
+(LAST_INSERT_ID()-4, 5), -- Dune: Ciencia Ficción
+(LAST_INSERT_ID()-3, 1), -- The Marvels: Acción
+(LAST_INSERT_ID()-2, 3), -- Oppenheimer: Drama
+(LAST_INSERT_ID()-1, 2), -- Barbie: Comedia
+(LAST_INSERT_ID(), 1),    -- Hunger Games: Acción
+(LAST_INSERT_ID(), 3);    -- Hunger Games: Drama
+
 -- -------------------------------
 -- FUNCION
 -- -------------------------------
@@ -268,6 +284,13 @@ INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado
 (6, 2, '19:00:00', '2026-02-23', '2026-02-23', 1), -- Avatar en sala 2
 (1, 1, '22:00:00', '2026-02-23', '2026-02-23', 1), -- Inception en sala 1
 (2, 1, '16:00:00', '2026-02-24', '2026-02-24', 1); -- Interstellar en sala 1
+
+INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
+((SELECT id FROM pelicula WHERE titulo='Dune: Parte 2'), 1, '20:00:00', '2026-03-15', '2026-03-15', 1),
+((SELECT id FROM pelicula WHERE titulo='The Marvels'), 2, '18:00:00', '2026-03-16', '2026-03-16', 1),
+((SELECT id FROM pelicula WHERE titulo='Oppenheimer'), 1, '22:00:00', '2026-03-16', '2026-03-16', 1),
+((SELECT id FROM pelicula WHERE titulo='Barbie'), 2, '16:00:00', '2026-03-17', '2026-03-17', 1),
+((SELECT id FROM pelicula WHERE titulo='The Hunger Games: Rebellion'), 1, '19:00:00', '2026-03-18', '2026-03-18', 1);
 
 -- Insertar Butacas en sala 1
 INSERT INTO butaca (sala_id, fila, numero) VALUES
