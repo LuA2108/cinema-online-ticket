@@ -211,6 +211,19 @@ header a:hover {
   color: #fff;
 }
 
+.header-admin {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: none;
+  background-color: #000924;
+  position: fixed;
+  height: 60px !important;
+  overflow: hidden;
+  z-index: 10;
+}
+
 footer {
   display: flex;
   flex-direction: column;
@@ -322,6 +335,75 @@ footer .subtitulo {
   color: rgb(249, 238, 169);
 }
 
+/* Menú lateral (sidebar) */
+.sidebar-menu {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  width: 260px;
+  height: 100%;
+  background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
+  transform: translateX(-260px);
+  transition: transform 0.3s ease;
+  padding: 20px;
+}
+
+/* Cuando el checkbox está marcado, el menú aparece */
+#openSidebarMenu:checked ~ .sidebar-menu {
+  transform: translateX(0);
+}
+
+/* Lista interna del menú */
+.sidebar-menu-inner {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Elementos de la lista */
+.sidebar-menu-inner li {
+  padding: 15px 10px;
+  color: white;
+}
+
+/* Enlaces dentro del menú */
+.sidebar-menu-inner a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Iconos dentro del menú */
+.sidebar-menu-inner i {
+  margin-right: 10px;
+}
+
+/* Contenedor del administrador (perfil o info) */
+.container-admin {
+  text-align: center;
+  color: white;
+}
+
+/* Imagen del administrador */
+.container-admin img {
+  width: 80px;
+  border: none;
+  border-radius: 50%;
+}
+
+/* Formulario de logout */
+.logout-form {
+  margin-top: 20px;
+}
+
+/* Botón de cerrar sesión */
+.logout-form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+}
+
 .carousel-item {
   position: relative;
 }
@@ -335,4 +417,19 @@ footer .subtitulo {
 
 body {
   background-color: #030016;
+}
+
+.admin {
+  overflow-x: hidden;
+  height: 100%;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+}
+
+.main-admin {
+  margin: 0 auto;
+  display: block;
+  height: 100%;
+  margin-top: 60px;
 }/*# sourceMappingURL=main.css.map */
