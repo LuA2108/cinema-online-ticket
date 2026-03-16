@@ -1,3 +1,4 @@
+/* Menú lateral (sidebar) */
 .sidebar-menu{
     position: fixed;
     left: 0;
@@ -10,45 +11,54 @@
     padding:20px;
 }
 
+/* Cuando el checkbox está marcado, el menú aparece */
 #openSidebarMenu:checked ~ .sidebar-menu{
     transform: translateX(0);
 }
 
+/* Lista interna del menú */
 .sidebar-menu-inner{
     list-style:none;
     padding:0;
     margin:0;
 }
 
+/* Elementos de la lista */
 .sidebar-menu-inner li{
     padding:15px 10px;
     color:white;
 }
 
+/* Enlaces dentro del menú */
 .sidebar-menu-inner a{
     text-decoration:none;
     color:white;
 }
 
+/* Iconos dentro del menú */
 .sidebar-menu-inner i{
     margin-right:10px;
 }
 
+/* Contenedor del administrador (perfil o info) */
 .container-admin{
     text-align:center;
     color:white;
 }
 
+/* Imagen del administrador */
 .container-admin img{
     width:80px;
     border: none;
     border-radius:50%;
 }
 
+/* Formulario de logout */  
 .logout-form{
     margin-top:20px;
 }
 
+/* Botón de cerrar sesión */
 .logout-form button{
     width:100%;
     padding:10px;
