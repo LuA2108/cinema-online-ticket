@@ -178,3 +178,20 @@ header {
 .item-reserva:hover {
     color: #fff;
 }
+
+// =========================================================
+// CABECERA ADMIN ==========================================
+// =========================================================
+.header-admin {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+    background-color: #FC466B;
+    position: fixed;
+    height: 60px!important;
+    overflow: hidden;
+    z-index: 10;
+}
+
