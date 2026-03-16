@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $title ?? 'Cinema Online Ticket' ?></title>
     <meta name="description" content="<?= $descripcion ?? 'Cinema Online Ticket' ?>">
+    <meta name="author" content="Lucero Anay Cahuana Cornejo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="64x42" href="public/assets/imgs/iconos/logo-limpio.png">
     <!-- BootStrap - Font Awesome - Google Fonts -->
