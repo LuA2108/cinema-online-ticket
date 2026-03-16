@@ -249,12 +249,12 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, dis
 
 -- Peliculas no disponibles
 INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
-('Dune: Parte 2', 'Continúa la saga de Paul Atreides en el planeta Arrakis.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE, 'https://example.com/dune2.jpg'),
-('The Marvels', 'Superhéroes del universo Marvel se unen.', 'Nia DaCosta', 2026, 120, 8.00, FALSE, 'https://example.com/themarvels.jpg'),
-('Oppenheimer', 'La historia del creador de la bomba atómica.', 'Christopher Nolan', 2026, 180, 8.00, FALSE, 'https://example.com/oppenheimer.jpg'),
-('Barbie', 'Una aventura divertida en el mundo de Barbie.', 'Greta Gerwig', 2026, 115, 8.00, FALSE, 'https://example.com/barbie.jpg'),
-('The Hunger Games: Rebellion', 'Katniss lidera la revolución en Panem.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg');
-
+('La Maldicion de Green House', 'Un misterio rodea la antigua mansión Green House donde suceden eventos extraños.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE, 'https://example.com/dune2.jpg'),
+('Fin del Amanecer', 'Un grupo de héroes intenta salvar la ciudad de un cataclismo inminente.', 'Nia DaCosta', 2026, 120, 8.00, FALSE, 'https://example.com/themarvels.jpg'),
+('Aprueba de Balas', 'Un brillante científico enfrenta dilemas éticos tras crear un arma devastadora.', 'Christopher Nolan', 2026, 180, 8.00, FALSE, 'https://example.com/oppenheimer.jpg'),
+('Caida en Picada', 'Diversión y caos cuando un grupo de amigos se embarca en una aventura inesperada.', 'Greta Gerwig', 2026, 115, 8.00, FALSE, 'https://example.com/barbie.jpg'),
+('Hombre sin rostro', 'En un mundo distópico, un joven líder desafía al régimen opresor.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg'),
+('Sin Rumbo', 'Una travesía peligrosa y emocionante por tierras desconocidas que pondrá a prueba su coraje.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg');
 -- -------------------------------
 -- PELICULA-GENERO
 -- -------------------------------
@@ -267,12 +267,12 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (6, 5); -- Avatar -> Ciencia Ficción
 
 INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
-(LAST_INSERT_ID()-4, 5), -- Dune: Ciencia Ficción
-(LAST_INSERT_ID()-3, 1), -- The Marvels: Acción
-(LAST_INSERT_ID()-2, 3), -- Oppenheimer: Drama
-(LAST_INSERT_ID()-1, 2), -- Barbie: Comedia
-(LAST_INSERT_ID(), 1),    -- Hunger Games: Acción
-(LAST_INSERT_ID(), 3);    -- Hunger Games: Drama
+(7, 4), -- La Maldicion de Green House: Terror
+(8, 1), -- Fin del Amanecer: Acción
+(9, 1), -- Aprueba de Balas: Accion
+(10, 2), -- Caida en Picada: Accion
+(11, 5), -- Hombre sin rostro: Ciencia Ficcion
+(12, 3); -- Sin Rumbo: Drama
 
 -- -------------------------------
 -- FUNCION
@@ -285,12 +285,16 @@ INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado
 (1, 1, '22:00:00', '2026-02-23', '2026-02-23', 1), -- Inception en sala 1
 (2, 1, '16:00:00', '2026-02-24', '2026-02-24', 1); -- Interstellar en sala 1
 
+-- Proyecciones (funciones) de películas no disponibles
+-- -------------------------------
 INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
-((SELECT id FROM pelicula WHERE titulo='Dune: Parte 2'), 1, '20:00:00', '2026-03-15', '2026-03-15', 1),
-((SELECT id FROM pelicula WHERE titulo='The Marvels'), 2, '18:00:00', '2026-03-16', '2026-03-16', 1),
-((SELECT id FROM pelicula WHERE titulo='Oppenheimer'), 1, '22:00:00', '2026-03-16', '2026-03-16', 1),
-((SELECT id FROM pelicula WHERE titulo='Barbie'), 2, '16:00:00', '2026-03-17', '2026-03-17', 1),
-((SELECT id FROM pelicula WHERE titulo='The Hunger Games: Rebellion'), 1, '19:00:00', '2026-03-18', '2026-03-18', 1);
+(7, 1, '20:00:00', '2026-03-15', '2026-04-15', 1),
+(8, 2, '18:00:00', '2026-06-16', '2026-07-16', 1),
+(9, 1, '22:00:00', '2026-06-16', '2026-07-16', 1),
+(10, 2, '16:00:00', '2026-01-17', '2026-02-17', 1),
+(11, 1, '19:00:00', '2026-03-18', '2026-04-18', 1),
+(12, 2, '21:00:00', '2026-02-18', '2026-03-18', 1);
+
 
 -- Insertar Butacas en sala 1
 INSERT INTO butaca (sala_id, fila, numero) VALUES
