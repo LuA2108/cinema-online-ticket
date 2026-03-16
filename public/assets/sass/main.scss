@@ -7,4 +7,8 @@
 
 @use 'componentes/carousel';
 @use 'componentes/button';
+@use 'componentes/sidebar';
+
+// Paginas
 @use 'paginas/index';
+@use 'paginas/admin';
