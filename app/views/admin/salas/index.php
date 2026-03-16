@@ -1,0 +1,1 @@
+<h1>Panel para salas del cine</h1>

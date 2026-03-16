@@ -1,0 +1,1 @@
+<h1>Panel para reservas de entradas</h1>
