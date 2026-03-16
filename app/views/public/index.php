@@ -1,5 +1,4 @@
-
-<h1> ¡Vive la magia de <span>CineToon</span>!</h1>
+<h1> ¡Vive la magia del <span>Cine</span>!</h1>
 
 <section id="carrousel-principal">
 
@@ -53,13 +52,46 @@
     </div>
 </section>
 
-<section id="proximas-peliculas">
+<section id="proximas-peliculas-container">
     <h2 class="titulo">Proximos estrenos</h2>
-    <div class="carousel-item">
-        <img src="#" alt="Pelicula estreno A">
-        <h3>Nombre pelicula</h3>
-        <a href="#" class="btn btn-primary">Comprar Entrada</a>
+    
+    <div class="peliculas-container">
+        <!-- Tarjeta 1 -->
+        <div class="pelicula-card">
+            <img src="#" alt="Título Película 1" class="pelicula-img">
+            <h3 class="pelicula-titulo">Película 1</h3>
+            <a href="#" class="pelicula-boton">Ver más</a>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="pelicula-card">
+            <img src="#" alt="Título Película 2" class="pelicula-img">
+            <h3 class="pelicula-titulo">Película 2</h3>
+            <a href="#" class="pelicula-boton">Ver más</a>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="pelicula-card">
+            <img src="#" alt="Título Película 3" class="pelicula-img">
+            <h3 class="pelicula-titulo">Película 3</h3>
+            <a href="#" class="pelicula-boton">Ver más</a>
+        </div>
+
+        <!-- Tarjeta 4 -->
+        <div class="pelicula-card">
+            <img src="#" alt="Título Película 4" class="pelicula-img">
+            <h3 class="pelicula-titulo">Película 4</h3>
+            <a href="#" class="pelicula-boton">Ver más</a>
+        </div>
+
+        <!-- Tarjeta 5 -->
+        <div class="pelicula-card">
+            <img src="#" alt="Título Película 5" class="pelicula-img">
+            <h3 class="pelicula-titulo">Película 5</h3>
+            <a href="#" class="pelicula-boton">Ver más</a>
+        </div>
     </div>
+
 </section>
 
 <section id="registro-info">
