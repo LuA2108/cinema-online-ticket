@@ -1,68 +1,189 @@
-/* Menú lateral (sidebar) */
-.sidebar-menu{
+@use '../base/variables' as v;
+
+// HEADER ADMIN
+.header-admin {
     position: fixed;
+    top: 0;
     left: 0;
-    top: 60px;
-    width: 260px;
-    height: 100%;
-    background: linear-gradient(180deg,#FC466B 0%,#3F5EFB 100%);
-    transform: translateX(-260px);
-    transition: transform 0.3s ease;
-    padding:20px;
+    width: 100%;
+    height: v.$header-height;
+    background: #2c3e50;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Cuando el checkbox está marcado, el menú aparece */
-#openSidebarMenu:checked ~ .sidebar-menu{
-    transform: translateX(0);
+// CHECKBOX OCULTO
+#openSidebarMenu {
+    display: none;
 }
 
-/* Lista interna del menú */
-.sidebar-menu-inner{
-    list-style:none;
-    padding:0;
-    margin:0;
+// BOTÓN HAMBURGUESA
+// BOTÓN HAMBURGUESA - 3 LÍNEAS HORIZONTALES
+.sidebarIconToggle {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1001;
+    margin: 10px;
+
+    .spinner {
+        position: absolute;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+        transition: v.$transition;
+        left: 0;
+        width: 100%;
+        transform-origin: center;
+        
+        &:nth-child(1) {
+            top: 5px;
+        }
+
+        &:nth-child(2) {
+            top: 15px;
+        }
+
+        &:nth-child(3) {
+            top: 23px;
+        }
+    }
 }
 
-/* Elementos de la lista */
-.sidebar-menu-inner li{
-    padding:15px 10px;
-    color:white;
+/* SIDEBAR */
+.sidebar-menu {
+    position: fixed;
+    top: v.$header-height;
+    left: 0;
+    width: v.$sidebar-width;
+    height: calc(100vh - #{v.$header-height});
+    background: #2c3e50;
+    padding: 20px;
+    transition: v.$transition;
+    overflow-y: auto; // Permite scroll interno vertical
 }
 
-/* Enlaces dentro del menú */
-.sidebar-menu-inner a{
-    text-decoration:none;
-    color:white;
+/* CUANDO SE CIERRA */
+#openSidebarMenu:not(:checked) ~ .sidebar-menu {
+    transform: translateX(-100%);
 }
 
-/* Iconos dentro del menú */
-.sidebar-menu-inner i{
-    margin-right:10px;
+.admin:has(#openSidebarMenu:not(:checked)) .main-admin {
+    margin-left: 0;
 }
 
-/* Contenedor del administrador (perfil o info) */
-.container-admin{
-    text-align:center;
-    color:white;
+// CONTENIDO SIDEBAR
+.container-admin {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+
+    img {
+        width: 80px;
+        border: none;
+        border-radius: 50%;
+    }
+
+    h2 {
+        margin: 10px 0 0 0;
+        font-size: 1.2em;
+    }
 }
 
-/* Imagen del administrador */
-.container-admin img{
-    width:80px;
-    border: none;
-    border-radius:50%;
+// Contenedor de la lista (ul), con los enlaces: Sin estilo ni margen interior o exterior ==========
+.sidebar-menu-inner {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    // Elemento de la lista: con margen y color de texto 
+    li {
+        padding: 15px 10px;
+        color: white;
+
+        // Primer elemento hijo (a) con estilo diferente al resto con fuente opacidad y en mayuscula
+        &:first-child {
+            font-weight: bold;
+            font-size: 0.9em;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+        
+        // Estilo a los enlaces: color, bordes, espacios y transicion
+        a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            border-radius: 5px;
+            padding: 8px 0;
+            transition: v.$transition;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                padding-left: 15px;
+            }
+
+            i {
+                margin-right: 10px;
+                width: 20px;
+                text-align: center;
+            }
+        }
+    }
 }
 
-/* Formulario de logout */  
-.logout-form{
-    margin-top:20px;
+// FORM LOGOUT
+.sidebar-menu {
+    form {
+        margin-top: 30px; // MArgen superior
+
+        // Boton
+        button {
+            width: 100%; // Ocupa el ancho 100%
+            padding: 12px; // Margen interior
+            border: none; // SIn borde
+            background: #fff; // Fondo color
+            color: #333; // Color texto boton
+            border-radius: 5px; // Grosor borde
+            cursor: pointer; // Puntero raton
+            font-weight: bold; // Anchura fuente
+            transition: v.$transition; // Variable de transicion
+
+            // Efecto hover al boton: color de fondo y desplazamiento leve hacia arriba
+            &:hover {
+                background: #f0f0f0;
+                transform: translateY(-1px);
+            }
+        }
+    }
 }
 
-/* Botón de cerrar sesión */
-.logout-form button{
-    width:100%;
-    padding:10px;
-    border:none;
-    background:#fff;
-    cursor:pointer;
+// RESPONSIVE del sidebar
+@media (max-width: 768px) {
+    .sidebar-menu {
+        width: 280px;
+    }
+}
+
+// ANIMACIÓN HAMBURGUESA
+// ANIMACIÓN AL ABRIR (se convierte en X)
+#openSidebarMenu:checked~.sidebarIconToggle {
+    .spinner {
+        &:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        &:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        &:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+    }
 }
