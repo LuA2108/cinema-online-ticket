@@ -8,7 +8,7 @@
     <?php require __DIR__ . "/../partials/cabecera.php"; ?>
     
     <main class="container-main">
-        <?= $content; ?> <!-- Aquí se inserta la vista que prepara el controlador -->
+        <?php require $content; ?>  <!-- Aquí se inserta la vista que prepara el controlador -->
     </main>
 
     <?php require __DIR__ . "/../partials/footer.php"; ?>
