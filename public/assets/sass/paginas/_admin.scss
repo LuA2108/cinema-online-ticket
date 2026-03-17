@@ -1,14 +1,14 @@
+@use '../base/variables' as v;
+
 .admin {
-    overflow-x: hidden;
-    height: 100%;
-    background: #fff;
-    padding: 0;
     margin: 0;
+    overflow-x: hidden;
+    background: #fff;
 }
 
 .main-admin {
-    margin: 0 auto;
-    display: block;
-    height: 100%;
-    margin-top: 60px;
+    margin-left: v.$sidebar-width; // ajusta con sidebar
+    padding: 20px;
+    padding-top: calc(#{v.$header-height} + 20px); // evita estar debajo del header
+    min-height: calc(100vh - #{v.$header-height}); // asegura que main ocupe toda la ventana
 }
