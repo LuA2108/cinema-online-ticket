@@ -1,1 +1,1 @@
-<p>Inicio de admin</p>
+<h1>Panel de administracion de Admin</h1>
