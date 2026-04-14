@@ -1,62 +1,47 @@
 <?php
-
+// config/database.php
 /**
- * Clase Database
- * 
- * Maneja la conexión a la base de datos MySQL usando MySQLi.
- * Proporciona métodos para abrir y cerrar la conexión.
- * Se puede extender para incluir transacciones (commit, rollback) y consultas preparadas.
- *
- * @package CineToon
- * @author TuNombre
- * @version 1.0
+ * Clase que maneja la conexion a la BD mediante Mysqli,
+ * con metodos para abrir y cerrar la conexion.
+ * @author Lucero Anay Cahuana
  */
-class DataBase
-{
-    /** Host de la base de datos */
-    private $host = 'localhost'; 
+class Database {
 
-    /** Usuario de la base de datos */
-    private $usuario = 'root'; 
-
-    /** Contraseña de la base de datos */
-    private $password = ""; 
-
-    /** Nombre de la base de datos */
-    private $database = "cinema-online-ticket"; 
-
-    /** Objeto de conexión MySQLi */
-    public $conn; 
+    //Atributos privados para la conexion a la BD
+    private $conn; 
+    private $host = 'localhost';
+    private $database = 'cinema-online-ticket';
+    private $usuario = 'root';
+    private $password = '';
 
     /**
-     * Constructor de la clase
-     * Inicializa la conexión a la base de datos automáticamente
+     * Crea la conexion con la BD directamente, 
+     * controla los errores por conexión notificando con un mensaje
      */
     public function __construct()
     {
-        $this->connect();
-    }
-
-    /**
-     * Conecta a la base de datos
-     * @return void
-     * @throws Exception si la conexión falla
-     */
-    public function connect()
-    {
         $this->conn = new mysqli($this->host, $this->usuario, $this->password, $this->database);
 
-        if ($this->conn->connect_error) {
-            die("Conexion fallida: " . $this->conn->connect_error);
+        if($this->conn->connect_error) {
+            die("Error, conexión fallida: ". $this->conn->connect_error);
         }
         $this->conn->set_charset('utf-8');
     }
 
     /**
-     * Ciera la conexion a la BD
+     * Funcion que obtiene la conexion creada
+     * @return mysqli
+     */
+    public function obtenerConexion() {
+        return $this->conn;
+    }
+
+    /**
+     * Cierra la conexión
      * @return void
      */
     public function close() {
         if($this->conn) $this->conn->close();
     }
-}
+    }
+?>
