@@ -1,6 +1,15 @@
 <?php
+require_once 'config/database.php';
+
+/**
+ * Clase que gestiona a los usuarios:
+ * crear, editar, eliminar y consultar datos
+ * Utilizanado una conexion a la BD para ejecutar las consultas sql
+ * @author lucero Anay Cahuana
+ */
 class Usuario
-{
+{   
+    private $conn;
     private $id;
     private $id_rol;
     private $nombre;
@@ -11,8 +20,31 @@ class Usuario
     private $fechaRegistro;
 
 
+    /**
+     * Constructor de la clase
+     * Recibe una conexión a la BD mediante inyección de dependencias
+     * @param mysqli $conn Conexión a la BD
+     */
+    public function __construct($conn) {
+        $this->conn = $conn;
+    }
+
+    /**
+     * Obtiene todos de usuarios de la BD
+     * @return array Lista de usuarios
+     */
+    public function obtenerUsuarios() {
+        $sql = "SELECT * FROM usuarios";
+        $resultado = $this->conn->query($sql);
+        
+        $usuarios = [];
+        while($fila = $resultado->fetch_assoc()) {
+            $usuarios[] = $fila;
+        }
+        return $usuarios;
+    }
     
-    // Getters y setters
+    // Getters y setters de las propiedades de la clase
     public function getId()
     {
         return $this->id;
