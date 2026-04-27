@@ -10,7 +10,7 @@ class Database {
     //Atributos privados para la conexion a la BD
     private $conn; 
     private $host = 'localhost';
-    private $database = 'cinema-online-ticket';
+    private $database = 'bd_sistema_reserva_cine';
     private $usuario = 'root';
     private $password = '';
 
@@ -25,7 +25,7 @@ class Database {
         if($this->conn->connect_error) {
             die("Error, conexión fallida: ". $this->conn->connect_error);
         }
-        $this->conn->set_charset('utf-8');
+        $this->conn->set_charset('utf8mb4');
     }
 
     /**
