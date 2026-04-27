@@ -335,7 +335,7 @@ VALUES
 (2, 'Maria Lopez', 'maria@mail.com', 'maria'),
 (2, 'Carlos Solaz', 'carlos@mail.com', 'carlos'),
 (2, 'Sara Vega', 'sara@mail.com', 'sara'),
-(1, 'admin', 'admin@admin.com' 'admin');
+(1, 'admin', 'admin@admin.com', 'admin');
 
 -- Insertar reserva
 INSERT INTO reserva (usuario_id, funcion_id, estado_id, total) VALUES
