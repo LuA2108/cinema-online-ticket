@@ -25,11 +25,19 @@ $conn = $db->obtenerConexion();
 $page = $_GET['page'] ?? 'index';
 
 // Instancia del modelo usuario
-$usuarios = new Usuario($conn);
+$usuario = new Usuario($conn);
+$userController = new UserControlador($usuario);
 
 // Instancia del controlador 
 $controlador = new pageController($conn);
 
 // El controlador gestiona las paginas
 $controlador->mostrarPagina($page);
+
+if($page === 'auth/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $contrasena = $_POST['contrasena'];
+
+    $userController ->login($email, $contrasena);
+}
 ?>
