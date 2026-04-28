@@ -44,7 +44,8 @@ class Usuario
         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ? ");
         $stmt -> bind_param("s", $email);
         $stmt->execute();
-
+        $stmt->close();
+        
         return $stmt->get_result()->fetch_assoc();
     }
 
