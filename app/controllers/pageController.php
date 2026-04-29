@@ -20,7 +20,7 @@ class pageController
         if(str_starts_with($page, "admin/")) 
         {   
             // No admin
-            if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
+            if (!isset($_SESSION['user_id']) || $_SESSION['rol_id'] != 1) {
                 $page = "index";    
                 $base = __DIR__ . "/../views/public/";
             
@@ -43,6 +43,8 @@ class pageController
         {
             $content = __DIR__ . "/../views/404.php";
         }
+
+        $contentView = $content;
 
         require __DIR__ . "/../views/layout/" .$layout. ".php";
     }
