@@ -25,7 +25,7 @@ class Usuario
      * @return array Lista de usuarios
      */
     public function obtenerUsuarios() {
-        $sql = "SELECT * FROM usuarios";
+        $sql = "SELECT * FROM usuario";
         $resultado = $this->conn->query($sql);
         
         $usuarios = [];
@@ -37,14 +37,13 @@ class Usuario
     
     /**
      * Función que devuelve un usuario segun el email
-     * @param $email correo del usuario
+     * @param string $email correo del usuario
      * @return array|bool|null array con datos del usuario   
      */
     public function buscarPorEmail($email) {
-        $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ? ");
+        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email = ? ");
         $stmt -> bind_param("s", $email);
         $stmt->execute();
-        $stmt->close();
         
         return $stmt->get_result()->fetch_assoc();
     }
