@@ -31,7 +31,7 @@
         <li><a href="?page=admin/productos/index"><i class="fa-solid fa-candy-cane" style="color: rgb(239, 244, 255);"></i>Productos</a></li>
     </ul>
 
-    <form action="#" method="POST">
+    <form action="index.php?page=auth/logout" method="POST">
         <button type="submit">Cerrar sesión</button>
     </form>
 </aside>
