@@ -5,6 +5,10 @@
     align-items: center;
     min-height: 70vh;
     
+    background-image: url("/cinema-online-ticket/public/assets/imgs/fondo/fondo_login_register.png");
+    background-repeat: no-repeat;
+    background-position: 50;
+
     h1 {
         margin-bottom: 20px;
         font-size: 2rem;
@@ -23,7 +27,7 @@
 .auth_form {
     width: 100%;
     max-width: 380px;
-    background-color: rgba(122, 119, 139, 0.416);
+    background-color: rgba(94, 93, 78, 0.416);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -61,4 +65,12 @@ input {
     &:hover {
         background: #0056b3;
     }
+}
+
+.error_login {
+    background-color: rgba(255, 0, 0, 0.347);
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: center;
 }
