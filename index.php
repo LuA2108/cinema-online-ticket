@@ -31,13 +31,21 @@ $userController = new UserControlador($usuario);
 // Instancia del controlador 
 $controlador = new pageController($conn);
 
+if($page === 'auth/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $email = $_POST['email'] ?? '';
+    $contrasena = $_POST['contrasena'] ?? '';
+
+    //Si falla, asigna mensaje de error
+    if(!$userController->login($email, $contrasena)) {
+        $_SESSION['error'] = "Usuario o contraseña incorrecto.";
+    }
+}
+
+if($page === 'auth/logout') {
+    $userController->logout();
+}
+
 // El controlador gestiona las paginas
 $controlador->mostrarPagina($page);
-
-if($page === 'auth/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $contrasena = $_POST['contrasena'];
-
-    $userController ->login($email, $contrasena);
-}
 ?>
