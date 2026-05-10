@@ -7,6 +7,7 @@
     <!-- CABECERA -->
     <?php require __DIR__ . "/../partials/cabecera.php"; ?>
     
+    <?php /** @var string $content */ ?>
     <main class="container-main">
         <?php require $content; ?>  <!-- Aquí se inserta la vista que prepara el controlador -->
     </main>
