@@ -13,8 +13,8 @@
                 <li class="dropdown">
                     <a href="#"> <i class="fa-solid fa-user" style="color: rgb(239, 244, 255);"></i></a>
                     <ul class="submenu">
-                        <li><a href="index.php?page=auth/login">Iniciar sesión</a></li>
-                        <li><a href="index.php?page=auth/registro">Registrarse</a></li>
+                        <li><a href="index.php?page=login">Iniciar sesión</a></li>
+                        <li><a href="index.php?page=registro">Registrarse</a></li>
                     </ul>
                 </li>
             </ul>
