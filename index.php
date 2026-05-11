@@ -20,7 +20,7 @@ $conn = $db->obtenerConexion();
 $page = $_GET['page'] ?? 'index';
 
 // Controlador principal
-$controlador = new pageController($conn);
+$controlador = new PageController($conn);
 
 // Ejecutar
 $controlador->cargarPaginas($page);
