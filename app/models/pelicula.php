@@ -7,10 +7,10 @@
 
         /**
          * Constructor de la clase película
-         * @param string $conn Conexión a la BD
+         * @param mysqli $conn Conexión a la BD
          */
         public function __construct($conn) {
-            $this->$conn = $conn;
+            $this->conn = $conn;
         }
 
         /**
@@ -22,8 +22,8 @@
 
             $peliculas = [];
 
-            while ($fila = $resultado->fetch_assoc) {
-                $peliculas = $fila;
+            while ($fila = $resultado->fetch_assoc()) {
+                $peliculas[] = $fila;
             }
 
             return $peliculas;
