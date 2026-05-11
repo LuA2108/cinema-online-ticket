@@ -15,7 +15,7 @@
             <!-- CarruselImg -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="public/assets/imgs/films/banner/inception_hor.jpg" class="d-block w-100 img-carousel" alt="Portada Inception">
+                    <img src="/cinema-online-ticket/public/assets/imgs/pelicula_imagen/banner/inception_banner.jpg" class="d-block w-100 img-carousel" alt="Portada Inception">
                     <!-- Contenedor para el título y el enlace -->
                     <section class="capa">
                         <h2 class="titulo-pelicula">Inception</h2>
@@ -23,14 +23,14 @@
                     </section>
                 </div>
                 <div class="carousel-item">
-                    <img src="public/assets/imgs/films/banner/avatarBanner.jpg" class="d-block w-100" alt="Portada Avatar">
+                    <img src="/cinema-online-ticket/public/assets/imgs/pelicula_imagen/banner/avatar_banner.jpg" class="d-block w-100" alt="Portada Avatar">
                     <section class="capa">
                         <h2 class="titulo-pelicula">Avatar</h2>
                         <a href="#" class="btn-reservar">¡Compra ya tus entradas!</a>
                     </section>
                 </div>
                 <div class="carousel-item">
-                    <img src="public/assets/imgs/films/banner/jocker_hor.png" class="d-block w-100 h-50" alt="Portada Jocker">
+                    <img src="/cinema-online-ticket/public/assets/imgs/pelicula_imagen/banner/jocker_banner.png" class="d-block w-100 h-50" alt="Portada Jocker">
                     <section class="capa">
                         <h2 class="titulo-pelicula">Jocker</h2>
                         <a href="#" class="btn-reservar">¡Compra ya tus entradas!</a>
