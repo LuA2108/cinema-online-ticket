@@ -1,43 +1,36 @@
 DROP DATABASE IF EXISTS bd_sistema_reserva_cine;
-CREATE DATABASE IF NOT EXISTS bd_sistema_reserva_cine;
+CREATE DATABASE bd_sistema_reserva_cine;
 USE bd_sistema_reserva_cine;
 
--- Tablas independientes
--- GENERO --------------------------
-DROP table if exists genero;
-CREATE TABLE if not exists genero (
-	id INT PRIMARY KEY auto_increment,
-    nombre VARCHAR(20)
+-- =========================
+-- TABLAS MAESTRAS
+-- =========================
+
+CREATE TABLE genero (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL
 );
 
--- ROL --------------------------
-DROP TABLE IF EXISTS rol;
-CREATE TABLE IF NOT EXISTS rol (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	tipo VARCHAR(20) NOT NULL,
+CREATE TABLE rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(20) NOT NULL,
     descripcion VARCHAR(50) DEFAULT '-'
 );
 
--- SALA --------------------------
-DROP table if exists sala;
-CREATE TABLE if not exists sala (
-	id INT auto_increment primary key,
+CREATE TABLE sala (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT UNIQUE NOT NULL,
     capacidad INT NOT NULL
 );
 
--- TIPO PRODUCTO ---------------------------
-DROP TABLE if exists tipo;
-CREATE TABLE if not exists tipo (
-	id int auto_increment primary key,
-	nombre VARCHAR(50) NOT NULL,
+CREATE TABLE tipo_producto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
     descripcion VARCHAR(100)
 );
 
--- ESTADO RESERVA ---------------------------
-DROP TABLE if exists estado_reserva;
-CREATE TABLE if not exists estado_reserva (
-	id int auto_increment primary key,
+CREATE TABLE estado_reserva (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(28) NOT NULL
 );
 
@@ -45,57 +38,67 @@ CREATE TABLE estado_funcion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL
 );
--- -----------------------------------
--- Tablas principales ----------------
 
--- PELICULA --------------------------
-DROP table if exists pelicula;
-CREATE TABLE if not exists pelicula (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- PELICULA
+-- =========================
+
+CREATE TABLE pelicula (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT,
     director VARCHAR(100) NOT NULL,
     anio INT NOT NULL,
-    duracion INT NOT NULL, -- Minutos
-    precio DECIMAL(10, 2) NOT NULL,
-    disponible boolean DEFAULT FALSE,
-    portada VARCHAR(255), -- URL
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de creacion
+    duracion INT NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    disponible BOOLEAN DEFAULT FALSE,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- USUARIO --------------------------
-DROP table if exists usuario;
-CREATE TABLE if not exists usuario (
-	id INT auto_increment primary key,
+-- 🖼 IMÁGENES DE PELICULA
+CREATE TABLE pelicula_imagen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pelicula_id INT NOT NULL,
+    tipo ENUM('poster','banner') NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE
+);
+
+-- =========================
+-- USUARIOS
+-- =========================
+
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     rol_id INT NOT NULL,
-    nombre varchar(50),
-    email varchar(50) NOT NULL UNIQUE,
-    contrasena varchar(255) NOT NULL,
-    ciudad varchar(50),
-    provincia varchar(50),
-    create_time timestamp DEFAULT current_timestamp,
-    
+    nombre VARCHAR(50),
+    email VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(50),
+    provincia VARCHAR(50),
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (rol_id) REFERENCES rol(id) ON DELETE CASCADE
 );
 
--- PRODUCTO ---------------------------
-DROP TABLE if exists producto;
-CREATE TABLE if not exists producto (
-	id int auto_increment primary key,
+-- =========================
+-- PRODUCTOS
+-- =========================
+
+CREATE TABLE producto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     tipo_id INT NOT NULL,
-	nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
-    comentario VARCHAR(400) NOT NULL,
-    create_time timestamp DEFAULT current_timestamp,
-    
-    foreign key (tipo_id) references tipo(id) ON DELETE CASCADE
+    comentario VARCHAR(400),
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tipo_id) REFERENCES tipo_producto(id) ON DELETE CASCADE
 );
 
--- TABLAS DEPENDIENTES
+-- =========================
+-- RELACIONES
+-- =========================
 
--- PELICULA-GENERO (Muchos a muchos) --------------------------
-DROP TABLE if exists pelicula_genero;
-CREATE TABLE if not exists pelicula_genero (
+CREATE TABLE pelicula_genero (
     pelicula_id INT NOT NULL,
     genero_id INT NOT NULL,
     PRIMARY KEY (pelicula_id, genero_id),
@@ -103,90 +106,92 @@ CREATE TABLE if not exists pelicula_genero (
     FOREIGN KEY (genero_id) REFERENCES genero(id) ON DELETE CASCADE
 );
 
--- BUTACA (depende de sala) ------------------
-DROP table if exists butaca;
-CREATE TABLE if not exists butaca (
-	id INT auto_increment primary key,
+CREATE TABLE butaca (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     sala_id INT NOT NULL,
-    numero INT NOT NULL,
     fila INT NOT NULL,
-
+    numero INT NOT NULL,
     UNIQUE (sala_id, fila, numero),
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
 
--- FUNCION ( Proyeccion: Pelicula + sala + hora )----------------   
-DROP table if exists funcion;
-CREATE TABLE if not exists funcion (
-	id INT auto_increment primary key,
+-- =========================
+-- FUNCIONES (PROYECCIONES)
+-- =========================
+
+CREATE TABLE funcion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     pelicula_id INT NOT NULL,
     sala_id INT NOT NULL,
     hora TIME NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     estado_id INT NOT NULL,
-    
+
     UNIQUE (sala_id, fecha_inicio, hora),
+
     FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
     FOREIGN KEY (sala_id) REFERENCES sala(id),
     FOREIGN KEY (estado_id) REFERENCES estado_funcion(id)
 );
 
--- RESERVA (Depende de Usuario, Funcion y estado) ---------------------------
-DROP TABLE if exists reserva;
-CREATE TABLE if not exists reserva (
-	id int auto_increment primary key,
-	usuario_id INT NOT NULL,
+-- =========================
+-- RESERVAS
+-- =========================
+
+CREATE TABLE reserva (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
     funcion_id INT NOT NULL,
     estado_id INT NOT NULL,
     fecha_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
-    total DECIMAL(10, 2) NOT NULL,
-    
-    foreign key (usuario_id) references usuario(id) ON DELETE CASCADE,
-    foreign key (funcion_id) references funcion(id) ON DELETE CASCADE,
-    foreign key (estado_id) references estado_reserva(id) ON DELETE CASCADE
+    total DECIMAL(10,2) NOT NULL,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE,
+    FOREIGN KEY (estado_id) REFERENCES estado_reserva(id) ON DELETE CASCADE
 );
 
--- RESERVA-BUTACA (Detalle de la reserva: Qué asientos son) ----------
-DROP table if exists reserva_butaca;
-CREATE TABLE if not exists reserva_butaca (
-	butaca_id INT NOT NULL,
+CREATE TABLE reserva_butaca (
+    butaca_id INT NOT NULL,
     reserva_id INT NOT NULL,
     funcion_id INT NOT NULL,
     precio DECIMAL(10,2),
-    
     PRIMARY KEY (funcion_id, butaca_id),
+
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
     FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE,
     FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE
 );
 
--- RESERVA-PRODUCTO (Si compran palomitas con la entrada) ---------------
-DROP TABLE if exists reserva_producto;
-CREATE TABLE if not exists reserva_producto (
-	reserva_id INT NOT NULL,
+CREATE TABLE reserva_producto (
+    reserva_id INT NOT NULL,
     producto_id INT NOT NULL,
-	precio_total DECIMAL(10,2) NOT NULL,
-    
-    PRIMARY KEY(reserva_id, producto_id),
-    
-    foreign key (reserva_id) references reserva(id) ON DELETE CASCADE,
-    foreign key (producto_id) references producto(id) ON DELETE CASCADE
+    precio_total DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (reserva_id, producto_id),
+
+    FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE,
+    FOREIGN KEY (producto_id) REFERENCES producto(id) ON DELETE CASCADE
 );
 
--- OPINION ---------------------------
-DROP TABLE if exists opinion;
-CREATE TABLE if not exists opinion (
-	id int auto_increment primary key,
-	pelicula_id INT NOT NULL,
+-- =========================
+-- OPINIONES
+-- =========================
+
+CREATE TABLE opinion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pelicula_id INT NOT NULL,
     usuario_id INT NOT NULL,
     comentario VARCHAR(400) NOT NULL,
-    create_time timestamp DEFAULT current_timestamp,
-    
-    foreign key (pelicula_id) references pelicula(id) ON DELETE CASCADE,
-    foreign key (usuario_id) references usuario(id) ON DELETE CASCADE
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
+-- --------------------------------------------------------
+-- INSERTAR DATOS A LA BD ---------------------------------
+-- --------------------------------------------------------
 
 -- -------------------------------
 -- GENERO
@@ -216,7 +221,7 @@ INSERT INTO sala (numero, capacidad) VALUES
 -- -------------------------------
 -- TIPO PRODUCTO
 -- -------------------------------
-INSERT INTO tipo (nombre, descripcion) VALUES
+INSERT INTO tipo_producto (nombre, descripcion) VALUES
 ('Snack', 'Comida para el cine'),
 ('Bebida', 'Refrescos y bebidas'),
 ('Combo', 'Combinación de snacks y bebida');
@@ -239,22 +244,51 @@ INSERT INTO estado_funcion (nombre) VALUES
 -- -------------------------------
 -- PELICULA
 -- -------------------------------
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
-('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 8.00, TRUE, 'https://example.com/inception.jpg'),
-('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 8.00, TRUE, 'https://example.com/interstellar.jpg'),
-('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 8.00, TRUE, 'https://example.com/joker.jpg'),
-('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 8.00, TRUE, 'https://example.com/titanic.jpg'),
-('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 8.00, TRUE, 'https://example.com/gladiator.jpg'),
-('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 8.00, TRUE, 'https://example.com/avatar.jpg');
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible) VALUES
+('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 8.00, TRUE),
+('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 8.00, TRUE),
+('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 8.00, TRUE),
+('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 8.00, TRUE),
+('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 8.00, TRUE),
+('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 8.00, TRUE);
 
 -- Peliculas no disponibles
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible, portada) VALUES
-('La Maldicion de Green House', 'Un misterio rodea la antigua mansión Green House donde suceden eventos extraños.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE, 'https://example.com/dune2.jpg'),
-('Fin del Amanecer', 'Un grupo de héroes intenta salvar la ciudad de un cataclismo inminente.', 'Nia DaCosta', 2026, 120, 8.00, FALSE, 'https://example.com/themarvels.jpg'),
-('Aprueba de Balas', 'Un brillante científico enfrenta dilemas éticos tras crear un arma devastadora.', 'Christopher Nolan', 2026, 180, 8.00, FALSE, 'https://example.com/oppenheimer.jpg'),
-('Caida en Picada', 'Diversión y caos cuando un grupo de amigos se embarca en una aventura inesperada.', 'Greta Gerwig', 2026, 115, 8.00, FALSE, 'https://example.com/barbie.jpg'),
-('Hombre sin rostro', 'En un mundo distópico, un joven líder desafía al régimen opresor.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg'),
-('Sin Rumbo', 'Una travesía peligrosa y emocionante por tierras desconocidas que pondrá a prueba su coraje.', 'Francis Lawrence', 2026, 140, 8.00, FALSE, 'https://example.com/hungergamesreb.jpg');
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible) VALUES
+('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE),
+('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, 8.00, FALSE),
+('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, 8.00, FALSE),
+('Caida en Picada', 'Aventura caótica de amigos.', 'Greta Gerwig', 2026, 115, 8.00, FALSE),
+('Hombre sin rostro', 'Distopía y rebelión.', 'Francis Lawrence', 2026, 140, 8.00, FALSE),
+('Sin Rumbo', 'Viaje de supervivencia.', 'Francis Lawrence', 2026, 140, 8.00, FALSE);
+
+-- ----------------------------------------------------
+-- IMAGENES DE PELICULAS ------------------------------
+-- ----------------------------------------------------
+INSERT INTO pelicula_imagen (pelicula_id, tipo, url) VALUES
+-- Inception
+(1, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/inception_poster.png'),
+(1, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/banner/inception_banner.png'),
+
+-- Interstellar
+(2, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/interestellar_poster.png'),
+(2, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/interestellar_baner.png'),
+
+-- Joker
+(3, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/jocker_poster.png'),
+(3, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/jocker_banner.png'),
+
+-- Titanic
+(4, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/titanic_poster.png'),
+(4, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/titanic_banner.png'),
+
+-- Gladiator
+(5, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/gladiator_poster.png'),
+(5, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/gladiator_banner.png'),
+
+-- Avatar
+(6, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/avatar_poster.png'),
+(6, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/avatar_banner.png');
+
 -- -------------------------------
 -- PELICULA-GENERO
 -- -------------------------------
