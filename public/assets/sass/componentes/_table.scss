@@ -1,0 +1,53 @@
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    thead {
+        background: #2c3e50;
+        color: #fff;
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    tbody {
+        tr {
+            transition: background 0.2s;
+
+            &:nth-child(even) {
+                background: #f8f9fa;
+            }
+
+            &:hover {
+                background: #e9f2ff;
+            }
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 13px;
+        margin-right: 8px;
+        color: #3498db;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
