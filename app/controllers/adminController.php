@@ -34,4 +34,11 @@ class adminController
             exit;
         }
     }
+
+    public function listarUsuarios() {
+        // Verifica si es admin
+        $this->authAdmin();
+
+        $_SESSION['lista_usuarios'] = $this->userModelo->obtenerUsuarios();
+    }
 }
