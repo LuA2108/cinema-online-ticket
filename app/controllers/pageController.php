@@ -6,7 +6,7 @@ require_once __DIR__ . "/adminController.php";
  * Controlador principal - Router + Layouts
  * Maneja TODAS las rutas de la aplicación
  */
-class pageController
+class PageController 
 {
     private $conn;              // Conexión BD
     private $authController;    // Controlador autenticación
@@ -30,8 +30,8 @@ class pageController
      */
     public function cargarPaginas($page)
     {
-        
-         // 1. FORMULARIOS POST
+
+        // 1. FORMULARIOS POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->manejarPost($page);
             return;
@@ -47,10 +47,10 @@ class pageController
         // 3. LAYOUT + CONTENIDO AUTOMÁTICO
         $layout = $this->obtenerLayout($page); // main.php o admin.php
         $content = $this->obtenerVista($page); // Página específica
-        
+
         // Variables para layout
         $GLOBALS['content'] = $content;
-        
+
         // Carga layout que incluye $content
         require $layout;
     }
@@ -68,7 +68,13 @@ class pageController
             $this->authController->logout(); // Logout link
         }
 
+        // ✅ DEBUG: Verifica datos
+        if ($page === 'panel_usuarios' || strpos($page, 'admin/') === 0) {
+            error_log("DEBUG pageController: Cargando usuarios para $page");
+            $this->adminController->listarUsuarios();
+        }
         // aqui se agregará más
+
     }
 
     /**
@@ -90,22 +96,27 @@ class pageController
 
     private function obtenerVista($page)
     {
+        if ($page === 'admin/usuarios/index') {
+            $this->adminController->listarUsuarios();
+        }
+
         // AUTOMÁTICO: admin/usuarios --> views/admin/usuarios.php
         $ruta = str_replace('/', '/', $page);
         $archivo = __DIR__ . "/../views/{$ruta}.php";
-        
+
         if (file_exists($archivo)) {
             return $archivo;
         }
-        
+
         // TUS RUTAS EXISTENTES
         $rutas = [
             'index' => __DIR__ . '/../views/public/index.php',
             'login' => __DIR__ . '/../views/auth/login.php',
             'perfil' => __DIR__ . '/../views/user/perfil.php',
             'editar' => __DIR__ . '/../views/user/editar.php',
+            'panel_usuarios' => __DIR__ . '/../views/admin/usuarios/index.php',
         ];
-        
+
         return $rutas[$page] ?? __DIR__ . '/../views/404.php';
     }
 }
