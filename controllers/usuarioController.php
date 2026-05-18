@@ -12,7 +12,7 @@ class UserControlador
 
     /**
      * Contructor del controlador de usuarios
-     * @param mixed $conn
+     * @param mysqli $conn
      */
     public function __construct($conn)
     {

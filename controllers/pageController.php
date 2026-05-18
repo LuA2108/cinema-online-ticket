@@ -68,11 +68,14 @@ class PageController
             $this->authController->logout(); // Logout link
         }
 
-        // ✅ DEBUG: Verifica datos
         if ($page === 'panel_usuarios' || strpos($page, 'admin/') === 0) {
-            error_log("DEBUG pageController: Cargando usuarios para $page");
             $this->adminController->listarUsuarios();
         }
+
+        if ($page === 'panel_peliculas' || strpos($page, 'admin/') === 0) {
+            $this->adminController->listarDetallesPeliculas();
+        }
+        
         // aqui se agregará más
 
     }
@@ -115,6 +118,7 @@ class PageController
             'perfil' => __DIR__ . '/../views/user/perfil.php',
             'editar' => __DIR__ . '/../views/user/editar.php',
             'panel_usuarios' => __DIR__ . '/../views/admin/usuarios/index.php',
+            'panel_peliculas' => __DIR__ . '/../views/admin/peliculas/index.php',
         ];
 
         return $rutas[$page] ?? __DIR__ . '/../views/404.php';

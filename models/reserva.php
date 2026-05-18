@@ -12,6 +12,10 @@
             $this->conn = $conn;
         }
 
+        /**
+         * Función que devuelve una lista de todas las reservass
+         * @return array Lista de reservas
+         */
         public function listarReservas() {
             $resultado = $this->conn->query("SELECT * FROM reserva");
 
