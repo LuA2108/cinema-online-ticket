@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 require __DIR__ . '/config/database.php';
 
 //Cargar controlador principal
-require __DIR__ . '/app/controllers/pageController.php';
+require __DIR__ . '/controllers/pageController.php';
 
 // Dependencias, conexion a la BD 
 $db = new Database();
