@@ -3,7 +3,7 @@ CREATE DATABASE bd_sistema_reserva_cine;
 USE bd_sistema_reserva_cine;
 
 -- =========================
--- TABLAS MAESTRAS
+-- TABLAS 
 -- =========================
 
 CREATE TABLE genero (
@@ -141,7 +141,9 @@ CREATE TABLE funcion (
 
 CREATE TABLE reserva (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
+    usuario_id INT NULL,
+    nombre_cliente VARCHAR(100),
+    email_cliente VARCHAR(100) NOT NULL,
     funcion_id INT NOT NULL,
     estado_id INT NOT NULL,
     fecha_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -371,10 +373,11 @@ VALUES
 (2, 'Sara Vega', 'sara@mail.com', 'sara'),
 (1, 'admin', 'admin@admin.com', 'admin');
 
--- Insertar reserva
-INSERT INTO reserva (usuario_id, funcion_id, estado_id, total) VALUES
-(2, 1, 2, 8.50),
-(3, 3, 1, 7.50);
+-- Insertar reservas de la película
+INSERT INTO reserva (usuario_id, nombre_cliente, email_cliente, funcion_id, estado_id, total)
+VALUES
+(2, 'Juan Perez', 'juan@mail.com', 1, 2, 8.50),
+(3, 'Maria Lopez', 'maria@mail.com', 3, 1, 7.50);
 
 -- Insertar reserva butaca
 INSERT INTO reserva_butaca (butaca_id, reserva_id, funcion_id, precio) VALUES
