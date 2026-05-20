@@ -22,23 +22,19 @@ class Usuario
 
     /**
      * Obtiene todos los usuarios de la base de datos
-     * @return array Array Lista de usuarios registrados
+     * @return array Lista de usuarios
      */
     public function obtenerUsuarios() {
         $sql = "SELECT * FROM usuario";
         $resultado = $this->conn->query($sql);
         
-        $usuarios = [];
-        while($fila = $resultado->fetch_assoc()) {
-            $usuarios[] = $fila;
-        }
-        return $usuarios;
+        return $resultado->fetch_all(MYSQLI_ASSOC);
     }
     
     /**
      * Obtiene los datos del usuario según su email
      * @param string $email correo del usuario
-     * @return array Array con datos del usuario   
+     * @return array|null Datos del usuario o null si no existe
      */
     public function buscarPorEmail($email) {
         $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email = ? ");
@@ -60,6 +56,7 @@ class Usuario
     public function crearUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia)
     {
         $sql = $this->conn->prepare("INSERT INTO usuario(rol_id, nombre, email, contrasena, ciudad, provincia) VALUES (?,?,?,?,?,?)");
+        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
         $sql->bind_param("isssss", $rol_id, $nombre, $email, $contrasena, $ciudad, $provincia);
 
         return $sql->execute();
@@ -78,6 +75,7 @@ class Usuario
      */
     public function actualizarUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia, $id_usuario) {
         $sql = $this->conn->prepare("UPDATE usuario SET rol_id = ?, email= ?, nombre = ?, contrasena = ?, ciudad = ?, provincia = ? WHERE id = ?");
+        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
         $sql->bind_param("isssssi", $rol_id, $email, $nombre, $contrasena, $ciudad, $provincia, $id_usuario);    
 
         return $sql->execute();
