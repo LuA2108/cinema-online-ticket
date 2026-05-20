@@ -7,7 +7,7 @@
     <meta name="description" content="<?= $descripcion ?? 'Cinema Online Ticket' ?>">
     <meta name="author" content="Lucero Anay Cahuana Cornejo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="64x42" href="public/assets/imgs/iconos/logo-limpio.png">
+    <link rel="icon" type="image/png" sizes="64x42" href="public/imgs/iconos/logo-limpio.png">
     <!-- BootStrap - Font Awesome - Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/b527a55e68.js" crossorigin="anonymous"></script>
@@ -16,11 +16,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="public/assets/css/main.css">
+    <link rel="stylesheet" href="public/css/main.css">
 
     <!-- CSS específico por página -->
     <?php if (isset($extraCSS)): ?>
-        <link rel="stylesheet" href="public/assets/css/<?= $extraCSS ?>.css">
+        <link rel="stylesheet" href="public/css/<?= $extraCSS ?>.css">
     <?php endif; ?>
 
 </head>

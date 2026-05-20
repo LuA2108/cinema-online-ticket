@@ -4,7 +4,7 @@
     <div class="contenedor-logo-sesion">
         <!-- LOGO -->
         <div class="logo">
-            <a href="index.php"><img src="public/assets/imgs/iconos/logo_cine.png" alt="Icono logo cine" width="170px" height="100px"></a>
+            <a href="index.php"><img src="public/imgs/iconos/logo_cine.png" alt="Icono logo cine" width="170px" height="100px"></a>
         </div>
 
         <!-- SUBMENU para SESION-->
@@ -33,7 +33,7 @@
                     <a class="item-promociones" href="#"><i class="fa-solid fa-euro-sign"></i> Promociones</a>
                 </li>
                 <li class="menu-item">
-                    <a class="item-servicios" href="#"> <img class="icono" src="public/assets/imgs/iconos/palomitas-de-maiz.png" alt="Icono de palomitas"> Servicios</a>
+                    <a class="item-servicios" href="#"> <img class="icono" src="public/imgs/iconos/palomitas-de-maiz.png" alt="Icono de palomitas"> Servicios</a>
                 </li>
                 <li class="menu-item">
                     <a class="item-info" href="#"> <i class="fa-solid fa-info"></i>Sobre Nosotros</a>
@@ -42,7 +42,7 @@
                     <a class="item-reserva" href="#"> <i class="fa-solid fa-ticket"></i> Reservar película</a>
                 </li>
                 <li class="menu-item buscador">
-                    <img src="public/assets/imgs/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
+                    <img src="public/imgs/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
                     <form action="#" method="get">
                         <input type="search" name="buscador" placeholder="Buscar película...">
                     </form>

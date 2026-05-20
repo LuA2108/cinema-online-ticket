@@ -15,7 +15,7 @@
 <aside class="sidebar-menu">
     <!-- contenido del sidebar: enlaces, titulo e imagen -->
     <div class="container-admin">
-        <img src="public/assets/imgs/admin-con-ruedas-dentadas.png" alt="Imagen de Administrador">
+        <img src="public/imgs/admin-con-ruedas-dentadas.png" alt="Imagen de Administrador">
         <h2>Administrador</h2>
     </div>
     <hr>
