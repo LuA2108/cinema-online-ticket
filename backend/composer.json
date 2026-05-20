@@ -1,0 +1,15 @@
+{
+    "name": "cinema-online-ticket/backend",
+    "autoload": {
+        "psr-4": {
+            "CinemaOnlineTicket\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucero",
+            "email": "luceroan2108@gmail.com"
+        }
+    ],
+    "require": {}
+}
