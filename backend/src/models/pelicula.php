@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Clase que gestiona las operaciones CRUD de películas
+ * Clase Película
+ * gestiona las operaciones CRUD de películas
+ * Usa una conexion mysqli mediante inyección de dependencias
  */
 class Pelicula
 {
@@ -33,6 +35,10 @@ class Pelicula
         return $peliculas;
     }
 
+    /**
+     * Obtiene una lista completa con todos los datos de la pelicula y sus relaciones
+     * @return array Arra Lista de películas
+     */
     public function listarPeliculasCompletas()
     {
         $sql = " SELECT p.id, p.titulo, p.descripcion, pi.url AS poster, GROUP_CONCAT(g.nombre SEPARATOR ', ') AS generos,
@@ -53,7 +59,7 @@ class Pelicula
     }
 
     /**
-     * Función que busca una película por ID
+     * Devuelve una pelicula según el ID
      * @param int $id ID de la película
      */
     public function peliculaId($id)
@@ -63,5 +69,52 @@ class Pelicula
         $sql->execute();
 
         return $sql->get_result()->fetch_assoc();
+    }
+
+    /**
+     * Crea una nueva película en la base de datos
+     * @param string $titulo_pelicula
+     * @param string $descripcion
+     * @param string $director
+     * @param int $anio
+     * @param float $duracion
+     * @param float $precio
+     * @param boolean $disponible
+     * @return bool True si se inserto, false al falla
+     */
+    public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible) {
+        $sql = $this->conn->prepare("INSERT INTO pelicula(titulo = ?, descripcion = ?, director = ?, anio = ?, duracion = ?, precio = ?, disponible = ?) VALUES(?,?,?,?,?,?,?)");
+        $sql->bind_param("sssiddb", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible);
+        return $sql->execute();
+        }
+    
+    /**
+     * Edita los datos de una película existente según su ID
+     * @param string $titulo_pelicula
+     * @param string $descripcion
+     * @param string $director
+     * @param int $anio
+     * @param float $duracion
+     * @param float $precio
+     * @param boolean $disponible
+     * @param int $pelicula_id
+     * @return bool True al editarse correctamente, False al fallar
+     */
+    public function actualizarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible, $pelicula_id ) {
+        $sql = $this->conn->prepare("UPDATE pelicula SET titulo = ?, descripcion = ?, director = ?, anio = ?, duracion = ?, precio = ?, disponible = ? WHERE id = ?");
+        $sql->bind_param("sssiddbi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible, $pelicula_id);
+        
+        return $sql->execute();
+    }
+
+    /**
+     * Elimina una película existente segun el ID
+     * @param int $pelicula_id
+     * @return bool True al eliminar la película, False al fallar
+     */
+    public function eliminarPelicula($pelicula_id) {
+        $sql = $this->conn->prepare("DELETE FROM pelicula WHERE id = ?");
+        $sql->bind_param("i", $pelicula_id);
+        return $sql->execute();
     }
 }
