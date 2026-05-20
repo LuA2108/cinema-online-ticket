@@ -83,8 +83,8 @@ class Usuario
         return $sql->execute();
     }
 
-    /*
-     * limina un usuario de la base de datos según su ID
+    /**
+     * Elimina un usuario de la base de datos según su ID
      * @param int $usuario_id ID del usuario
      * @return bool True si se elimino, false al fallar
      */
