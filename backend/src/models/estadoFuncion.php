@@ -1,4 +1,5 @@
 <?php 
+namespace App\Models;
     /**
      * Clase de Estados de las Funciones
      * Consultas de lectura

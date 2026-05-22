@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 /**
  * Clase Estado de Reserva
  * Gestiona las consultas de los estados de Reserva

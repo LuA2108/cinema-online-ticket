@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 /**
  * Clase Opinión
  * Gestiona metodos CRUD de la entidad

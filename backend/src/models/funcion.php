@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 /**
  * Clase Función
  * Gestiona las funciones (proyecciones) que tiene una pelicula con metodos CRUD y filtrados

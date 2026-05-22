@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 /**
  * Clase Producto
  * Gestiona metodos CRUD ademas de filtrados

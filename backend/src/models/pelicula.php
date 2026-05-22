@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 /**
  * Clase Película
  * gestiona las operaciones CRUD de películas

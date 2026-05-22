@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 /**
  * Clase TipoProducto
  *  Proporciona métodos CRUD y consultas de búsqueda

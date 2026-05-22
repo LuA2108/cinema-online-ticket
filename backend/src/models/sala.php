@@ -1,10 +1,14 @@
-<?php 
-    /**
-     * Clase Sala
-     * Gestiona metodos CRUD, excepto delete (desactiva en vez de eliminar)
-     * Conexión mysqli mediante inyeccion de dependencias
-     */
-    class Sala {
+<?php
+
+namespace App\Models;
+
+/**
+ * Clase Sala
+ * Gestiona metodos CRUD, excepto delete (desactiva en vez de eliminar)
+ * Conexión mysqli mediante inyeccion de dependencias
+ */
+class Sala
+{
     private $conn;
 
     public function __construct($conn)
@@ -26,9 +30,10 @@
      * Obtiene una lista de todas las salas activas
      * @param boolean $activa
      */
-    public function listarSalaPorActivo($activa) {
+    public function listarSalaPorActivo($activa)
+    {
         $sql = $this->conn->prepare("SELECT * FROM sala WHERE activa = ?");
-        
+
         $activa = $activa ? 1 : 0;
 
         $sql->bind_param("i", $activa);
@@ -41,7 +46,8 @@
      * @param mixed $numero Numero de sala
      * @param mixed $capacidad Capacidad de la sala
      */
-    public function agregarSala($numero, $capacidad) {
+    public function agregarSala($numero, $capacidad)
+    {
         $sql = $this->conn->prepare("INSERT INTO sala(numero, capacidad) VALUES(?, ?)");
         $sql->bind_param("ii", $numero, $capacidad);
 
@@ -55,7 +61,8 @@
      * @param int $capacidad Capacidad de la sala
      * @param boolean $activa Estado de la sala
      */
-    public function actualizarSala($sala_id, $numero, $capacidad, $activa) {
+    public function actualizarSala($sala_id, $numero, $capacidad, $activa)
+    {
         $sql = $this->conn->prepare("UPDATE sala SET numero = ?, capacidad = ?, activa = ? WHERE id = ?");
         $activa = $activa ? 1 : 0;
         $sql->bind_param("iiii", $numero, $capacidad, $activa, $sala_id);
@@ -67,11 +74,10 @@
      * @param int $sala_id ID de la sala
      * @return bool True al ser desactivada, false al fallar
      */
-    public function desactivarSala($sala_id) {
+    public function desactivarSala($sala_id)
+    {
         $sql = $this->conn->prepare("UPDATE sala SET activa = FALSE WHERE id = ?");
         $sql->bind_param("i", $sala_id);
         return $sql->execute();
     }
 }
-
-?>

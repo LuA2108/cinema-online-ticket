@@ -1,4 +1,5 @@
 <?php 
+namespace App\Models;
     /**
      * Clase Butaca
      * Lee datos de butaca

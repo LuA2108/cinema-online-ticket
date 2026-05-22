@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 require_once 'config/database.php';
 
 /**
@@ -29,6 +31,19 @@ class Usuario
         $resultado = $this->conn->query($sql);
         
         return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Obtiene los datos del usuario según su ID
+     * @param string $id ID usuario
+     * @return array|null Datos del usuario o null si no existe
+     */
+    public function buscarPorID($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE id = ? ");
+        $stmt -> bind_param("s", $id);
+        $stmt->execute();
+        
+        return $stmt->get_result()->fetch_assoc();
     }
     
     /**

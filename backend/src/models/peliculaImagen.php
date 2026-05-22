@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 /**
  * Clase PeliculaImagen
  * Gestiona las imágenes asociadas a películas con metodos CRUD, ademas de filtrados

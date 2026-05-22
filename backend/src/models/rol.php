@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 /**
  * Clase ROl
  * Gestiona metodos CRUD: consultas, crear, actualizar y desactivar

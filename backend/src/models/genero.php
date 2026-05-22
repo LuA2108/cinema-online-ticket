@@ -1,4 +1,5 @@
 <?php 
+namespace App\Models;
     /**
      * Clase Genero
      * Gestiona operaciones CRUD de géneros de películas
