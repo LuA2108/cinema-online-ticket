@@ -1,8 +1,10 @@
 {
     "name": "cinema-online-ticket/backend",
+    "description": "API de cine",
+    "type": "project",
     "autoload": {
         "psr-4": {
-            "CinemaOnlineTicket\\Backend\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
