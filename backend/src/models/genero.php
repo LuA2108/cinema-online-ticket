@@ -74,8 +74,9 @@
         public function mostrarGenerosPelicula($id_pelicula) {
             $sql = $this->conn->prepare("SELECT g.nombre FROM genero g JOIN pelicula_genero pg ON g.id = pg.genero_id WHERE pg.pelicula_id = ?");
             $sql->bind_param("i", $id_pelicula);
+            $sql->execute();
 
-            $resultado = $sql->execute();
+            $resultado = $sql->get_result();
             $generos = [];
 
             while ($fila = $resultado->fetch_assoc()) {
