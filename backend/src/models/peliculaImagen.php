@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 /**
  * Clase PeliculaImagen
  * Gestiona las imágenes asociadas a películas con metodos CRUD, ademas de filtrados
@@ -17,19 +19,28 @@ class PeliculaImagen
     {
         $this->conn = $conn;
     }
-    
+
     /**
-     * Funcion que lista todas las imagenes
+     * Funcion que lista todas las imagenes de todas las peliculas, ordenadas por pelicula_id y tipo
      * @return array Lista de todas las imagenes
      */
     public function listar()
     {
-        $resultado = $this->conn->query("SELECT * FROM pelicula_imagen");
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+        $sql = "SELECT * FROM pelicula_imagen ORDER BY pelicula_id, tipo";
+
+        $resultado = $this->conn->query($sql);
+        $rows = $resultado->fetch_all(MYSQLI_ASSOC);
+        $peliculas = [];
+
+        foreach ($rows as $row) {
+            $peliculas[$row['pelicula_id']][] = $row;
+        }
+
+        return $peliculas;
     }
 
     /**
-     * Función que obtiene datos de las imagenes por ID de película
+     * Función que obtiene todas las imágenes asociadas a una película específica
      * @param int $pelicula_id ID de película
      * @return array Lista de datos del ID de la película
      */
@@ -58,20 +69,6 @@ class PeliculaImagen
             return $this->conn->insert_id;
         }
         return -1;
-    }
-
-    /**
-     * Función que modifica los datos de la imagen asociada a una película según el ID de la imagen
-     * @param int $id ID de la imagen
-     * @param string $tipo Tipo de imagen (poster, banner, ...)
-     * @param string $url URL o enlace de la imgen
-     * @return bool True si la modificacion fue exitosa, False en caso contrario
-     */
-    public function editar($id, $tipo, $url)
-    {
-        $sql = $this->conn->prepare("UPDATE pelicula_imagen SET tipo = ?, url = ? WHERE id = ?");
-        $sql->bind_param("ssi", $tipo, $url, $id);
-        return $sql->execute();
     }
 
     /**
