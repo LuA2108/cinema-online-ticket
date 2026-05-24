@@ -1,91 +1,84 @@
-<?php 
+<?php
+
 namespace App\Models;
+
+/**
+ * Clase Genero
+ * Gestiona operaciones CRUD de géneros de películas
+ * Usa una conexion mysqli mediante inyección de dependencias
+ */
+class Genero
+{
+    private $conn;
+
     /**
-     * Clase Genero
-     * Gestiona operaciones CRUD de géneros de películas
-     * Usa una conexion mysqli mediante inyección de dependencias
+     * Constructor de la clase Género
+     * @param mysqli $conn
      */
-    class Genero {
-
-        private $conn;
-
-        /**
-         * Constructor de la clase Género
-         * @param mixed $conn
-         */
-        public function __construct($conn)
-        {
-            $this->conn = $conn;
-        }
-
-        /**
-         * Obtiene una lista de todos los Géneros 
-         * @return array
-         */
-        public function listarGeneros() {
-            $resultado = $this->conn->query("SELECT * FROM genero");
-
-            $generos = [];
-            while ($fila = $resultado->fetch_assoc()) {
-                $generos[] = $fila;
-            }
-
-            return $generos;
-        }
-
-        /**
-         * Agrega más géneros a la BD
-         * @param string $nombre
-         */
-        public function agregarGenero($nombre) {
-            $sql = $this->conn->prepare("INSERT INTO genero(nombre) VALUES(?)");
-            $sql->bind_param("s", $nombre);
-
-            return $sql->execute();
-        }
-
-        /**
-         * Edita un genero existente según su ID
-         * @param int $id ID del género
-         * @param string $nombre Nombre del genero
-         */
-        public function editarGenero($id, $nombre) {
-            $sql = $this->conn->prepare("UPDATE genero SET nombre = ? WHERE id = ?");
-            $sql->bind_param("si", $nombre, $id);
-
-            return $sql->execute();
-        }
-
-        /**
-         * Elimina un género según su ID
-         * @param int $id ID del género
-         */
-        public function eliminarGenero($id) {
-            $sql = $this->conn->prepare("DELETE FROM genero WHERE id = ?");
-            $sql->bind_param("i", $id);
-
-            return $sql->execute();
-        }
-
-        /**
-         * Devuelve una lista de géneros según el ID de la película
-         * @param int $id_pelicula ID de la película
-         * @return array Lista de generos
-         */
-        public function mostrarGenerosPelicula($id_pelicula) {
-            $sql = $this->conn->prepare("SELECT g.nombre FROM genero g JOIN pelicula_genero pg ON g.id = pg.genero_id WHERE pg.pelicula_id = ?");
-            $sql->bind_param("i", $id_pelicula);
-            $sql->execute();
-
-            $resultado = $sql->get_result();
-            $generos = [];
-
-            while ($fila = $resultado->fetch_assoc()) {
-                $generos[] = $fila['nombre'];
-            }
-
-            return $generos;
-        }
+    public function __construct($conn)
+    {
+        $this->conn = $conn;
     }
 
-?>
+    /**
+     * Obtener todos los géneros
+     * @return array
+     */
+    public function obtenerTodos()
+    {
+        $sql = "SELECT * FROM genero";
+        $resultado = $this->conn->query($sql);
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Obtener género por ID
+     * @param int $id
+     * @return array|null
+     */
+    public function obtenerPorId($id)
+    {
+        $sql = $this->conn->prepare("SELECT * FROM genero WHERE id = ?");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+
+        return $sql->get_result()->fetch_assoc();
+    }
+
+    /**
+     * Crear género
+     * @param string $nombre
+     * @return bool
+     */
+    public function crearGenero($nombre)
+    {
+        $sql = $this->conn->prepare("INSERT INTO genero(nombre)VALUES(?)");
+        $sql->bind_param("s", $nombre);
+        return $sql->execute();
+    }
+
+    /**
+     * Actualizar género
+     * @param int $id
+     * @param string $nombre
+     * @return bool
+     */
+    public function actualizarGenero($id, $nombre)
+    {
+        $sql = $this->conn->prepare("UPDATE generoSET nombre = ?WHERE id = ?");
+        $sql->bind_param("si", $nombre, $id);
+        return $sql->execute();
+    }
+
+    /**
+     * Eliminar género
+     * @param int $id
+     * @return bool
+     */
+    public function eliminarGenero($id)
+    {
+        $sql = $this->conn->prepare("DELETE FROM genero WHERE id = ?");
+        $sql->bind_param("i", $id);
+        return $sql->execute();
+    }
+}
