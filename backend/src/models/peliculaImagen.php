@@ -68,6 +68,18 @@ class PeliculaImagen
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function existeUrl(int $peliculaId, string $url): bool
+    {
+        $sql = $this->conn->prepare(
+            "SELECT 1 FROM pelicula_imagen WHERE pelicula_id = ? AND url = ? LIMIT 1"
+        );
+
+        $sql->bind_param("is", $peliculaId, $url);
+        $sql->execute();
+
+        return $sql->get_result()->fetch_assoc() !== null;
+    }
+
     /**
      * Función que agrega una imagen asociada a una película en la base de datos
      * @param int $pelicula_id ID de película
