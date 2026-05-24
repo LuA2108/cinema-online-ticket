@@ -6,14 +6,14 @@ use App\service\PeliculaService;
 
 class PeliculaController
 {
-    private $peliculaService;
+    private PeliculaService $peliculaService;
 
     /**
      * Constructor de la clase controlador película
      */
-    public function __construct($conn)
+    public function __construct($peliculaService)
     {
-        $this->peliculaService = new PeliculaService($conn);
+        $this->peliculaService = $peliculaService;
     }
 
     /**

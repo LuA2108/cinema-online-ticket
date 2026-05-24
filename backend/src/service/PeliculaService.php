@@ -10,21 +10,21 @@ use Exception;
 class PeliculaService
 {
     private $conn;
-    private $peliculaModelo;
-    private $peliculaGeneroModelo;
-    private $generoModelo;
+    private Pelicula $peliculaModelo;
+    private PeliculaGenero $peliculaGeneroModelo;
+    private Genero $generoModelo;
 
     /**
      * Constructor con de la clase PeliculaService
      * Inicializa el modelo de Pelicula con la conexión a la base de datos proporcionada
      * @param mysqli $conn Conexión a la base de datos
      */
-    public function __construct($conn)
+    public function __construct($peliculaModelo, $peliculaGeneroModelo, $generoModelo, $conn)
     {
         $this->conn = $conn;
-        $this->peliculaModelo = new Pelicula($conn);
-        $this->generoModelo = new Genero($conn);
-        $this->peliculaGeneroModelo = new PeliculaGenero($conn);
+        $this->peliculaModelo = $peliculaModelo;
+        $this->generoModelo = $generoModelo;
+        $this->peliculaGeneroModelo = $peliculaGeneroModelo;
     }
 
     // CONSULTAS
