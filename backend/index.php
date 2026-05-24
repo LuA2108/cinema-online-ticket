@@ -1,11 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../vendor/autoload.php'; //Carga dependencias (Composer)
+require_once __DIR__ . '/../config/database.php'; // Configura conexión a base de datos
 
+// Todas las respuestas serán en formato JSON
 header("Content-Type: application/json");
 
-// CORS (importante para frontend)
+// Define headers globales (JSON + CORS)
+// Permite que el frontend consuma la API desde cualquier origen
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
