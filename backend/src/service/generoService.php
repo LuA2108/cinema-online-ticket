@@ -7,7 +7,6 @@ use App\Models\Genero;
 /**
  * Clase GeneroService
  * Gestiona la lógica de negocio relacionada con los géneros de películas
- * Conexión a la base de datos mediante inyección de dependencias y uso del modelo Genero para operaciones CRUD
  */
 class GeneroService
 {
