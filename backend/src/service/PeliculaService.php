@@ -18,6 +18,10 @@ class PeliculaService
      * Constructor con de la clase PeliculaService
      * Inicializa el modelo de Pelicula con la conexión a la base de datos proporcionada
      * @param mysqli $conn Conexión a la base de datos
+     * @param Pelicula $peliculaModelo Modelo de película para realizar operaciones CRUD
+     * @param PeliculaGenero $peliculaGeneroModelo Modelo de relación película-género
+     * @param Genero $generoModelo Modelo de género para realizar operaciones CRUD relacionadas con géneros de películas
+     * 
      */
     public function __construct($peliculaModelo, $peliculaGeneroModelo, $generoModelo, $conn)
     {
