@@ -40,6 +40,20 @@ class PeliculaImagen
     }
 
     /**
+     * Obtiene los datos de una imagen de película según su ID
+     * @param int $imagen_id
+     * @return array|null Devuelve un array asociativo con los datos de la imagen o null si no existe
+     */
+    public function obtenerImagen($imagen_id)
+    {
+        $sql = $this->conn->prepare("SELECT * FROM pelicula_imagen WHERE id = ?");
+        $sql->bind_param("i", $imagen_id);
+        $sql->execute();
+        $resultado = $sql->get_result()->fetch_assoc();
+        return $resultado;
+    }
+
+    /**
      * Función que obtiene todas las imágenes asociadas a una película específica
      * @param int $pelicula_id ID de película
      * @return array Lista de datos del ID de la película
