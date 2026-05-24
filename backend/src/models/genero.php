@@ -48,13 +48,19 @@ class Genero
     /**
      * Crear género
      * @param string $nombre
-     * @return bool
-     */
+     * @return int ID del nuevo género o -1 si hubo un error
+    */
     public function crearGenero($nombre)
     {
-        $sql = $this->conn->prepare("INSERT INTO genero(nombre)VALUES(?)");
+        $sql = $this->conn->prepare("INSERT INTO genero(nombre) VALUES(?)");
         $sql->bind_param("s", $nombre);
-        return $sql->execute();
+        $resultado = $sql->execute();
+    
+        if ($resultado) {
+            return $this->conn->insert_id; // Devuelve el ID del nuevo género
+        } else {
+            return -1; // Indica que hubo un error
+        }
     }
 
     /**
@@ -65,7 +71,7 @@ class Genero
      */
     public function actualizarGenero($id, $nombre)
     {
-        $sql = $this->conn->prepare("UPDATE generoSET nombre = ?WHERE id = ?");
+        $sql = $this->conn->prepare("UPDATE genero SET nombre = ? WHERE id = ?");
         $sql->bind_param("si", $nombre, $id);
         return $sql->execute();
     }
