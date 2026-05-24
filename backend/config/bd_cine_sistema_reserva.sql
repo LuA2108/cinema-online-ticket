@@ -13,7 +13,8 @@ CREATE TABLE genero (
 
 CREATE TABLE rol (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(20) NOT NULL,
+    tipo VARCHAR(20) NOT NULL UNIQUE,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
     descripcion VARCHAR(50) DEFAULT '-'
 );
 
@@ -21,6 +22,7 @@ CREATE TABLE sala (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT UNIQUE NOT NULL,
     capacidad INT NOT NULL
+    activa BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE tipo_producto (
@@ -209,14 +211,13 @@ INSERT INTO genero (nombre) VALUES
 -- ROL
 -- -------------------------------
 INSERT INTO rol (tipo, descripcion) VALUES
-('admin', 'Administrador del sistema'),
-('cliente', 'Usuario que compra entradas'),
-('empleado', 'Personal del cine');
+('administrador', 'Administrador del sistema'),
+('cliente', 'Usuario que compra entradas');
 
 -- -------------------------------
 -- SALA
 -- -------------------------------
-INSERT INTO sala (numero, capacidad) VALUES
+INSERT INTO sala (numero, capacidad, activa) VALUES
 (1, 50),
 (2, 50);
 
