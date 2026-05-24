@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 /**
  * Clase Película
  * gestiona las operaciones CRUD de películas
@@ -82,12 +84,22 @@ class Pelicula
      * @param boolean $disponible
      * @return bool True si se inserto, false al falla
      */
-    public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible) {
+    public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible)
+    {
         $sql = $this->conn->prepare("INSERT INTO pelicula(titulo, descripcion, director, anio, duracion, precio, disponible) VALUES(?,?,?,?,?,?,?)");
         $disponible = (int)$disponible;
-        $sql->bind_param("sssiidi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible);
-        return $sql->execute();
+        $sql->bind_param("sssiiidi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible);
+
+        // Ejecutar
+        $resultado = $sql->execute();
+
+        // Si falla
+        if (!$resultado) {
+            return -1;
         }
+
+        return $this->conn->insert_id;
+    }
 
     /**
      * Edita los datos de una película existente según su ID
@@ -101,21 +113,38 @@ class Pelicula
      * @param int $pelicula_id
      * @return bool True al editarse correctamente, False al fallar
      */
-    public function actualizarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible, $pelicula_id ) {
+    public function actualizarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible, $pelicula_id)
+    {
         $sql = $this->conn->prepare("UPDATE pelicula SET titulo = ?, descripcion = ?, director = ?, anio = ?, duracion = ?, precio = ?, disponible = ? WHERE id = ?");
         $disponible = (int)$disponible;
         $sql->bind_param("sssiidii", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible, $pelicula_id);
-        
+
+        return $sql->execute();
+    }
+
+    
+    /**
+     * Cambia el estado de disponibilidad de una película según su ID
+     * @param int $peliculaId
+     * @param bool $estado
+     * @return bool
+     */
+    public function cambiarEstado(int $peliculaId, bool $estado)
+    {
+        $sql = $this->conn->prepare("UPDATE pelicula SET disponible = ? WHERE id = ?");
+        $sql->bind_param("ii", $estado, $peliculaId);
         return $sql->execute();
     }
 
     /**
-     * Cambia el estado de disponibilidad de una película
+     * Agregar un genero existente a una película
      * @param int $pelicula_id
+     * @param int $genero_id
      */
-    public function desactivarPelicula($pelicula_id) {
-        $sql = $this->conn ->prepare("UPDATE pelicula SET disponible = FALSE WHERE id = ?");
-        $sql->bind_param("i", $pelicula_id);
+    public function agregarGeneroPelicula($pelicula_id, $genero_id)
+    {
+        $sql = $this->conn->prepare("INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES (?, ?)");
+        $sql->bind_param("ii", $pelicula_id, $genero_id);
         return $sql->execute();
     }
 }
