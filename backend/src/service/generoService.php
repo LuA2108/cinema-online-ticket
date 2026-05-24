@@ -12,16 +12,17 @@ use App\Models\Genero;
 class GeneroService
 {
     private $conn;
-    private $generoModel;
+    private Genero $generoModel;
 
     /**
      * Constructor de la clase
      * @param mysqli $conn conexión a la base de datos para inyección de dependencias
+     * @param Genero $generoModel modelo de género para realizar operaciones CRUD
      */
-    public function __construct($conn)
+    public function __construct($conn, $generoModel)
     {
         $this->conn = $conn;
-        $this->generoModel = new Genero($conn);
+        $this->generoModel = $generoModel;
     }
 
     public function listarGeneros()

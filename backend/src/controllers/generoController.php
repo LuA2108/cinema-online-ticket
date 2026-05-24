@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Models\Genero;
 use App\Service\GeneroService;
 
 /**
@@ -12,13 +13,15 @@ use App\Service\GeneroService;
 class GeneroController
 {
 
-    private $conn;
-    private $generoService;
+    private GeneroService $generoService;
 
-    public function __construct($conn)
+    /**
+     * Constructor de la clase
+     * @param GeneroService $generoService servicio de géneros para realizar operaciones CRUD
+     */
+    public function __construct($generoService)
     {
-        $this->conn = $conn;
-        $this->generoService = new GeneroService($conn);
+        $this->generoService = $generoService;
     }
 
     /**
