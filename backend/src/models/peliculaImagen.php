@@ -47,14 +47,17 @@ class PeliculaImagen
      * Función que agrega una imagen asociada a una película en la base de datos
      * @param int $pelicula_id ID de película
      * @param string $tipo Tipo de imagen (poster, banner, ...)
-     * @param mixed $url URL o enlace de la imgen
-     * @return bool True si la inserción fue exitosa, False en caso contrario
+     * @param string $url URL o enlace de la imgen
+     * @return int ID de la imagen creada o -1 si hubo un error
      */
     public function crear($pelicula_id, $tipo, $url)
     {
         $sql = $this->conn->prepare("INSERT INTO pelicula_imagen (pelicula_id, tipo, url) VALUES (?, ?, ?)");
         $sql->bind_param("iss", $pelicula_id, $tipo, $url);
-        return $sql->execute();
+        if ($sql->execute()) {
+            return $this->conn->insert_id;
+        }
+        return -1;
     }
 
     /**
