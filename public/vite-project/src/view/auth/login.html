@@ -1,33 +1,185 @@
-<section class="container_login">
-    <h1>Bienvenido</h1>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cinema Online Ticket</title>
+    <meta name="description" content='Cinema Online Ticket'>
+    <meta name="author" content="Lucero Anay Cahuana Cornejo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="64x42" href="src/assets/iconos/logo-limpio.png">
+    <!-- BootStrap - Font Awesome - Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b527a55e68.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
 
-    <div class="auth_form">
-        <h2 class="login_titulo">Iniciar sesión</h2>
+    <!-- CSS global -->
+    <link rel="stylesheet" href="/cinema-online-ticket/public/vite-project/src/view/public/style/css/main.css">
 
-        <!-- Formulario - inicio sesión -->
-        <form action="index.php?page=auth/login" method="post">
+</head>
 
-            <!-- Email  -->
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Correo">
+<body>
+    <!-- ======= Cabecera : Logo / Buscador / Menu  ======= -->
+    <header>
+        <div class="contenedor-logo-sesion">
+            <!-- LOGO -->
+            <div class="logo">
+                <a href="index.php"><img src="../../assets/iconos/logo-limpio.png" alt="Icono logo cine" width="170px"
+                        height="100px"></a>
+            </div>
 
-            <!-- Contraseña -->
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="contrasena" placeholder="Contraseña">
+            <!-- SUBMENU para SESION-->
+            <nav class="menu-sesion">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#"> <i class="fa-solid fa-user" style="color: rgb(239, 244, 255);"></i></a>
+                        <ul class="submenu">
+                            <li><a href="src/view/auth/login.html">Iniciar sesión</a></li>
+                            <li><a href="src/view/auth/registro.html">Registrarse</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Menu y buscador -->
+        <div class="container-menu-buscador">
+            <!-- MENU -->
+            <nav class="menu">
+                <ul class="">
+                    <li class="menu-item">
+                        <a class="item-peliculas" href="#"> <i class="fa-solid fa-clapperboard"></i> Películas</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-servicios" href="#"> <img class="icono"
+                                src="src/assets/iconos/palomitas-de-maiz.png" alt="Icono de palomitas"> Servicios</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-info" href="#"> <i class="fa-solid fa-info"></i>Sobre Nosotros</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-reserva" href="#"> <i class="fa-solid fa-ticket"></i> Reservar película</a>
+                    </li>
+                    <li class="menu-item buscador">
+                        <img src="/src/assets/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
+                        <form action="#" method="get">
+                            <input type="search" name="buscador" placeholder="Buscar película...">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="container_login">
+            <h1>Bienvenido</h1>
 
-            <?php if (!empty($_SESSION['error'])): ?>
-                <div class="error_login">
-                    <p>
-                        <?php echo $_SESSION['error']; ?>
-                    </p>
+            <div class="auth_form">
+                <h2 class="login_titulo">Iniciar sesión</h2>
+
+                <!-- Formulario - inicio sesión -->
+                <form action="index.php?page=auth/login" method="post">
+
+                    <!-- Email  -->
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Correo">
+
+                    <!-- Contraseña -->
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="contrasena" placeholder="Contraseña">
+
+
+                    <!-- Confirmacion y enlace -->
+                    <button class="button" type="submit">Enviar</button>
+                    <p>¿No tienes cuenta? <a href="index.php?page=auth/registro">Registrate</a></p>
+                </form>
+
+            </div>
+        </section>
+    </main>
+    <footer>
+        <hr>
+        <div class="container-footer">
+            <section class="container-redes-sociales">
+                <h2 class="footer-titulo titulo-logo">CineToon</h2>
+                <p>"Disfruta de las mejores películas y estrenos exclusivos"</p>
+
+                <div class="container-icons-redes">
+                    <h3 class="subtitulo">Siguenos en redes sociales:</h3>
+                    <ul class="iconos-redes-sociales">
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-facebook icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-instagram icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-x-twitter icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-youtube icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-tiktok icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-            <?php unset($_SESSION['error']); ?>
-            <?php endif; ?>
+            </section>
 
-            <!-- Confirmacion y enlace -->
-            <button class="button" type="submit">Enviar</button>
-            <p>¿No tienes cuenta? <a href="index.php?page=auth/registro">Registrate</a></p>
-        </form>
+            <section>
+                <h2 class="footer-titulo">Explorar</h2>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Peliculas</a></li>
+                    <li><a href="#">Estrenos</a></li>
+                    <li><a href="#">Cartelera</a></li>
+                    <li><a href="#">Reserva</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Cuenta</h2>
+                <ul>
+                    <li><a href="#">Iniciar sesion</a></li>
+                    <li><a href="#">Registrarse</a></li>
+                    <li><a href="#">Mi perfil</a></li>
+                    <li><a href="#">Mi lista</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Información</h2>
+                <ul>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Noticias</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Legal</h2>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Política de cookies</a></li>
+                </ul>
+            </section>
+        </div>
 
-    </div>
-</section>
+        <div class="copy">
+            <hr>
+            <p>&copy; 2026 <span>CineToon</span>. Todos los derechos reservados.</p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="module" src="/src/main.js"></script>
+    </footer>
+</body>
