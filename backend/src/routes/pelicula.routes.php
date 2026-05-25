@@ -87,65 +87,44 @@ try {
 
     // GET /api/peliculas - Obtener listado de películas
     if ($method === 'GET' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->index()
-        ]);
+        echo json_encode($controller->index());
         exit;
     }
 
     // GET /api/peliculas/completas - Obtener películas con relaciones completas (géneros, imágenes)
     if ($method === 'GET' && $param === 'completas') {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->listarPeliculasCompletas()
-        ]);
+        echo json_encode($controller->listarPeliculasCompletas());
         exit;
     }
 
     // GET /api/peliculas/1 - Obtener película por ID
     if ($method === 'GET' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->mostrarPelicula($id)
-        ]);
+        echo json_encode($controller->mostrarPelicula($id));
         exit;
     }
 
     // POST /api/peliculas - Crear nueva película
     if ($method === 'POST' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->guardarPelicula($body)
-        ]);
+        echo json_encode( $controller->guardarPelicula($body));
         exit;
     }
 
     // PUT /api/peliculas/1 - Actualizar película existente
     if ($method === 'PUT' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->actualizarPelicula($id, $body)
-        ]);
+        echo json_encode($controller->actualizarPelicula($id, $body));
         exit;
     }
 
 
     // PATCH /api/peliculas/1/activar - Activar película
     if ($method === 'PATCH' && $id && $action === 'activar') {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->activar($id)
-        ]);
+        echo json_encode($controller->activar($id));
         exit;
     }
 
     // PATCH /api/peliculas/1/desactivar - Desactivar película
     if ($method === 'PATCH' && $id && $action === 'desactivar') {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->desactivar($id)
-        ]);
+        echo json_encode($controller->desactivar($id));
         exit;
     }
 } catch (Exception $e) {

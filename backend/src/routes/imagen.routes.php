@@ -64,53 +64,33 @@ try {
 
     // GET /imagenes
     if ($method === 'GET' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->index()
-        ]);
+        echo json_encode($controller->index());
         exit;
     }
 
     // GET /imagenes/1
     if ($method === 'GET' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->obtenerImagen($id)
-        ]);
+        echo json_encode($controller->obtenerImagen($id));
         exit;
     }
 
     // GET /imagenes/pelicula/1
     if ($method === 'GET' && $param === 'pelicula') {
-
         $peliculaId = (int)($segments[2] ?? 0);
-
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->imagenesPorPelicula($peliculaId)
-        ]);
+        echo json_encode($controller->imagenesPorPelicula($peliculaId));
         exit;
     }
 
     // POST /imagenes
     if ($method === 'POST' && !$param) {
-
         $body = json_decode(file_get_contents("php://input"), true);
-
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->crearImagen($body)
-        ]);
+        echo json_encode($controller->crearImagen($body));
         exit;
     }
 
     // DELETE /imagenes/1
     if ($method === 'DELETE' && $id) {
-
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->eliminarImagen($id)
-        ]);
+        echo json_encode($controller->eliminarImagen($id));
         exit;
     }
 } catch (Exception $e) {

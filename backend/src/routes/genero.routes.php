@@ -65,55 +65,37 @@ try {
     
     // GET /api/generos - Obtener listado de géneros
     if ($method === 'GET' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->index()
-        ]);
+        echo json_encode($controller->index());
         exit;
     }
 
     // GET /api/generos/completas - Obtener géneros con relaciones completas
     if ($method === 'GET' && $param === 'completas') {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->index()
-        ]);
+        echo json_encode( $controller->index());
         exit;
     }
 
     // GET /api/generos/1 - Obtener género por ID
     if ($method === 'GET' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->mostrarGenero($id)
-        ]);
+        echo json_encode($controller->mostrarGenero($id));
         exit;
     }
 
     // POST /api/generos - Crear nuevo género
     if ($method === 'POST' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->crearGenero($body)
-        ]);
+        echo json_encode($controller->crearGenero($body));
         exit;
     }
 
     // PUT /api/generos/1 - Actualizar género existente
     if ($method === 'PUT' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->actualizarGenero($id, $body)
-        ]);
+        echo json_encode($controller->actualizarGenero($id, $body));
         exit;
     }
 
     // DELETE /api/generos/1 - Eliminar género
     if ($method === 'DELETE' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->eliminarGenero($id)
-        ]);
+        echo json_encode($controller->eliminarGenero($id));
         exit;
     }
 

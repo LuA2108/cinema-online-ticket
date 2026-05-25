@@ -43,9 +43,6 @@ $resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
 // Parámetro principal (normalmente ID) o acción (activar/desactivar)
 $param = $segments[1] ?? null;
 
-// Acción adicional para rutas como: /peliculas/1/activar
-$action = $segments[2] ?? null;
-
 // Convertir el parámetro a ID numérico si es posible, o dejarlo como null
 $id = is_numeric($param) ? (int) $param : null;
 
@@ -60,55 +57,37 @@ try {
 
     // GET /api/usuarios - Listar todos los usuarios
     if ($method === 'GET' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->index()
-        ]);
+    echo json_encode($controller->index());
         exit;
     }
 
     // GET /api/usuarios/1 - Obtener usuario por ID
     if ($method === 'GET' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->mostrarUsuarioID($id)
-        ]);
+    echo json_encode($controller->mostrarUsuarioID($id));
         exit;
     }
 
     // GET /api/usuarios/email - Obtener usuario por email
     if ($method === 'GET' && $param === 'email') {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->mostrarUsuarioEmail($body['email'])
-        ]);
+        echo json_encode($controller->mostrarUsuarioEmail($segments[2] ?? ''));
         exit;
     }
 
     // POST /api/usuarios - Crear nuevo usuario
     if ($method === 'POST' && !$param) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->guardar($body)
-        ]);
+        echo json_encode($controller->guardar($body));
         exit;
     }
 
     // PUT /api/usuarios/1 - Actualizar usuario existente
     if ($method === 'PUT' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->actualizar($id, $body)
-        ]);
+        echo json_encode($controller->actualizar($id, $body));
         exit;
     }
 
     // DELETE /api/usuarios/1 - Eliminar usuario existente
     if ($method === 'DELETE' && $id) {
-        echo json_encode([
-            'success' => true,
-            'data' => $controller->eliminar($id)
-        ]);
+        echo json_encode($controller->eliminar($id));
         exit;
     }
     
