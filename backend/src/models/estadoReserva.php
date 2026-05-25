@@ -29,8 +29,9 @@ class EstadoReserva
     }
 
     /**
-     * Obtiene el datos del estado segun el ID
-     * @param mixed $estado_id
+     * Obtiene los datos del estado segun el ID
+     * @param int $estado_id
+     * @return array
      */
     public function obtenerEstado($estado_id)
     {
