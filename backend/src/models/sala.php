@@ -72,7 +72,7 @@ class Sala
         $resultado = $sql->execute();
 
         if($resultado) {
-            return $resultado->insert_id();
+            return $this->conn->insert_id;
         }
 
         return -1;
