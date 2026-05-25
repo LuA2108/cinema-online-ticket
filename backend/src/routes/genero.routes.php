@@ -1,5 +1,5 @@
 <?php 
-use App\Controller\GeneroController;
+use App\Controllers\GeneroController;
 use App\Service\GeneroService;
 use App\Models\Genero;
 
