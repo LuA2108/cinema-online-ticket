@@ -112,6 +112,7 @@ class PeliculaService
      * @param int $id El ID de la película a actualizar
      * @param array $pelicula Los datos actualizados de la película
      * @param array $generos Los géneros actualizados de la película
+     * @return array Resultado de la operación de actualización, incluyendo un mensaje de éxito o error según corresponda
      */
     public function actualizarPelicula($id, $pelicula, $generos)
     {
@@ -188,15 +189,15 @@ class PeliculaService
 
     // ESTADO DE PELÍCULA
 
-    public function activarPelicula(int $id): bool
+    public function activarPelicula(int $id)
     {
-        return $this->peliculaModelo
-            ->cambiarEstado($id, true);
+        $resultado = $this->peliculaModelo->peliculaId($id);
+        return ["success" => $resultado, "datos" => $resultado, "error" => $resultado ? null : "No se encontró la película con ID: $id."];
     }
 
-    public function desactivarPelicula(int $id): bool
+    public function desactivarPelicula(int $id)
     {
-        return $this->peliculaModelo
-            ->cambiarEstado($id, false);
+        $resultado = $this->peliculaModelo->peliculaId($id);
+        return ["success" => $resultado, "datos" => $resultado, "error" => $resultado ? null : "No se encontró la película con ID: $id."];
     }
 }

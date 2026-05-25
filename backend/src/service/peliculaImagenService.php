@@ -30,7 +30,7 @@ class PeliculaImagenService
 
     /**
      * Lista todas las imagenes
-     * @return array
+     * @return array Resultado de la operación de listado de todas las imágenes, incluyendo un array de imágenes agrupadas por película o un mensaje de error si la operación falla
      */
     public function listarTodas()
     {
@@ -41,7 +41,7 @@ class PeliculaImagenService
     /**
      * Lista las imagenes de una película específica
      * @param int $peliculaId
-     * @return array
+     * @return array Resultado de la operación de listado de imágenes por película, incluyendo un array de imágenes o un mensaje de error si la operación falla 
      */
     public function listarImagenesPorPelicula(int $peliculaId)
     {
@@ -55,7 +55,7 @@ class PeliculaImagenService
     /**
      * Obtiene una imagen específica por su ID
      * @param int $imagenId
-     * @return array|null
+     * @return array  Resultado de la operación de obtención de imagen, incluyendo los detalles de la imagen o un mensaje de error si la operación falla
      */
     public function obtenerImagen(int $imagenId)
     {
@@ -76,6 +76,7 @@ class PeliculaImagenService
      * @param int $peliculaId ID de la película a la que se le agregará la imagen
      * @param string $tipo Tipo de imagen (poster, banner, etc.)
      * @param string $url URL o enlace de la imagen
+     * @return array Resultado de la operación de creación de imagen
      */
     public function agregar(int $peliculaId, string $tipo, string $url)
     {
