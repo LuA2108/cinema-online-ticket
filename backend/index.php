@@ -30,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// 
+$respuesta = false;
+
 // ==========================
 // CARGA DE MÓDULOS (ROUTERS)
 // ==========================
@@ -40,11 +43,12 @@ require_once __DIR__ . '/src/routes/genero.routes.php';
 
 
 // SI NINGÚN MÓDULO RESPONDIÓ
-http_response_code(404);
+if (!$respuesta) {
+    http_response_code(404);
 
-echo json_encode([
-    'success' => false,
-    'message' => 'Ruta no encontrada'
-]);
-
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ruta no encontrada'
+    ]);
+}
 ?>

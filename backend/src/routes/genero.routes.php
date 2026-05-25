@@ -8,6 +8,8 @@ require_once __DIR__ . '/../models/Genero.php';
 require_once __DIR__ . '/../service/GeneroService.php';
 require_once __DIR__ . '/../controllers/GeneroController.php';
 
+global $respuesta;
+
  // Conexión a base de datos y creación del controlador
 $conn = (new Database())->obtenerConexion();
 
@@ -46,16 +48,12 @@ $action = $segments[2] ?? null;
 // Convertir el parámetro a ID numérico si es posible, o dejarlo como null
 $id = is_numeric($param) ? (int) $param : null;
 
-/**
- * RUTEO DE PETICIONES
- * 
- * Aquí se definen las rutas para el módulo de géneros.
- * Se pueden agregar más rutas para otros módulos (películas, salas, ...)
- * siguiendo la misma estructura.
- * 
- * El controlador se encarga de procesar la lógica de cada ruta.
- * Todas las respuestas se envían en formato JSON con un formato estándar.
- */
+/* SI NO ES ESTE MÓDULO, SALIR */
+if ($resource !== 'generos') {
+    return;
+}
+
+$respuesta = true; // este route de generos se encargará de manejar la solicitud actual
 
     /**
  * MANEJO DE RUTAS Y RESPUESTAS
@@ -64,11 +62,6 @@ $id = is_numeric($param) ? (int) $param : null;
  * un bloque try/catch para manejar errores.
  */
 try {
-
-    // 
-    if ($resource !== 'generos') {
-        return;
-    }
     
     // GET /api/generos - Obtener listado de géneros
     if ($method === 'GET' && !$param) {

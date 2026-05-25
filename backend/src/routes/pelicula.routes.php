@@ -17,6 +17,7 @@ require_once __DIR__ . '/../models/PeliculaGenero.php';
 require_once __DIR__ . '/../service/PeliculaService.php';
 require_once __DIR__ . '/../controllers/PeliculaController.php';
 
+global $respuesta; // Variable global para indicar si la ruta fue manejada por este módulo
 
 // Crear conexión a base de datos
 $conn = (new Database())->obtenerConexion();
@@ -69,6 +70,13 @@ $action = $segments[2] ?? null;
 $id = is_numeric($param) ? (int) $param : null;
 
 
+/* SI NO ES ESTE MÓDULO, SALIR */
+if ($resource !== 'peliculas') {
+    return;
+}
+
+$respuesta = true; // este route de peliculas se encargará de manejar la solicitud actual
+
 /**
  * MANEJO DE RUTAS Y RESPUESTAS
  * ===============================
@@ -77,11 +85,6 @@ $id = is_numeric($param) ? (int) $param : null;
  */
 try {
 
-    // 
-    if ($resource !== 'peliculas') {
-        return;
-    }
-    
     // GET /api/peliculas - Obtener listado de películas
     if ($method === 'GET' && !$param) {
         echo json_encode([
