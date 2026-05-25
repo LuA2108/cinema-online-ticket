@@ -11,6 +11,10 @@ class Sala
 {
     private $conn;
 
+    /**
+     * Constructor de la clase Sala
+     * @param mixed $conn
+     */
     public function __construct($conn)
     {
         $this->conn = $conn;
@@ -24,6 +28,19 @@ class Sala
     {
         $sql = $this->conn->query("SELECT * FROM sala");
         return $sql->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Obtiene una sala por su ID
+     * @param int $sala_id
+     * @return array Sala encontrada o null si no existe
+     */
+    public function listarSala($sala_id)
+    {
+        $sql = $this->conn->prepare("SELECT * FROM sala WHERE id = ?");
+        $sql->bind_param("i", $sala_id);
+        $sql->execute();
+        return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
@@ -45,13 +62,20 @@ class Sala
      * Agrega una nueva sala
      * @param mixed $numero Numero de sala
      * @param mixed $capacidad Capacidad de la sala
+     * @return int ID de la sala creada, -1 si hubo un error
      */
     public function agregarSala($numero, $capacidad)
     {
         $sql = $this->conn->prepare("INSERT INTO sala(numero, capacidad) VALUES(?, ?)");
         $sql->bind_param("ii", $numero, $capacidad);
 
-        return $sql->execute();
+        $resultado = $sql->execute();
+
+        if($resultado) {
+            return $resultado->insert_id();
+        }
+
+        return -1;
     }
 
     /**
@@ -60,6 +84,7 @@ class Sala
      * @param int $numero Numero de sala
      * @param int $capacidad Capacidad de la sala
      * @param boolean $activa Estado de la sala
+     * @return bool True al ser actualizada, false al fallar
      */
     public function actualizarSala($sala_id, $numero, $capacidad, $activa)
     {
