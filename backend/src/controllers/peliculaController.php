@@ -22,13 +22,18 @@ class PeliculaController
     }
 
     /**
-     * Obtiene una lista de todas las películas de la base de datos y la devuelve en formato JSON
+     * Obtiene una lista de todas las películas de la base de datos
+     * @return array Un array de películas
      */
     public function index()
     {
         return $this->peliculaService->listarPeliculas();
     }
 
+    /**
+     * Lista todas las películas con detalles completos de la base de datos incluyendo géneros e imágenes asociadas
+     * @return array Un array de películas con detalles completos
+     */
     public function listarPeliculasCompletas()
     {
         return $this->peliculaService->listarPeliculasCompletas();
@@ -70,8 +75,9 @@ class PeliculaController
     }
 
     /**
-     * Desactiva una película de la base de datos utilizando su ID
+     * Activa una película de la base de datos utilizando su ID
      * @param int $id
+     * @return array Resultado de la operación de activación, incluyendo un mensaje de éxito o error según corresponda
      */
     public function activar($id)
     {
@@ -79,8 +85,9 @@ class PeliculaController
     }
 
     /**
-     * Summary of desactivar
+     * Desactiva una película de la base de datos utilizando su ID
      * @param mixed $id
+     * @return array Resultado de la operación de desactivación, incluyendo un mensaje de éxito o error según corresponda
      */
     public function desactivar($id)
     {

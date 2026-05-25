@@ -26,6 +26,7 @@ class GeneroController
 
     /**
      * Obtener todos los géneros
+     * @return array Resultado de la operación con éxito o error
      */
     public function index()
     {
@@ -35,8 +36,8 @@ class GeneroController
     /**
      * Obtener género por ID
      * @param int $id
-      * @return array|null
-     */
+     * @return array Resultado de la operación con éxito o error
+    */
     public function mostrarGenero($id)
     {
         return $this->generoService->obtenerGenero($id);
@@ -45,15 +46,10 @@ class GeneroController
     /**
      * Crear género
      * @param string $nombre
-     * @return int ID del nuevo género o -1 si hubo un error
+     * @return array Resultado de la operación con éxito o error
      */
     public function crearGenero($nombre)
     {
-        if (!isset($nombre)) {
-            throw new \InvalidArgumentException(
-                "El nombre del género es obligatorio."
-            );
-        }
         return $this->generoService->crearGenero($nombre);
     }
 
@@ -61,22 +57,17 @@ class GeneroController
      * Actualizar género
      * @param int $id ID del género a actualizar
      * @param string $nombre Nuevo nombre del género
-     * @return bool true si se actualizó correctamente, false en caso contrario
+     * @return array Resultado de la operación con éxito o error
      */
     public function actualizarGenero($id, $nombre)
     {
-        if (!isset($nombre)) {
-            throw new \InvalidArgumentException(
-                "El nombre del género es obligatorio."
-            );
-        }
         return $this->generoService->actualizarGenero($id, $nombre);
     }
 
     /**
      * Eliminar género
      * @param int $id ID del género a eliminar
-     * @return bool true si se eliminó correctamente, false en caso contrario
+     * @return array Resultado de la operación con éxito o error
      */
     public function eliminarGenero($id)
     {

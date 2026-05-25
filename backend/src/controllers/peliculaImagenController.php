@@ -24,25 +24,39 @@ class PeliculaImagenController
         $this->peliculaImagenService = $peliculaImagenService;
     }
 
+    /**
+     * Lista las imagenes de todas las películas
+     * @return array
+     */
     public function index()
     {
         return $this->peliculaImagenService->listarTodas();
     }
 
+    /**
+     * Lista las imagenes de una película específica utilizando su ID
+     * @param int $peliculaId ID de la película para la cual se desean listar las imágenes
+     * @return array Resultado de la operación de listado de imágenes por película, incluyendo un array de imágenes o un mensaje de error si la operación falla 
+     */
     public function imagenesPorPelicula(int $peliculaId)
     {
         return $this->peliculaImagenService->listarImagenesPorPelicula($peliculaId);
     }
 
+    /**
+     * Obtiene una imagen específica por su ID
+     * @param int $imagenId
+     * @return array Resultado de la operación de obtención de imagen, incluyendo los detalles de la imagen o un mensaje de error si la operación falla
+     */
     public function obtenerImagen(int $imagenId)
     {
         return $this->peliculaImagenService->obtenerImagen($imagenId);
     }
 
     /**
-     * Summary of crearImagen
+     * Crea una nueva imagen para una película utilizando los datos proporcionados
      * @param array $datos
-     * @throws \InvalidArgumentException
+     * @return array Resultado de la operación de creación de imagen
      */
     public function crearImagen(array $datos)
     {
@@ -53,6 +67,11 @@ class PeliculaImagenController
         );
     }
 
+    /**
+     * Elimina una imagen de la base de datos utilizando su ID
+     * @param int $imagenId
+     * @return array Resultado de la operación de eliminación, incluyendo un mensaje de éxito o error según corresponda
+     */
     public function eliminarImagen(int $imagenId)
     {
         return $this->peliculaImagenService->eliminar($imagenId);
