@@ -18,29 +18,6 @@ require_once __DIR__ . '/../service/PeliculaService.php';
 require_once __DIR__ . '/../controllers/PeliculaController.php';
 
 
-// HEADERS HTTP
-// Configuración global de respuestas JSON y CORS
-// para permitir peticiones desde frontend.
-
-// Todas las respuestas serán JSON
-header('Content-Type: application/json');
-
-// Permitir acceso desde cualquier origen
-header('Access-Control-Allow-Origin: *');
-
-// Métodos HTTP permitidos
-header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
-
-// Headers permitidos desde frontend
-header('Access-Control-Allow-Headers: Content-Type');
-
-// El navegador envía una petición OPTIONS antes de las peticiones POST, PUT, PATCH o DELETE
-// Aquí se responde correctamente para evitar bloqueos por CORS
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
 // Crear conexión a base de datos
 $conn = (new Database())->obtenerConexion();
 
@@ -100,18 +77,11 @@ $id = is_numeric($param) ? (int) $param : null;
  */
 try {
 
-    /**
-     * Validar recurso principal
-     */
+    // Verificar que el recurso solicitado es "peliculas"
     if ($resource !== 'peliculas') {
-        http_response_code(404);
-        echo json_encode([
-            'success' => false,
-            'message' => 'Recurso no encontrado'
-        ]);
-        exit;
+        return;
     }
-
+    
     // GET /api/peliculas - Obtener listado de películas
     if ($method === 'GET' && !$param) {
         echo json_encode([
@@ -175,13 +145,6 @@ try {
         ]);
         exit;
     }
-
-    // Ruta no encontrada
-    http_response_code(404);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Ruta no encontrada'
-    ]);
 } catch (Exception $e) {
 
     // Manejo global de errores con código 500 y mensaje de error
