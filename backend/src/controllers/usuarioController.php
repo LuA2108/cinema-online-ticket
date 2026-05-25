@@ -1,6 +1,7 @@
 <?php
-//Importa modelo usuario
-require_once __DIR__ . "/../models/usuario.php";
+
+namespace App\Controller;
+use App\Service\UsuarioService;
 
 /**
  * Controlador de usuarios
@@ -8,7 +9,8 @@ require_once __DIR__ . "/../models/usuario.php";
  */
 class UsuarioController
 {
-    private $usuario;
+    private $conn;
+    private $usuarioService;
 
     /**
      * Contructor del controlador de usuarios
@@ -16,15 +18,57 @@ class UsuarioController
      */
     public function __construct($conn)
     {
-        $this->usuario = new Usuario($conn);
+        $this->conn = $conn;
+        $this->usuarioService = new UsuarioService($conn);
+    }
+
+    /**
+     * Devuelve una lista de todos los usuarios
+     * @return array Resultado de la consulta, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function index()
+    {
+        return $this->usuarioService->listarUsuarios();
+
+    }
+
+    /**
+     * Obtiene un usuario por su ID
+     * @param mixed $id ID del usuario a mostrar
+     * @return array Resultado de la consulta, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function mostrarUsuarioID($id)
+    {
+        return $this->usuarioService->obtenerUsuarioPorID($id);
+
+    }
+
+    /**
+     * Obtiene un usuario por su email
+     * @param mixed $email Email del usuario a mostrar
+     * @return array Resultado de la consulta, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function mostrarUsuarioEmail($email)
+    {
+        return $this->usuarioService->obtenerUsuarioEmail($email);
     }
     
+
     /**
-     * Obtiene la lista de todos los usuarios
-     * @return array Lista de usuarios
+     * Crea un nuevo usuario
+     * @param array $datos Datos del usuario a crear
+     * @return array Resultado de la creación, incluyendo un mensaje de éxito o error según corresponda
      */
-    public function listarUsuarios()
-    {
-        return $this->usuario->obtenerUsuarios();
+    public function guardar($datos) {
+        return $this->usuarioService->crearUsuario($datos);
+    }
+
+    /**
+     * Elimina un usuario existente
+     * @param mixed $id ID del usuario a eliminar
+     * @return array Resultado de la eliminación, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function eliminar($id) {
+        return $this->usuarioService->eliminarUsuario($id);
     }
 }
