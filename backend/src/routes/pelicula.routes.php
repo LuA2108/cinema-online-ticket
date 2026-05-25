@@ -1,67 +1,157 @@
 <?php
 
-use App\Controller\PeliculaController;
+use App\Controllers\PeliculaController;
 use App\Service\PeliculaService;
+use App\Models\Pelicula;
 use App\Models\Genero;
 use App\Models\PeliculaGenero;
-use App\Models\Pelicula;
 
-require_once __DIR__ . '/../config/Database.php';
+require_once __DIR__ . '/../../config/database.php';
 
-/**
- * Conexión a base de datos y creación del controlador
- */
+// Cargar clases manualmente
+require_once __DIR__ . '/../models/Pelicula.php';
+require_once __DIR__ . '/../models/Genero.php';
+require_once __DIR__ . '/../models/PeliculaGenero.php';
+require_once __DIR__ . '/../service/PeliculaService.php';
+require_once __DIR__ . '/../controllers/PeliculaController.php';
+
+header('Content-Type: application/json');
+
+// Permitir peticiones desde JS/frontend
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Responder preflight de CORS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Crear conexión
 $conn = (new Database())->obtenerConexion();
 
-// Modelos necesarios para el controlador de películas
+// Crear modelos
 $peliculaModel = new Pelicula($conn);
 $generoModel = new Genero($conn);
 $peliculaGeneroModel = new PeliculaGenero($conn);
 
-// Servicio de películas
-$peliculaService = new PeliculaService($peliculaModel, $generoModel, $peliculaGeneroModel, $conn);
+// Crear service
+$peliculaService = new PeliculaService(
+    $peliculaModel,
+    $peliculaGeneroModel,
+    $generoModel,
+    $conn
+);
 
-// Controlador de películas
+// Crear controller
 $controller = new PeliculaController($peliculaService);
 
-/**
- * Se obtiene la URI y el método HTTP de la petición
- */
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// Leer método HTTP
 $method = $_SERVER['REQUEST_METHOD'];
 
-// GET /api/peliculas - Listar todas las películas
-if ($uri === '/api/peliculas' && $method === 'GET') {
-    echo json_encode($controller->index());
-    exit;
-}
+// Leer JSON enviado desde el frontend
+$body = json_decode(file_get_contents('php://input'), true) ?? [];
 
-/* GET /api/peliculas/{id} - Obtiene una pelicula */
-if (preg_match('#^/api/peliculas/(\d+)$#', $uri, $m) && $method === 'GET') {
-    echo json_encode($controller->mostrarPelicula($m[1]));
-    exit;
-}
+// Leer ruta enviada por .htaccess
+$route = $_GET['route'] ?? '';
+$route = trim($route, '/');
 
-// POST /api/peliculas - Crear una nueva película
-if ($uri === '/api/peliculas' && $method === 'POST') {
-    echo json_encode($controller->guardarPelicula());
-    exit;
-}
+$segments = $route === '' ? [] : explode('/', $route);
 
-// PUT /api/peliculas - Actualizar una película existente
-if ($uri === '/api/peliculas' && $method === 'PUT') {
-    echo json_encode($controller->actualizarPelicula());
-    exit;
-}
+$resource = $segments[0] ?? null;
+$param = $segments[1] ?? null;
+$action = $segments[2] ?? null;
 
-// POST /api/peliculas/{id}/activar - Activar una película
-if (preg_match('#^/api/peliculas/(\d+)/activar$#', $uri, $m)) {
-    echo json_encode($controller->activar($m[1]));
-    exit;
-}
+// También permitimos query params por compatibilidad
+$id = is_numeric($param) ? (int) $param : null;
 
-// POST /api/peliculas/{id}/desactivar - Desactivar una película
-if (preg_match('#^/api/peliculas/(\d+)/desactivar$#', $uri, $m)) {
-    echo json_encode($controller->desactivar($m[1]));
-    exit;
+try {
+
+    if ($resource !== 'peliculas') {
+        http_response_code(404);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Recurso no encontrado'
+        ]);
+        exit;
+    }
+
+    // GET /api/peliculas
+    if ($method === 'GET' && !$param) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->index()
+        ]);
+        exit;
+    }
+
+    // GET /api/peliculas/completas
+    if ($method === 'GET' && $param === 'completas') {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->listarPeliculasCompletas()
+        ]);
+        exit;
+    }
+
+    // GET /api/peliculas/1
+    if ($method === 'GET' && $id) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->mostrarPelicula($id)
+        ]);
+        exit;
+    }
+
+    // POST /api/peliculas
+    if ($method === 'POST' && !$param) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->guardarPelicula($body)
+        ]);
+        exit;
+    }
+
+    // PUT /api/peliculas/1
+    if ($method === 'PUT' && $id) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->actualizarPelicula($id, $body)
+        ]);
+        exit;
+    }
+
+
+    // PATCH /api/peliculas/1/activar
+    if ($method === 'PATCH' && $id && $action === 'activar') {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->activar($id)
+        ]);
+        exit;
+    }
+
+    // PATCH /api/peliculas/1/desactivar
+    if ($method === 'PATCH' && $id && $action === 'desactivar') {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->desactivar($id)
+        ]);
+        exit;
+    }
+
+    http_response_code(404);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ruta no encontrada'
+    ]);
+
+} catch (Exception $e) {
+
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
 }

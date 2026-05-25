@@ -88,7 +88,7 @@ class Pelicula
     {
         $sql = $this->conn->prepare("INSERT INTO pelicula(titulo, descripcion, director, anio, duracion, precio, disponible) VALUES(?,?,?,?,?,?,?)");
         $disponible = (int)$disponible;
-        $sql->bind_param("sssiiidi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible);
+        $sql->bind_param("sssiidi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible);
 
         // Ejecutar
         $resultado = $sql->execute();
@@ -132,7 +132,8 @@ class Pelicula
     public function cambiarEstado(int $peliculaId, bool $estado)
     {
         $sql = $this->conn->prepare("UPDATE pelicula SET disponible = ? WHERE id = ?");
-        $sql->bind_param("ii", $estado, $peliculaId);
+        $estadoInt = $estado ? 1 : 0;
+        $sql->bind_param("ii", $estadoInt, $peliculaId);
         return $sql->execute();
     }
 

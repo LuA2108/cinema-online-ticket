@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
-use App\service\PeliculaService;
+use App\Service\PeliculaService;
 
+/**
+ * Controlador de pelicula
+ * 
+ */
 class PeliculaController
 {
     private PeliculaService $peliculaService;
 
     /**
      * Constructor de la clase controlador película
+     * @param PeliculaService $peliculaService El servicio de película que se utilizará para manejar la lógica de negocio relacionada con las películas
      */
-    public function __construct($peliculaService)
+    public function __construct(PeliculaService $peliculaService)
     {
         $this->peliculaService = $peliculaService;
     }
@@ -30,35 +35,40 @@ class PeliculaController
     }
 
     /**
-     * Obtiene una película por su ID y la devuelve en formato JSON
-     * @param int $id
+     * Obtiene los detalles de una película específica utilizando su ID
+     * @param int $id ID de la película que se desea obtener
      */
     public function mostrarPelicula($id)
     {
         return $this->peliculaService->obtenerPeliculaPorId($id);
     }
     /**
-     * Guarda una nueva película en la base de datos utilizando los datos proporcionados en el cuerpo de la solicitud HTTP
+     * Guarda una nueva película en la base de datos utilizando los datos proporcionados 
+     * @return array Resultado de la operación de guardado, incluyendo el ID de la nueva película o un mensaje de error si la operación falla
      */
-    public function guardarPelicula()
+    public function guardarPelicula(array $datos)
     {
-        $datos = $_POST;
         $pelicula = $datos['pelicula'];
         $generos = $datos['generos'];
 
-        $resultado = $this->peliculaService->crearPelicula($pelicula, $generos);
-        return $resultado;
+        return $this->peliculaService->crearPelicula($pelicula, $generos);
     }
 
-    public function actualizarPelicula()
+    /**
+     * Actualiza los datos de una película existente en la base de datos utilizando su ID y los nuevos datos proporcionados
+     * @param int $id ID de la película que se desea actualizar
+     * @param array $datos Los datos de la película a actualizar, incluyendo el ID de la película, los nuevos datos de la película y los géneros asociados
+     * @return array Resultado de la operación de actualización, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function actualizarPelicula($id, $datos)
     {
-        $datos = $_POST;
         $pelicula = $datos['pelicula'];
         $generos = $datos['generos'];
 
-        $resultado = $this->peliculaService->actualizarPelicula($pelicula['id'], $pelicula, $generos);
+        $resultado = $this->peliculaService->actualizarPelicula($id, $pelicula, $generos);
         return $resultado;
     }
+
     /**
      * Desactiva una película de la base de datos utilizando su ID
      * @param int $id

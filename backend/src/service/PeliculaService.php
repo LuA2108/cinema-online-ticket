@@ -116,9 +116,9 @@ class PeliculaService
         try {
             $this->conn->begin_transaction();
 
-            if (!$pelicula) {
+            if (!$pelicula || !$generos) {
                 $this->conn->rollback();
-                return ["error" => "No se proporcionaron datos para actualizar la película."];
+                return ["error" => "No se proporcionaron datos para actualizar la película con ID $id."];
             }
 
             // 1. Actualizar película

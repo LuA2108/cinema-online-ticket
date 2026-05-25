@@ -1,0 +1,8 @@
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /cinema-online-ticket/
+
+# API: /api/peliculas -> backend/index.php?route=peliculas
+# Todo lo que empiece con /api lo enviamos al backend/index.php
+RewriteRule ^api/?(.*)$ backend/index.php?route=$1 [QSA,L]
