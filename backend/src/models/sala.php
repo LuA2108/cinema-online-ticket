@@ -40,7 +40,7 @@ class Sala
         $sql = $this->conn->prepare("SELECT * FROM sala WHERE id = ?");
         $sql->bind_param("i", $sala_id);
         $sql->execute();
-        return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $sql->get_result()->fetch_assoc();
     }
 
     /**
