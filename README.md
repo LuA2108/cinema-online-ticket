@@ -17,3 +17,14 @@ Sistema de venta de entradas online para cines con selección de asientos.
 - user: admin@admin.com
 - password: admin
 
+# API - peliculas
+Para acceder a los distintios api de cada modulo:
+    - Película: http://localhost/cinema-online-ticket/api/peliculas
+    - Genero 
+    - Imagen
+    - Usuario
+    - opinion
+    - Sala
+    - Producto
+    - Función (proyección de película):
+    - Reserva
