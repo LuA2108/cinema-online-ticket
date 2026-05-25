@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 require_once 'config/database.php';
@@ -10,7 +11,7 @@ require_once 'config/database.php';
  * @author lucero Anay Cahuana
  */
 class Usuario
-{   
+{
     private $conn;
 
     /**
@@ -18,7 +19,8 @@ class Usuario
      * Recibe una conexión a la BD mediante inyección de dependencias
      * @param mysqli $conn Conexión a la BD
      */
-    public function __construct($conn) {
+    public function __construct($conn)
+    {
         $this->conn = $conn;
     }
 
@@ -26,10 +28,11 @@ class Usuario
      * Obtiene todos los usuarios de la base de datos
      * @return array Lista de usuarios
      */
-    public function obtenerUsuarios() {
+    public function obtenerUsuarios()
+    {
         $sql = "SELECT * FROM usuario";
         $resultado = $this->conn->query($sql);
-        
+
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -38,24 +41,26 @@ class Usuario
      * @param string $id ID usuario
      * @return array|null Datos del usuario o null si no existe
      */
-    public function buscarPorID($id) {
+    public function buscarPorID($id)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE id = ? ");
-        $stmt -> bind_param("s", $id);
+        $stmt->bind_param("s", $id);
         $stmt->execute();
-        
+
         return $stmt->get_result()->fetch_assoc();
     }
-    
+
     /**
      * Obtiene los datos del usuario según su email
      * @param string $email correo del usuario
      * @return array|null Datos del usuario o null si no existe
      */
-    public function buscarPorEmail($email) {
+    public function buscarPorEmail($email)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email = ? ");
-        $stmt -> bind_param("s", $email);
+        $stmt->bind_param("s", $email);
         $stmt->execute();
-        
+
         return $stmt->get_result()->fetch_assoc();
     }
     /**
@@ -74,7 +79,11 @@ class Usuario
         $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
         $sql->bind_param("isssss", $rol_id, $nombre, $email, $contrasena, $ciudad, $provincia);
 
-        return $sql->execute();
+        if ($sql->execute()) {
+            return $this->conn->insert_id; // 👈 AQUÍ
+        }
+
+        return -1;
     }
 
     /**
@@ -88,10 +97,11 @@ class Usuario
      * @param int $id_usuario
      * @return bool True si se actualizo, False en caso contrario
      */
-    public function actualizarUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia, $id_usuario) {
+    public function actualizarUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia, $id_usuario)
+    {
         $sql = $this->conn->prepare("UPDATE usuario SET rol_id = ?, email= ?, nombre = ?, contrasena = ?, ciudad = ?, provincia = ? WHERE id = ?");
         $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
-        $sql->bind_param("isssssi", $rol_id, $email, $nombre, $contrasena, $ciudad, $provincia, $id_usuario);    
+        $sql->bind_param("isssssi", $rol_id, $email, $nombre, $contrasena, $ciudad, $provincia, $id_usuario);
 
         return $sql->execute();
     }
@@ -101,9 +111,10 @@ class Usuario
      * @param int $usuario_id ID del usuario
      * @return bool True si se elimino, false al fallar
      */
-    public function eliminarUsuario($usuario_id) {
+    public function eliminarUsuario($usuario_id)
+    {
         $sql = $this->conn->prepare("DELETE FROM usuario WHERE id = ?");
-        $sql ->bind_param("i", $usuario_id);
+        $sql->bind_param("i", $usuario_id);
         return $sql->execute();
     }
 }
