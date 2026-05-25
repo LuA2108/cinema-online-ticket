@@ -26,5 +26,6 @@ Para acceder a los distintios api de cada modulo:
     - Sala: http://localhost/cinema-online-ticket/api/salas
     - Función (proyección de película): http://localhost/cinema-online-ticket/api/funciones
     - TipoProducto: http://localhost/cinema-online-ticket/api/tipoproductos
+    - EstadosReservas: http://localhost/cinema-online-ticket/api/estados-reserva
     - Butaca:
     - Reserva

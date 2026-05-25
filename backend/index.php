@@ -7,8 +7,6 @@ require_once __DIR__ . '/config/database.php';
 // HEADERS GLOBALES
 // =========================================================
 
-
-
 // Todas las respuestas serán JSON
 header('Content-Type: application/json');
 
@@ -43,6 +41,7 @@ require_once __DIR__ . '/src/routes/usuarios.routes.php';
 require_once __DIR__ . '/src/routes/sala.routes.php';
 require_once __DIR__ . '/src/routes/funcion.routes.php';
 require_once __DIR__ . "/src/routes/tipoProducto.routes.php";
+require_once __DIR__ . "/src/routes/estadosReserva.routes.php";
 
 // Aquí más rutas para otros módulos (...)
 
