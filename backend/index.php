@@ -41,6 +41,8 @@ require_once __DIR__ . '/src/routes/genero.routes.php';
 require_once __DIR__ . '/src/routes/imagen.routes.php';
 require_once __DIR__ . '/src/routes/usuarios.routes.php';
 require_once __DIR__ . '/src/routes/sala.routes.php';
+require_once __DIR__ . '/src/routes/funcion.routes.php';
+
 // Aquí más rutas para otros módulos (...)
 
 
