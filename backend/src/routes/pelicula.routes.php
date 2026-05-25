@@ -77,7 +77,7 @@ $id = is_numeric($param) ? (int) $param : null;
  */
 try {
 
-    // Verificar que el recurso solicitado es "peliculas"
+    // 
     if ($resource !== 'peliculas') {
         return;
     }
