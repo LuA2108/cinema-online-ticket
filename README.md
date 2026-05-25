@@ -23,8 +23,7 @@ Para acceder a los distintios api de cada modulo:
     - Genero: http://localhost/cinema-online-ticket/api/generos
     - Imagen: http://localhost/cinema-online-ticket/api/imagenes
     - Usuario: http://localhost/cinema-online-ticket/api/usuarios
-    - opinion
-    - Sala
+    - Sala: http://localhost/cinema-online-ticket/api/salas
     - Producto
     - Función (proyección de película):
     - Reserva
