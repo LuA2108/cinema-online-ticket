@@ -58,7 +58,7 @@ class Producto
         $stmt->execute();
 
         $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        return $result->fetch_assoc() ?: null;
     }
 
     /**
