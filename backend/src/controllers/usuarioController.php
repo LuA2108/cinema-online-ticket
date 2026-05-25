@@ -9,17 +9,16 @@ use App\Service\UsuarioService;
  */
 class UsuarioController
 {
-    private $conn;
     private $usuarioService;
 
     /**
      * Contructor del controlador de usuarios
+     * @param UsuarioService $usuarioService Servicio de usuarios para realizar operaciones relacionadas con usuarios
      * @param mysqli $conn
      */
-    public function __construct($conn)
+    public function __construct($usuarioService)
     {
-        $this->conn = $conn;
-        $this->usuarioService = new UsuarioService($conn);
+        $this->usuarioService = $usuarioService;    
     }
 
     /**
@@ -61,6 +60,16 @@ class UsuarioController
      */
     public function guardar($datos) {
         return $this->usuarioService->crearUsuario($datos);
+    }
+
+    /**
+     * Actualiza un usuario existente
+     * @param mixed $id ID del usuario a actualizar
+     * @param array $datos Datos actualizados del usuario
+     * @return array Resultado de la actualización, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function actualizar($id, $datos) {
+        return $this->usuarioService->actualizarUsuario($id, $datos);
     }
 
     /**

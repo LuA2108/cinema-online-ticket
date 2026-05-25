@@ -11,12 +11,13 @@ class UsuarioService
 
     /**
      * contructor de la clase UsuarioService
+     * @param Usuario $userModel Modelo de usuario para realizar operaciones relacionadas con usuarios
      * @param mysqli $conn Conexión a la base de datos para inicializar el modelo de usuario
      */
-    public function __construct($conn)
+    public function __construct($userModel, $conn)
     {
         $this->conn = $conn;
-        $this->userModel = new Usuario($conn);
+        $this->userModel = $userModel;
     }
 
     /**
@@ -79,6 +80,39 @@ class UsuarioService
         }
 
         return ["success" => true, "datos" => $usuarioId, "error" => null];
+    }
+
+    /**
+     * Actualiza un usuario existente
+     * @param int $id ID del usuario a actualizar
+     * @param array $datos Nuevos datos del usuario (nombre, email, contraseña, rol_id, ciudad, provincia)
+     * @return array Resultado de la actualización, incluyendo un mensaje de éxito o error según corresponda
+     */
+    public function actualizarUsuario($id, $datos)
+    {
+        $usuario = $this->userModel->buscarPorID($id);
+
+        if (!$usuario) {
+            return ["success" => false, "datos" => null, "error" => "Usuario no encontrado"];
+        }
+
+        // Si se proporciona un nuevo email, verifica que no esté registrado por otro usuario
+        if (!empty($datos['email'])) {
+            $email = strtolower(trim($datos['email']));
+            $usuarioExistente = $this->userModel->buscarPorEmail($email);
+
+            if ($usuarioExistente && $usuarioExistente['id'] != $id) {
+                return ["success" => false, "datos" => null, "error" => "El email ya está registrado por otro usuario"];
+            }
+        }
+
+        $resultado = $this->userModel->actualizarUsuario($id, $datos['rol_id'], $datos['nombre'], $datos['email'], $datos['contrasena'], $datos['ciudad'], $datos['provincia']);
+
+        if (!$resultado) {
+            return ["success" => false, "datos" => null, "error" => "No se pudo actualizar el usuario"];
+        }
+
+        return ["success" => true, "datos" => null, "error" => null];
     }
 
     /**

@@ -22,7 +22,7 @@ Para acceder a los distintios api de cada modulo:
     - Película: http://localhost/cinema-online-ticket/api/peliculas
     - Genero: http://localhost/cinema-online-ticket/api/generos
     - Imagen: http://localhost/cinema-online-ticket/api/imagenes
-    - Usuario
+    - Usuario: http://localhost/cinema-online-ticket/api/usuarios
     - opinion
     - Sala
     - Producto
