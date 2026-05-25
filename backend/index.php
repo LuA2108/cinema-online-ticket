@@ -38,7 +38,7 @@ $respuesta = false;
 // ==========================
 require_once __DIR__ . '/src/routes/pelicula.routes.php';
 require_once __DIR__ . '/src/routes/genero.routes.php';
-
+require_once __DIR__ . '/src/routes/imagen.routes.php';
 // Aquí más rutas para otros módulos (...)
 
 
