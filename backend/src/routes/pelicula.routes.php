@@ -1,5 +1,7 @@
 <?php
 
+//  IMPORTACIÓN DE CLASES NECESARIAS
+//Se importan controlador, servicio y modelos utilizados por el módulo de películas.
 use App\Controllers\PeliculaController;
 use App\Service\PeliculaService;
 use App\Models\Pelicula;
@@ -15,28 +17,39 @@ require_once __DIR__ . '/../models/PeliculaGenero.php';
 require_once __DIR__ . '/../service/PeliculaService.php';
 require_once __DIR__ . '/../controllers/PeliculaController.php';
 
+
+// HEADERS HTTP
+// Configuración global de respuestas JSON y CORS
+// para permitir peticiones desde frontend.
+
+// Todas las respuestas serán JSON
 header('Content-Type: application/json');
 
-// Permitir peticiones desde JS/frontend
+// Permitir acceso desde cualquier origen
 header('Access-Control-Allow-Origin: *');
+
+// Métodos HTTP permitidos
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+
+// Headers permitidos desde frontend
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Responder preflight de CORS
+// El navegador envía una petición OPTIONS antes de las peticiones POST, PUT, PATCH o DELETE
+// Aquí se responde correctamente para evitar bloqueos por CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-// Crear conexión
+// Crear conexión a base de datos
 $conn = (new Database())->obtenerConexion();
 
-// Crear modelos
+// Instanciar modelos
 $peliculaModel = new Pelicula($conn);
 $generoModel = new Genero($conn);
 $peliculaGeneroModel = new PeliculaGenero($conn);
 
-// Crear service
+// Crear servicio con inyección de dependencias
 $peliculaService = new PeliculaService(
     $peliculaModel,
     $peliculaGeneroModel,
@@ -47,27 +60,49 @@ $peliculaService = new PeliculaService(
 // Crear controller
 $controller = new PeliculaController($peliculaService);
 
-// Leer método HTTP
+// LECTURA DE DATOS DE LA PETICIÓN ///////////////////////
+
+// Leer método HTTP utilizado
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Leer JSON enviado desde el frontend
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
 
-// Leer ruta enviada por .htaccess
-$route = $_GET['route'] ?? '';
-$route = trim($route, '/');
+// Leer ruta enviada por .htaccess mediante: backend/index.php?route=peliculas/1
 
+
+// Obtener route enviada por Apache Rewrite
+$route = $_GET['route'] ?? '';
+$route = trim($route, '/'); // Eliminar barras sobrantes
+
+// Convertir la ruta en segmentos: peliculas/1/activar 
+// Ejemplo: "peliculas/1/activar" => ["peliculas", "1", "activar"]
 $segments = $route === '' ? [] : explode('/', $route);
 
-$resource = $segments[0] ?? null;
+// Recurso principal
+$resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
+
+// Parámetro principal (normalmente ID) o acción (activar/desactivar)
 $param = $segments[1] ?? null;
+
+// Acción adicional para rutas como: /peliculas/1/activar
 $action = $segments[2] ?? null;
 
-// También permitimos query params por compatibilidad
+// Convertir el parámetro a ID numérico si es posible, o dejarlo como null
 $id = is_numeric($param) ? (int) $param : null;
 
+
+/**
+ * MANEJO DE RUTAS Y RESPUESTAS
+ * ===============================
+ * Todas las operaciones se ejecutan dentro de
+ * un bloque try/catch para manejar errores.
+ */
 try {
 
+    /**
+     * Validar recurso principal
+     */
     if ($resource !== 'peliculas') {
         http_response_code(404);
         echo json_encode([
@@ -77,7 +112,7 @@ try {
         exit;
     }
 
-    // GET /api/peliculas
+    // GET /api/peliculas - Obtener listado de películas
     if ($method === 'GET' && !$param) {
         echo json_encode([
             'success' => true,
@@ -86,7 +121,7 @@ try {
         exit;
     }
 
-    // GET /api/peliculas/completas
+    // GET /api/peliculas/completas - Obtener películas con relaciones completas (géneros, imágenes)
     if ($method === 'GET' && $param === 'completas') {
         echo json_encode([
             'success' => true,
@@ -95,7 +130,7 @@ try {
         exit;
     }
 
-    // GET /api/peliculas/1
+    // GET /api/peliculas/1 - Obtener película por ID
     if ($method === 'GET' && $id) {
         echo json_encode([
             'success' => true,
@@ -104,7 +139,7 @@ try {
         exit;
     }
 
-    // POST /api/peliculas
+    // POST /api/peliculas - Crear nueva película
     if ($method === 'POST' && !$param) {
         echo json_encode([
             'success' => true,
@@ -113,7 +148,7 @@ try {
         exit;
     }
 
-    // PUT /api/peliculas/1
+    // PUT /api/peliculas/1 - Actualizar película existente
     if ($method === 'PUT' && $id) {
         echo json_encode([
             'success' => true,
@@ -123,7 +158,7 @@ try {
     }
 
 
-    // PATCH /api/peliculas/1/activar
+    // PATCH /api/peliculas/1/activar - Activar película
     if ($method === 'PATCH' && $id && $action === 'activar') {
         echo json_encode([
             'success' => true,
@@ -132,7 +167,7 @@ try {
         exit;
     }
 
-    // PATCH /api/peliculas/1/desactivar
+    // PATCH /api/peliculas/1/desactivar - Desactivar película
     if ($method === 'PATCH' && $id && $action === 'desactivar') {
         echo json_encode([
             'success' => true,
@@ -141,14 +176,15 @@ try {
         exit;
     }
 
+    // Ruta no encontrada
     http_response_code(404);
     echo json_encode([
         'success' => false,
         'message' => 'Ruta no encontrada'
     ]);
-
 } catch (Exception $e) {
 
+    // Manejo global de errores con código 500 y mensaje de error
     http_response_code(500);
     echo json_encode([
         'success' => false,
