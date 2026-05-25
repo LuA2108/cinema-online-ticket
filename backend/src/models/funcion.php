@@ -21,15 +21,19 @@ class Funcion
 
     /**
      * Lista todas las funciones con información relacionada
+     * @return array
      */
     public function listar()
     {
-        $sql = $this->conn->prepare("SELECT f.*, p.titulo AS pelicula, s.numero AS sala, e.nombre AS estado FROM funcion f
+        $sql = $this->conn->prepare("SELECT f.*, p.titulo AS pelicula, s.numero AS sala, e.nombre AS estado
+            FROM funcion f
             INNER JOIN pelicula p ON f.pelicula_id = p.id
             INNER JOIN sala s ON f.sala_id = s.id
-            INNER JOIN estado_funcion e ON f.estado_id = e.id");
+            INNER JOIN estado_funcion e ON f.estado_id = e.id
+        ");
 
         $sql->execute();
+
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -39,7 +43,7 @@ class Funcion
      */
     public function obtenerPorId($id)
     {
-        $sql = $this->conn->prepare("SELECT * FROM funcion WHERE id = ?");
+        $sql = $this->conn->prepare("SELECT * FROM funcion WHERE id = ? LIMIT 1");
         $sql->bind_param("i", $id);
         $sql->execute();
         return $sql->get_result()->fetch_assoc();
@@ -53,13 +57,18 @@ class Funcion
      * @param string $fecha_inicio Fecha in
      * @param string $fecha_fin
      * @param int $estado_id
-     * @return bool
      */
     public function crear($pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id)
     {
         $sql = $this->conn->prepare("INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES (?, ?, ?, ?, ?, ?)");
         $sql->bind_param("iisssi", $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id);
-        return $sql->execute();
+        $resultado = $sql->execute();
+
+        if(!$resultado) {
+            return -1;
+        }
+
+        return $this->conn->insert_id;
     }
 
     /**
