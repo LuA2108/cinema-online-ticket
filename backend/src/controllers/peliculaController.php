@@ -42,6 +42,7 @@ class PeliculaController
     /**
      * Obtiene los detalles de una película específica utilizando su ID
      * @param int $id ID de la película que se desea obtener
+     * @return array Un array con los detalles de la película, incluyendo sus géneros e imágenes asociadas
      */
     public function mostrarPelicula($id)
     {
@@ -64,7 +65,7 @@ class PeliculaController
      * @param int $id ID de la película que se desea actualizar
      * @param array $datos Los datos de la película a actualizar, incluyendo el ID de la película, los nuevos datos de la película y los géneros asociados
      * @return array Resultado de la operación de actualización, incluyendo un mensaje de éxito o error según corresponda
-     */
+    */ 
     public function actualizarPelicula($id, $datos)
     {
         $pelicula = $datos['pelicula'];
