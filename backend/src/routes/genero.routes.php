@@ -8,9 +8,7 @@ require_once __DIR__ . '/../models/Genero.php';
 require_once __DIR__ . '/../service/GeneroService.php';
 require_once __DIR__ . '/../controllers/GeneroController.php';
 
-/**
- * Conexión a base de datos y creación del controlador
- */
+ // Conexión a base de datos y creación del controlador
 $conn = (new Database())->obtenerConexion();
 
 // Modelos necesarios para el controlador de géneros
