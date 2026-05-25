@@ -28,34 +28,18 @@ namespace App\Models;
         }
 
         /**
-         * Obtener ID por nombre         
-         * @param string $nombre
+         * Obtener estado por ID
+         * @param int $id Id del estado
+         * @return array|null 
          */
-        public function getIdPorNombre($nombre)
-        {
-            $sql = $this->conn->prepare("
-                SELECT id FROM estado_funcion WHERE nombre = ?
-            ");
-
-            $sql->bind_param("s", $nombre);
-            $sql->execute();
-
-            $res = $sql->get_result()->fetch_assoc();
-
-            return $res ? (int)$res['id'] : null;
-        }
-
-        /**
-         * Obtener nombre por ID
-         * @param int $id
-         */
-        public function getNombrePorId($id)
+        public function obtenerEstadoPorId($id)
         {
             $sql = $this->conn->prepare("SELECT nombre FROM estado_funcion WHERE id = ?");
             $sql->bind_param("i", $id);
             $sql->execute();
 
-            return $sql->get_result()->fetch_assoc();
+            $respuesta = $sql->get_result()->fetch_assoc();
+            return $respuesta ?: null;
         }
     }
 
