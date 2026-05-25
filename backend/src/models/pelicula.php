@@ -82,7 +82,7 @@ class Pelicula
      * @param int $duracion
      * @param float $precio
      * @param boolean $disponible
-     * @return bool True si se inserto, false al falla
+     * @return int ID de la nueva película o -1 si falla
      */
     public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $precio, $disponible)
     {
