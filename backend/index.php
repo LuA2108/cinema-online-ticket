@@ -7,6 +7,8 @@ require_once __DIR__ . '/config/database.php';
 // HEADERS GLOBALES
 // =========================================================
 
+
+
 // Todas las respuestas serán JSON
 header('Content-Type: application/json');
 
@@ -32,7 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // CARGA DE MÓDULOS (ROUTERS)
 // ==========================
 require_once __DIR__ . '/src/routes/pelicula.routes.php';
-// Aquí más rutas para otros módulos (géneros, salas, ...)
+require_once __DIR__ . '/src/routes/genero.routes.php';
+
+// Aquí más rutas para otros módulos (...)
 
 
 // SI NINGÚN MÓDULO RESPONDIÓ

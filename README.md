@@ -20,7 +20,7 @@ Sistema de venta de entradas online para cines con selección de asientos.
 # API - peliculas
 Para acceder a los distintios api de cada modulo:
     - Película: http://localhost/cinema-online-ticket/api/peliculas
-    - Genero 
+    - Genero: http://localhost/cinema-online-ticket/api/generos
     - Imagen
     - Usuario
     - opinion

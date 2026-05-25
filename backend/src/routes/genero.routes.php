@@ -3,8 +3,10 @@ use App\Controller\GeneroController;
 use App\Service\GeneroService;
 use App\Models\Genero;
 
-require_once __DIR__ . '/../config/Database.php';
-
+require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../models/Genero.php';
+require_once __DIR__ . '/../service/GeneroService.php';
+require_once __DIR__ . '/../controllers/GeneroController.php';
 
 /**
  * Conexión a base de datos y creación del controlador
@@ -20,42 +22,118 @@ $generoService = new GeneroService($generoModel);
 // Controlador de géneros
 $controller = new GeneroController($generoService);
 
-/**
- * Se obtiene la URI y el método HTTP de la petición
- */
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// Leer método HTTP utilizado
 $method = $_SERVER['REQUEST_METHOD'];
 
-/* GET todas */
-if ($uri === '/api/generos' && $method === 'GET') {
-    echo json_encode($controller->index());
-    exit;
-}
+// Leer JSON enviado desde el frontend
+$body = json_decode(file_get_contents('php://input'), true) ?? [];
 
-/* GET por ID */
-if (preg_match('#^/api/generos/(\d+)$#', $uri, $m) && $method === 'GET') {
-    echo json_encode($controller->mostrarGenero($m[1]));
-    exit;
-}
+// Obtener route enviada por Apache Rewrite
+$route = $_GET['route'] ?? '';
+$route = trim($route, '/'); // Eliminar barras sobrantes
 
-/* POST crear */
-if ($uri === '/api/generos' && $method === 'POST') {
-    echo json_encode($controller->crearGenero($_POST['nombre'] ?? null));
-    exit;
-}
+// Convertir la ruta en segmentos: peliculas/1/activar 
+// Ejemplo: "peliculas/1/activar" => ["peliculas", "1", "activar"]
+$segments = $route === '' ? [] : explode('/', $route);
 
-/* PUT actualizar */
-if (preg_match('#^/api/generos/(\d+)$#', $uri, $m) && $method === 'PUT') {
-    // Para PUT, se asume que los datos vienen en formato JSON
-    $data = json_decode(file_get_contents("php://input"), true);
-    echo json_encode($controller->actualizarGenero($m[1], $data['nombre'] ?? null));
-    exit;
-}
+// Recurso principal
+$resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
 
-/* DELETE eliminar */
-if (preg_match('#^/api/generos/(\d+)$#', $uri, $m) && $method === 'DELETE') {
-    echo json_encode($controller->eliminarGenero($m[1]));
-    exit;
+// Parámetro principal (normalmente ID) o acción (activar/desactivar)
+$param = $segments[1] ?? null;
+
+// Acción adicional para rutas como: /peliculas/1/activar
+$action = $segments[2] ?? null;
+
+// Convertir el parámetro a ID numérico si es posible, o dejarlo como null
+$id = is_numeric($param) ? (int) $param : null;
+
+/**
+ * RUTEO DE PETICIONES
+ * 
+ * Aquí se definen las rutas para el módulo de géneros.
+ * Se pueden agregar más rutas para otros módulos (películas, salas, ...)
+ * siguiendo la misma estructura.
+ * 
+ * El controlador se encarga de procesar la lógica de cada ruta.
+ * Todas las respuestas se envían en formato JSON con un formato estándar.
+ */
+
+    /**
+ * MANEJO DE RUTAS Y RESPUESTAS
+ * ===============================
+ * Todas las operaciones se ejecutan dentro de
+ * un bloque try/catch para manejar errores.
+ */
+try {
+
+    // 
+    if ($resource !== 'generos') {
+        return;
+    }
+    
+    // GET /api/generos - Obtener listado de géneros
+    if ($method === 'GET' && !$param) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->index()
+        ]);
+        exit;
+    }
+
+    // GET /api/generos/completas - Obtener géneros con relaciones completas
+    if ($method === 'GET' && $param === 'completas') {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->index()
+        ]);
+        exit;
+    }
+
+    // GET /api/generos/1 - Obtener género por ID
+    if ($method === 'GET' && $id) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->mostrarGenero($id)
+        ]);
+        exit;
+    }
+
+    // POST /api/generos - Crear nuevo género
+    if ($method === 'POST' && !$param) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->crearGenero($body)
+        ]);
+        exit;
+    }
+
+    // PUT /api/generos/1 - Actualizar género existente
+    if ($method === 'PUT' && $id) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->actualizarGenero($id, $body)
+        ]);
+        exit;
+    }
+
+    // DELETE /api/generos/1 - Eliminar género
+    if ($method === 'DELETE' && $id) {
+        echo json_encode([
+            'success' => true,
+            'data' => $controller->eliminarGenero($id)
+        ]);
+        exit;
+    }
+
+} catch (Exception $e) {
+
+    // Manejo global de errores con código 500 y mensaje de error
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
 }
 
 ?>
