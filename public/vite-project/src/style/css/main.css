@@ -492,7 +492,7 @@ footer .subtitulo {
   justify-content: center;
   align-items: center;
   min-height: 70vh;
-  background-image: url("/cinema-online-ticket/public/assets/imgs/fondo/fondo_login_register.png");
+  background-image: url("/src/assets/imgs/fondo_login.jpg");
   background-repeat: no-repeat;
   background-position: 50;
 }
