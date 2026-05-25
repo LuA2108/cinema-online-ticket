@@ -29,29 +29,14 @@ class EstadoReserva
     }
 
     /**
-     * Obtiene el ID del estado de reserva segun el nombre
-     * @param string $nombre
-     * @return int
-     */
-    public function obtenerIdPorNombre($nombre)
-    {
-        $sql = $this->conn->prepare("SELECT * FROM estado_reserva WHERE nombre = ?");
-        $sql->bind_param("s", $nombre);
-        $sql->execute();
-        $resultado = $sql->get_result()->fetch_assoc();
-        return $resultado ? $resultado['id'] : null;
-    }
-
-    /**
-     * Obtiene el nombre del estado segun el ID
+     * Obtiene el datos del estado segun el ID
      * @param mixed $estado_id
-     * @return void
      */
     public function obtenerEstado($estado_id)
     {
-        $sql = $this->conn->prepare("SELECT nombre FROM estado_reserva WHERE id = ?");
+        $sql = $this->conn->prepare("SELECT * FROM estado_reserva WHERE id = ?");
         $sql->bind_param("i", $estado_id);
         $sql->execute();
-        return $sql->get_result()->fetch_assoc();
+        return $sql->get_result()->fetch_assoc() ?: null;
     }
 }
