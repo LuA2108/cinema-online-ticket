@@ -93,7 +93,7 @@ class Funcion
 
     /** 
      * Filtrar funciones por estado
-     * estado_id (1 ->pendiente, 2 -> cancelada, 3 -> pagado)
+     * estado_id (1 ->activa, 2 -> cancelada, 3 -> finalizada)
      * @param int $estado_id ID del estado de la función
      */
     public function obtenerPorEstado($estado_id)
