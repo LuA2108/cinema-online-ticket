@@ -23,16 +23,16 @@ class GeneroService
 
     public function listarGeneros()
     {
-        return $this->generoModel->obtenerTodos();
+        return ["success" => true, "datos" => $this->generoModel->obtenerTodos(), "error" => null];
     }
 
     public function obtenerGenero($id)
     {
         if (!is_numeric($id) || $id <= 0) {
-            throw new \InvalidArgumentException("El ID del género debe ser un número positivo.");
+            return ["success" => false, "datos" => null, "error" => "El ID del género debe ser un número positivo"];
         }
 
-        return $this->generoModel->obtenerPorId($id);
+        return ["success" => true, "datos" => $this->generoModel->obtenerPorId($id), "error" => null];
     }
 
     public function crearGenero($nombre)
@@ -40,16 +40,16 @@ class GeneroService
         $nombre = trim($nombre);
 
         if (empty($nombre)) {
-            throw new \InvalidArgumentException("El nombre del género no puede estar vacío.");
+            return ["success" => false, "datos" => null, "error" => "El nombre del género no puede estar vacío"];
         }
 
         $id = $this->generoModel->crearGenero($nombre);
 
         if ($id === -1) {
-            throw new \Exception("Error al crear el género.");
+            return ["success" => false, "datos" => null, "error" => "Error al crear el género."];
         }
 
-        return $id;
+        return ["success" => true, "datos" => $id, "error" => null];
     }
 
     public function actualizarGenero($id, $nombre)
@@ -57,21 +57,26 @@ class GeneroService
         $nombre = trim($nombre);
 
         if (!is_numeric($id) || $id <= 0) {
-            throw new \InvalidArgumentException("El ID del género debe ser un número positivo.");
+            return ["success" => false, "datos" => null, "error" => "El ID del género debe ser un número positivo."];
         }
 
         if (empty($nombre)) {
-            throw new \InvalidArgumentException("El nombre del género no puede estar vacío.");
+            return ["success" => false, "datos" => null, "error" => "El nombre del género no puede estar vacío."];
         }
 
-        return $this->generoModel->actualizarGenero($id, $nombre);
+        $genero = $this->generoModel->obtenerPorId($id);
+        if (!$genero) {
+            return ["success" => false, "datos" => null, "error" => "No se encontró el género con ID: $id."];
+        }
+
+        return ["success" => true, "datos" => $this->generoModel->actualizarGenero($id, $nombre), "error" => null];
     }
 
     public function eliminarGenero($id)
     {
         if (!is_numeric($id) || $id <= 0) {
-            throw new \InvalidArgumentException("El ID del género debe ser un número positivo.");
+            return ["success" => false, "datos" => null, "error" => "El ID del género debe ser un número positivo."];
         }
-        return $this->generoModel->eliminarGenero($id);
+        return ["success" => true, "datos" => $this->generoModel->eliminarGenero($id), "error" => null];
     }
 }

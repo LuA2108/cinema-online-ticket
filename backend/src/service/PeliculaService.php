@@ -39,7 +39,7 @@ class PeliculaService
      */
     public function listarPeliculas()
     {
-        return $this->peliculaModelo->listarPeliculas();
+        return ["success" => true, "datos" => $this->peliculaModelo->listarPeliculas(), "error" => null];
     }
 
     /**
@@ -48,7 +48,7 @@ class PeliculaService
      */
     public function listarPeliculasCompletas()
     {
-        return $this->peliculaModelo->listarPeliculasCompletas();
+        return ["success" => true, "datos" => $this->peliculaModelo->listarPeliculasCompletas(), "error" => null];
     }
 
     /**
@@ -58,7 +58,7 @@ class PeliculaService
      */
     public function obtenerPeliculaPorId($id)
     {
-        return $this->peliculaModelo->peliculaId($id);
+        return ["success" => true, "datos" => $this->peliculaModelo->peliculaId($id), "error" => null];
     }
 
     // CREAR PELÍCULA
@@ -76,7 +76,7 @@ class PeliculaService
 
             if (!$pelicula || !$generos) {
                 $this->conn->rollback();
-                return ["error" => "No se proporcionaron datos para crear la película."];
+                return ["success" => false, "datos" => null, "error" => "No se proporcionaron datos para crear la película."];
             }
 
             // 1. Crear película
@@ -84,21 +84,23 @@ class PeliculaService
 
             // 2. Asociar géneros
             foreach ($generos as $generoId) {
-                $this->peliculaGeneroModelo
-                    ->agregarGenero($peliculaId, $generoId);
+                $this->peliculaGeneroModelo->agregarGenero($peliculaId, $generoId);
             }
 
             $this->conn->commit();
 
             return [
-                'success' => true,
-                'pelicula_id' => $peliculaId
+                "success" => true,
+                "datos" => $peliculaId,
+                "error" => null
             ];
         } catch (Exception $e) {
             // ROLLBACK
             $this->conn->rollback();
             return [
-                'error' => $e->getMessage()
+                "success" => false,
+                "datos" => null,
+                "error" => $e->getMessage()
             ];
         }
     }
@@ -118,7 +120,7 @@ class PeliculaService
 
             if (!$pelicula || !$generos) {
                 $this->conn->rollback();
-                return ["error" => "No se proporcionaron datos para actualizar la película con ID $id."];
+                return ["success" => false, "datos" => null, "error" => "No se proporcionaron datos para actualizar la película con ID $id."];
             }
 
             // 1. Actualizar película
@@ -140,11 +142,14 @@ class PeliculaService
 
             return [
                 "success" => true,
-                "message" => "Película actualizada correctamente"
+                "datos" => true,
+                "error" => null
             ];
         } catch (Exception $e) {
             $this->conn->rollback();
             return [
+                "success" => false,
+                "datos" => null,
                 "error" => $e->getMessage()
             ];
         }
@@ -194,6 +199,4 @@ class PeliculaService
         return $this->peliculaModelo
             ->cambiarEstado($id, false);
     }
-
-
 }

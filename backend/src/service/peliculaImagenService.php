@@ -35,7 +35,7 @@ class PeliculaImagenService
     public function listarTodas()
     {
         // Lista todas las imágenes de todas las películas agrupadas por película_id
-        return $this->imagenModelo->listar();
+        return ["success" => true, "datos" => $this->imagenModelo->listar(), "error" => null];
     }
 
     /**
@@ -45,7 +45,11 @@ class PeliculaImagenService
      */
     public function listarImagenesPorPelicula(int $peliculaId)
     {
-        return $this->imagenModelo->obtenerPorPelicula($peliculaId);
+        if ($peliculaId <= 0) {
+            return ["success" => false, "datos" => null, "error" => "ID de película inválido"];
+        }
+
+        return ["success" => true, "datos" => $this->imagenModelo->obtenerPorPelicula($peliculaId), "error" => null];
     }
 
     /**
@@ -55,7 +59,16 @@ class PeliculaImagenService
      */
     public function obtenerImagen(int $imagenId)
     {
-        return $this->imagenModelo->obtenerImagen($imagenId);
+        if ($imagenId <= 0) {
+            return ["success" => false, "datos" => null, "error" => "ID de imagen inválido"];
+        }
+
+        $imagen = $this->imagenModelo->obtenerImagen($imagenId);
+
+        if (!$imagen) {
+            return ["success" => false, "datos" => null, "error" => "Imagen no encontrada"];
+        }
+        return ["success" => true, "datos" => $imagen, "error" => null];
     }
 
     /**
@@ -63,7 +76,6 @@ class PeliculaImagenService
      * @param int $peliculaId ID de la película a la que se le agregará la imagen
      * @param string $tipo Tipo de imagen (poster, banner, etc.)
      * @param string $url URL o enlace de la imagen
-     * @return int ID de la imagen creada o -1 si hubo un error
      */
     public function agregar(int $peliculaId, string $tipo, string $url)
     {
@@ -71,40 +83,47 @@ class PeliculaImagenService
         $pelicula = $this->peliculaModelo->peliculaId($peliculaId);
 
         if (!$pelicula) {
-            throw new \Exception("La película no existe");
+            return ["success" => false, "datos" => null, "error" => "La película no existe"];
         }
 
         if (empty($tipo) || empty($url)) {
-            throw new \Exception("Tipo y URL son obligatorios");
+            return ["success" => false, "datos" => null, "error" => "Tipo y URL son obligatorios"];
+        }
+
+        $pelicula = $this->peliculaModelo->peliculaId($peliculaId);
+
+        if (!$pelicula) {
+            return ["success" => false, "datos" => null, "error" => "La película no existe"];
         }
 
         // Validar que no exista una imagen con la misma URL para la misma película
         if ($this->imagenModelo->existeUrl($peliculaId, $url)) {
-            throw new \Exception("Esta imagen ya existe para esta película");
+            return ["success" => false, "datos" => null, "error" => "Esta imagen ya existe para esta película"];
         }
 
         $id = $this->imagenModelo->crear($peliculaId, $tipo, $url);
 
         if (!$id) {
-            throw new \Exception("No se pudo crear la imagen");
+            return ["success" => false, "datos" => null, "error" => "No se pudo crear la imagen"];
         }
 
-        return $id;
+        return ["success" => true, "datos" => $id, "error" => null];
     }
 
     /**
      * Eliminar imagen de película
      * @param int $id ID de la imagen a eliminar
-     * @return bool True si la imagen se eliminó correctamente, False en caso contrario
+     * @return array Resultado de la eliminación
      */
     public function eliminar(int $id)
     {
         $imagen = $this->imagenModelo->obtenerImagen($id);
 
         if (!$imagen) {
-            return false;
+            return ["success" => false, "datos" => null, "error" => "Imagen no encontrada"];
         }
 
-        return $this->imagenModelo->eliminar($id);
+        $result = $this->imagenModelo->eliminar($id);
+        return ["success" => $result, "datos" => $result, "error" => $result ? null : "No se pudo eliminar la imagen"];
     }
 }
