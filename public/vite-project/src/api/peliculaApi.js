@@ -1,7 +1,7 @@
 // Se realiza fetch al backend de api peliculas
 
 // Base de la api peliculas
-const BASE_URL = 'http://localhost/api/peliculas';
+const BASE_URL = 'http://localhost/cinema-online-ticket/api';
 
 // Obtener todas las películas
 export async function getPeliculas() {
