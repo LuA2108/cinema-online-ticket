@@ -19,7 +19,7 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="../../../style/css/main.css">
+    <link rel="stylesheet" href="../../src/style/css/main.css">
 
 </head>
 
@@ -43,8 +43,7 @@
     <aside class="sidebar-menu">
 
         <div class="container-admin">
-            <img src="../../../assets/admin-con-ruedas-dentadas.png" alt="Administrador">
-
+            <img src="../../src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
             <h2>Administrador</h2>
         </div>
 
@@ -55,56 +54,63 @@
             <li>Panel de control</li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/index.html">
+                <a href="../../admin.html">
                     <i class="fa-solid fa-house"></i>
                     Inicio
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/usuarios/index.html">
+                <a href="../usuarios/index.html">
                     <i class="fa-solid fa-user"></i>
                     Usuarios
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/peliculas/index.html">
+                <a href="./index.html">
                     <i class="fa-solid fa-video"></i>
                     Películas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/generos/index.html">
+                <a href="../imagenes/index.html">
+                    <i class="fa-regular fa-image"></i>
+                    Imagenes
+                </a>
+            </li>
+
+            <li>
+                <a href="../generos/index.html">
                     <i class="fa-solid fa-masks-theater"></i>
                     Géneros películas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/funciones/index.html">
+                <a href="../funciones/index.html">
                     <i class="fa-solid fa-tv"></i>
                     Funciones
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/reservas/index.html">
+                <a href="../reservas/index.html">
                     <i class="fa-solid fa-calendar"></i>
                     Reservas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/salas/index.html">
+                <a href="../salas/index.html">
                     <i class="fa-solid fa-clapperboard"></i>
                     Salas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/productos/index.html">
+                <a href="../productos/index.html">
                     <i class="fa-solid fa-candy-cane"></i>
                     Productos
                 </a>
@@ -120,12 +126,57 @@
     </aside>
 
     <!-- CONTENIDO -->
-    <main class="main-admin">
-        <article>
-            <h1 style="color: black">Editar Película</h1>
+    </main>
+    <article class="d-flex justify-content-center mt-4">
 
-        </article>
+        <div class="card border-0 shadow-lg bg-white bg-opacity-75 w-100"
+            style="max-width:600px; backdrop-filter: blur(6px);">
 
+            <div class="card-header text-white" style="background:#2c3e50;">
+                <h5 class="mb-0">Película</h5>
+            </div>
+
+            <div class="card-body">
+
+                <form id="form-pelicula" enctype="multipart/form-data">
+
+                    <input class="form-control mb-2" name="titulo" placeholder="Título">
+
+                    <textarea class="form-control mb-2" name="descripcion" placeholder="Descripción"></textarea>
+
+                    <input class="form-control mb-2" name="director" placeholder="Director">
+
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-control mb-2" type="number" name="anio" placeholder="Año">
+                        </div>
+                        <div class="col">
+                            <input class="form-control mb-2" type="number" name="duracion" placeholder="Min">
+                        </div>
+                    </div>
+
+                    <input class="form-control mb-2" type="number" step="0.01" name="precio" placeholder="Precio">
+
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="disponible">
+                        <label class="form-check-label">Disponible</label>
+                    </div>
+
+                    <input class="form-control mb-2" type="file" name="poster">
+                    <input class="form-control mb-2" type="file" name="banner">
+
+                    <select class="form-select mb-3" name="generos[]" multiple></select>
+
+                    <button class="btn w-100 text-white" style="background:#2c3e50;">
+                        Guardar
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </article>
     </main>
     <footer>
         <script type="module" src="/public/vite-project/src/app/admin/pelicula.js"></script>

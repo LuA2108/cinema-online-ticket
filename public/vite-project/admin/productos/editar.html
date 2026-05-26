@@ -1,0 +1,157 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cinema Online Ticket</title>
+    <meta name="description" content='Cinema Online Ticket'>
+    <meta name="author" content="Lucero Anay Cahuana Cornejo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="64x42" href="../../../assets/iconos/logo-limpio.png">
+    <!-- BootStrap - Font Awesome - Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b527a55e68.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="../../src/style/css/main.css">
+
+</head>
+
+<body class="admin">
+
+    <!-- CHECKBOX -->
+    <input type="checkbox" id="openSidebarMenu" checked>
+
+    <!-- BOTÓN HAMBURGUESA -->
+    <label for="openSidebarMenu" class="sidebarIconToggle">
+        <div class="spinner"></div>
+        <div class="spinner"></div>
+        <div class="spinner"></div>
+    </label>
+
+    <!-- HEADER -->
+    <header class="header-admin">
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar-menu">
+
+        <div class="container-admin">
+            <img src="../../src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
+            <h2>Administrador</h2>
+        </div>
+
+        <hr>
+
+        <ul class="sidebar-menu-inner">
+            <li>Panel de control</li>
+
+            <li>
+                <a href="../../admin.html">
+                    <i class="fa-solid fa-house"></i>
+                    Inicio
+                </a>
+            </li>
+
+            <li>
+                <a href="./index.html">
+                    <i class="fa-solid fa-user"></i>
+                    Usuarios
+                </a>
+            </li>
+
+            <li>
+                <a href="../peliculas/index.html">
+                    <i class="fa-solid fa-video"></i>
+                    Películas
+                </a>
+            </li>
+
+            <li>
+                <a href="../peliculas/index.html">
+                    <i class="fa-regular fa-image"></i>
+                    Imagenes
+                </a>
+            </li>
+
+            <li>
+                <a href="../generos/index.html">
+                    <i class="fa-solid fa-masks-theater"></i>
+                    Géneros películas
+                </a>
+            </li>
+
+            <li>
+                <a href="../funciones/index.html">
+                    <i class="fa-solid fa-tv"></i>
+                    Funciones
+                </a>
+            </li>
+
+            <li>
+                <a href="./index.html">
+                    <i class="fa-solid fa-calendar"></i>
+                    Reservas
+                </a>
+            </li>
+
+            <li>
+                <a href="../salas/index.html">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    Salas
+                </a>
+            </li>
+
+            <li>
+                <a href="./index.html">
+                    <i class="fa-solid fa-candy-cane"></i>
+                    Productos
+                </a>
+            </li>
+        </ul>
+
+        <form action="#" method="POST">
+            <button type="submit">
+                Cerrar sesión
+            </button>
+        </form>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="main-admin">
+        <article>
+            <h1 style="color: black">Gestor de Reservas</h1>
+
+            <table border="1" class="tabla_panel tabla">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Director</th>
+                        <th>Año</th>
+                        <th>Duración</th>
+                        <th>Precio</th>
+                        <th>Disponible</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaPeliculasBody">
+                    <!-- JS inyecta aquí -->
+                </tbody>
+            </table>
+        </article>
+
+    </main>
+    <footer>
+        <script></script>
+    </footer>
+</body>
+
+</html>
