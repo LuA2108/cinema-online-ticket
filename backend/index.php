@@ -45,7 +45,7 @@ require_once __DIR__ . "/src/routes/estadosReserva.routes.php";
 require_once __DIR__ . "/src/routes/producto.routes.php";
 require_once __DIR__ . "/src/routes/butaca.routes.php";
 require_once __DIR__ . "/src/routes/reserva.routes.php";
-
+require_once __DIR__ . "/src/routes/reservaButaca.routes.php";
 // Aquí más rutas para otros módulos (...)
 
 

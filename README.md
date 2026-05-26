@@ -31,4 +31,6 @@ Para acceder a los distintios api de cada modulo:
     - Butaca: http://localhost/cinema-online-ticket/api/butacas/sala/1 -> por sala 
     - Reserva: http://localhost/cinema-online-ticket/api/reservas
     - ReservaButaca: 
+        - http://localhost/cinema-online-ticket/api/reserva-butacas/reserva/1 -> butacas por reservas
+        - http://localhost/cinema-online-ticket/api/reserva-butacas/funcion/1 -> Butacas por funcion
     - ReservaProducto:
