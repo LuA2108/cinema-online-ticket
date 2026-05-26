@@ -8,7 +8,7 @@
     <meta name="description" content='Cinema Online Ticket'>
     <meta name="author" content="Lucero Anay Cahuana Cornejo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="64x42" href="../../assets/iconos/logo-limpio.png">
+    <link rel="icon" type="image/png" sizes="64x42" href="../../../assets/iconos/logo-limpio.png">
     <!-- BootStrap - Font Awesome - Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -19,7 +19,7 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="../../style/css/main.css">
+    <link rel="stylesheet" href="../../src/style/css/main.css">
 
 </head>
 
@@ -43,8 +43,7 @@
     <aside class="sidebar-menu">
 
         <div class="container-admin">
-            <img src="../../assets/admin-con-ruedas-dentadas.png" alt="Administrador">
-
+            <img src="../../src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
             <h2>Administrador</h2>
         </div>
 
@@ -55,56 +54,56 @@
             <li>Panel de control</li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/index.html">
+                <a href="../../admin.html">
                     <i class="fa-solid fa-house"></i>
                     Inicio
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/usuarios/index.html">
+                <a href="../usuarios/index.html">
                     <i class="fa-solid fa-user"></i>
                     Usuarios
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/peliculas/index.html">
+                <a href="./index.html">
                     <i class="fa-solid fa-video"></i>
                     Películas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/generos/index.html">
+                <a href="../generos/index.html">
                     <i class="fa-solid fa-masks-theater"></i>
                     Géneros películas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/funciones/index.html">
+                <a href="../funciones/index.html">
                     <i class="fa-solid fa-tv"></i>
                     Funciones
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/reservas/index.html">
+                <a href="../reservas/index.html">
                     <i class="fa-solid fa-calendar"></i>
                     Reservas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/salas/index.html">
+                <a href="../salas/index.html">
                     <i class="fa-solid fa-clapperboard"></i>
                     Salas
                 </a>
             </li>
 
             <li>
-                <a href="/public/vite-project/src/pages/admin/productos/index.html">
+                <a href="../productos/index.html">
                     <i class="fa-solid fa-candy-cane"></i>
                     Productos
                 </a>
@@ -121,16 +120,32 @@
 
     <!-- CONTENIDO -->
     <main class="main-admin">
-        
-        <h1>Panel de administración</h1>
+        <article>
+            <h1 style="color: black">Gestión de Películas</h1>
 
-        <p>
-            Bienvenido al panel principal.
-        </p>
+            <table border="1" class="tabla_panel tabla">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Director</th>
+                        <th>Año</th>
+                        <th>Duración</th>
+                        <th>Precio</th>
+                        <th>Disponible</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaPeliculasBody">
+                    <!-- JS inyecta aquí -->
+                </tbody>
+            </table>
+        </article>
 
     </main>
     <footer>
-        <script ></script>
+        <script type="module" src="/public/vite-project/src/app/admin/pelicula.js"></script>
     </footer>
 </body>
 

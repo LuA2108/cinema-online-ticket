@@ -19,7 +19,7 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="src/style/css/main.css">
+    <link rel="stylesheet" href="./src/style/css/main.css">
 
 </head>
 
@@ -43,74 +43,73 @@
     <aside class="sidebar-menu">
 
         <div class="container-admin">
-            <img src="src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
+            <img src="./src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
 
             <h2>Administrador</h2>
         </div>
 
         <hr>
 
-        <nav class="sidebar-menu-inner">
+        <ul class="sidebar-menu-inner">
 
-            <li class="sidebar-title">Panel de control</li>
+            <li>Panel de control</li>
 
             <li>
-                <button class="sidebar-btn" data-page="inicio">
+                <a href="./admin.html">
                     <i class="fa-solid fa-house"></i>
                     Inicio
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="usuarios">
+                <a href="./admin/usuarios/index.html">
                     <i class="fa-solid fa-user"></i>
                     Usuarios
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="peliculas">
+                <a href="./admin/peliculas/index.html">
                     <i class="fa-solid fa-video"></i>
                     Películas
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="generos">
+                <a href="../generos/index.html">
                     <i class="fa-solid fa-masks-theater"></i>
                     Géneros películas
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="funciones">
+                <a href="../funciones/index.html">
                     <i class="fa-solid fa-tv"></i>
                     Funciones
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="reservas">
+                <a href="../reservas/index.html">
                     <i class="fa-solid fa-calendar"></i>
                     Reservas
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="salas">
+                <a href="../salas/index.html">
                     <i class="fa-solid fa-clapperboard"></i>
                     Salas
-                </button>
+                </a>
             </li>
 
             <li>
-                <button class="sidebar-btn" data-page="productos">
+                <a href="../productos/index.html">
                     <i class="fa-solid fa-candy-cane"></i>
                     Productos
-                </button>
+                </a>
             </li>
-
-        </nav>
+        </ul>
 
         <form action="#" method="POST">
             <button type="submit">
@@ -121,11 +120,17 @@
     </aside>
 
     <!-- CONTENIDO -->
-    <main id="adminApp"></main>
+    <main class="main-admin">
+        
+        <h1>Panel de administración</h1>
 
-    <script type="module" src="/src/admin/admin.js"></script>
+        <p>
+            Bienvenido al panel principal.
+        </p>
+
+    </main>
     <footer>
-        <script></script>
+        <script ></script>
     </footer>
 </body>
 
