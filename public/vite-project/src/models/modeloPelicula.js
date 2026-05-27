@@ -1,7 +1,7 @@
 import { getPeliculas } from "../api/peliculaApi";
 
 class ModeloPelicula {
-    constructor(id, titulo, descripcion, director, anio, duracion, precio, disponible, fechaRegistrada) {
+    constructor(id, titulo, descripcion, director, anio, duracion, precio, disponible, create_time) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -10,7 +10,7 @@ class ModeloPelicula {
         this.duracion = duracion;
         this.precio = precio;
         this.disponible = disponible;
-        this.fechaRegistrada = fechaRegistrada;
+        this.create_time = create_time;
     }
 
     async obtenerPeliculas() {

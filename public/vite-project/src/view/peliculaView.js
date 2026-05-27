@@ -25,6 +25,7 @@ class PeliculaView {
                 <td>
                     ${pelicula.disponible ? 'Sí' : 'No'}
                 </td>
+                <td>${pelicula.create_time}</td>
             `;
 
             tbody.appendChild(tr);
