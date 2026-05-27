@@ -43,7 +43,7 @@
     <aside class="sidebar-menu">
 
         <div class="container-admin">
-            <img src="../../src/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
+            <img src="../../public/assets/admin-con-ruedas-dentadas.png" alt="Administrador">
             <h2>Administrador</h2>
         </div>
 
@@ -130,21 +130,27 @@
         <article>
             <h1 style="color: black">Gestión de Funciones</h1>
 
+            <div class="d-flex justify-content gap-2">
+                <button class="btn btn-success border-0 px-3 py-2 rounded-1 shadow-sm mb-2  ">
+                    Agregar Función
+                </button>
+            </div>
+
             <table border="1" class="tabla_panel tabla">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>dato</th>
-                        <th>dato</th>
-                        <th>dato</th>
-                        <th>dato</th>
-                        <th>dato</th>
-                        <th>dato</th>
-                        <th>dato</th>
+                        <th>ID Película</th>
+                        <th>ID Sala</th>
+                        <th>Hora</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
 
-                <tbody id="tablaPeliculasBody">
+                <tbody id="tablaFuncionesBody">
                     <!-- JS inyecta aquí -->
                 </tbody>
             </table>
@@ -152,7 +158,7 @@
 
     </main>
     <footer>
-        <script type="module" src="/public/vite-project/src/app/admin/pelicula.js"></script>
+        <script type="module" src="../../src/admin/funciones.js"></script>
     </footer>
 </body>
 
