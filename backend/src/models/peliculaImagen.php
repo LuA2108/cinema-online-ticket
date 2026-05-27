@@ -27,16 +27,8 @@ class PeliculaImagen
     public function listar()
     {
         $sql = "SELECT * FROM pelicula_imagen ORDER BY pelicula_id, tipo";
-
         $resultado = $this->conn->query($sql);
-        $rows = $resultado->fetch_all(MYSQLI_ASSOC);
-        $peliculas = [];
-
-        foreach ($rows as $row) {
-            $peliculas[$row['pelicula_id']][] = $row;
-        }
-
-        return $peliculas;
+        return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
