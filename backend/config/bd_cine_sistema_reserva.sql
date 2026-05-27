@@ -21,7 +21,7 @@ CREATE TABLE rol (
 CREATE TABLE sala (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT UNIQUE NOT NULL,
-    capacidad INT NOT NULL
+    capacidad INT NOT NULL,
     activa BOOLEAN DEFAULT TRUE
 );
 
