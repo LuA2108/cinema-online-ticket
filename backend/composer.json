@@ -13,5 +13,7 @@
             "email": "luceroan2108@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "firebase/php-jwt": "^7.0"
+    }
 }
