@@ -28,34 +28,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// 
-$respuesta = false;
+// Obtener route enviada por Apache Rewrite
+$route = $_GET['route'] ?? null;
+
+$route = trim($route, '/'); // Eliminar barras sobrantes
+
+// Convertir la ruta en segmentos: peliculas/1/activar 
+// Ejemplo: "peliculas/1/activar" => ["peliculas", "1", "activar"]
+$segments = $route === '' ? [] : explode('/', $route);
+
+// Recurso principal
+$resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
+
+// Parámetro principal (normalmente ID) o acción (activar/desactivar)
+$param = $segments[1] ?? null;
+
+// Acción adicional para rutas como: /peliculas/1/activar
+$action = $segments[2] ?? null;
 
 // ==========================
-// CARGA DE MÓDULOS (ROUTERS)
+// ROUTER PRINCIPAL
 // ==========================
-require_once __DIR__ . '/src/routes/pelicula.routes.php';
-require_once __DIR__ . '/src/routes/genero.routes.php';
-require_once __DIR__ . '/src/routes/imagen.routes.php';
-require_once __DIR__ . '/src/routes/usuarios.routes.php';
-require_once __DIR__ . '/src/routes/sala.routes.php';
-require_once __DIR__ . '/src/routes/funcion.routes.php';
-require_once __DIR__ . "/src/routes/tipoProducto.routes.php";
-require_once __DIR__ . "/src/routes/estadosReserva.routes.php";
-require_once __DIR__ . "/src/routes/producto.routes.php";
-require_once __DIR__ . "/src/routes/butaca.routes.php";
-require_once __DIR__ . "/src/routes/reserva.routes.php";
-require_once __DIR__ . "/src/routes/reservaButaca.routes.php";
-// Aquí más rutas para otros módulos (...)
+switch ($resource) {
 
+    case 'usuarios':
+        require_once __DIR__ . '/src/routes/usuarios.routes.php';
+        break;
 
-// SI NINGÚN MÓDULO RESPONDIÓ
-if (!$respuesta) {
-    http_response_code(404);
+    case 'peliculas':
+        require_once __DIR__ . '/src/routes/pelicula.routes.php';
+        break;
 
-    echo json_encode([
-        'success' => false,
-        'message' => 'Ruta no encontrada'
-    ]);
+    case 'generos':
+        require_once __DIR__ . '/src/routes/genero.routes.php';
+        break;
+
+    case 'imagenes':
+        require_once __DIR__ . '/src/routes/imagen.routes.php';
+        break;
+
+    case 'salas':
+        require_once __DIR__ . '/src/routes/sala.routes.php';
+        break;
+
+    case 'butacas':
+        require_once __DIR__ . '/src/routes/butaca.routes.php';
+        break;
+
+    case 'funciones':
+        require_once __DIR__ . '/src/routes/funcion.routes.php';
+        break;
+
+    case 'productos':
+        require_once __DIR__ . '/src/routes/producto.routes.php';
+        break;
+
+    case 'reservas':
+        require_once __DIR__ . '/src/routes/reserva.routes.php';
+        break;
+
+    case 'reserva-butacas':
+        require_once __DIR__ . '/src/routes/reservaButaca.routes.php';
+        break;
+
+    case 'tipoproductos':
+        require_once __DIR__ . '/src/routes/tipoProducto.routes.php';
+        break;
+
+    case 'estados-reservas':
+        require_once __DIR__ . '/src/routes/estadosReserva.routes.php';
+        break;
+
+    case 'login':
+        require_once __DIR__ . '/src/routes/auth.routes.php';
+        break;
+
+    case 'perfil':
+        require_once __DIR__ . '/src/routes/perfil.routes.php';
+        break;
+
+    case 'admin':
+        require_once __DIR__ . '/src/routes/admin.routes.php';
+        break;
+
+    default:
+        http_response_code(404);
+
+        echo json_encode([
+            "success" => false,
+            "message" => "Ruta no encontrada"
+        ]);
 }
-?>
