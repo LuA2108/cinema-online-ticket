@@ -8,17 +8,17 @@ use App\Models\EstadoReserva;
 use App\Models\Usuario;
 
 require_once __DIR__ . '/../../config/database.php';
-
 require_once __DIR__ . '/../models/Reserva.php';
 require_once __DIR__ . '/../models/Funcion.php';
 require_once __DIR__ . '/../models/EstadoReserva.php';
 require_once __DIR__ . '/../models/Usuario.php';
-
 require_once __DIR__ . '/../service/ReservaService.php';
 require_once __DIR__ . '/../controllers/ReservaController.php';
 
-global $respuesta;
+// VARIABLES GLOBALES DEL ROUTER CENTRAL
+global $resource, $param, $action, $segments;
 
+// CONEXIÓN E INYECCIÓN DE DEPENDENCIAS
 // CONEXIÓN BD
 $conn = (new Database())->obtenerConexion();
 
@@ -40,29 +40,12 @@ $reservaService = new ReservaService(
 // CONTROLLER
 $controller = new ReservaController($reservaService);
 
-// =========================
-// REQUEST
-// =========================
-
+// DATOS DE LA PETICIÓN
 $method = $_SERVER['REQUEST_METHOD'];
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
+$id = is_numeric($param) ? (int) $param : null;
 
-$route = $_GET['route'] ?? '';
-$route = trim($route, '/');
-$segments = $route === '' ? [] : explode('/', $route);
-
-$resource = $segments[0] ?? null;
-$param = $segments[1] ?? null;
-$action = $segments[2] ?? null;
-
-$id = is_numeric($param) ? (int)$param : null;
-
-if ($resource !== 'reservas') {
-    return;
-}
-
-$respuesta = true;
-
+// ROUTES
 try {
 
     // GET /reservas
@@ -79,14 +62,14 @@ try {
 
     // GET /reservas/usuario/1
     if ($method === 'GET' && $param === 'usuario' && isset($segments[2])) {
-        $usuario_id = (int)$segments[2];
+        $usuario_id = (int) $segments[2];
         echo json_encode($controller->obtenerPorUsuario($usuario_id));
         exit;
     }
 
     // GET /reservas/funcion/1
     if ($method === 'GET' && $param === 'funcion' && isset($segments[2])) {
-        $funcion_id = (int)$segments[2];
+        $funcion_id = (int) $segments[2];
         echo json_encode($controller->obtenerPorFuncion($funcion_id));
         exit;
     }
@@ -105,7 +88,7 @@ try {
 
     // PATCH /reservas/1/estado
     if ($method === 'PATCH' && $id && $param === 'estado') {
-        echo json_encode($controller->cambiarEstadoReserva($id, (int)$body['estado_id']));
+        echo json_encode($controller->cambiarEstadoReserva($id, (int) $body['estado_id']));
         exit;
     }
 
@@ -115,10 +98,16 @@ try {
         exit;
     }
 
+    // Ruta inválida dentro del módulo
+    http_response_code(404);
+    echo json_encode([
+        "success" => false,
+        "message" => "Ruta de reservas no válida"
+    ]);
+
 } catch (Exception $e) {
 
     http_response_code(500);
-
     echo json_encode([
         "success" => false,
         "datos" => null,

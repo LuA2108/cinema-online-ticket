@@ -5,95 +5,81 @@ use App\Service\UsuarioService;
 use App\Models\Usuario;
 
 require_once __DIR__ . '/../../config/database.php';
+
 require_once __DIR__ . '/../models/Usuario.php';
 require_once __DIR__ . '/../service/UsuarioService.php';
 require_once __DIR__ . '/../controllers/UsuarioController.php';
 
+// VARIABLES GLOBALES DEL ROUTER CENTRAL
 
-global $respuesta; // Variable global para indicar si la ruta fue manejada por este módulo
+global $resource, $param, $action, $segments;
 
-// Crear conexión a base de datos
+// CONEXIÓN E INYECCIÓN DE DEPENDENCIAS
+// CONEXIÓN BD
 $conn = (new Database())->obtenerConexion();
 
-// Instanciar modelo
+// MODELO
 $usuarioModel = new Usuario($conn);
-// Crear servicio con inyección de dependencias
+
+// SERVICE
 $usuarioService = new UsuarioService($usuarioModel, $conn);
-// Crear controller
+
+// CONTROLLER
 $controller = new UsuarioController($usuarioService);
 
-// LECTURA DE DATOS DE LA PETICIÓN ///////////////////////
-// Leer método HTTP utilizado
+// DATOS DE LA PETICIÓN
 $method = $_SERVER['REQUEST_METHOD'];
-
-// Leer JSON enviado desde el frontend
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
-
-// Obtener route enviada por Apache Rewrite
-$route = $_GET['route'] ?? '';
-$route = trim($route, '/'); // Eliminar barras sobrantes
-
-// Convertir la ruta en segmentos: peliculas/1/activar 
-// Ejemplo: "peliculas/1/activar" => ["peliculas", "1", "activar"]
-$segments = $route === '' ? [] : explode('/', $route);
-
-// Recurso principal
-$resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
-
-// Parámetro principal (normalmente ID) o acción (activar/desactivar)
-$param = $segments[1] ?? null;
-
-// Convertir el parámetro a ID numérico si es posible, o dejarlo como null
 $id = is_numeric($param) ? (int) $param : null;
 
-/* SI NO ES ESTE MÓDULO, SALIR */
-if ($resource !== 'usuarios') {
-    return;
-}
-
-$respuesta = true; // Variable para indicar si este módulo manejó la ruta actual
-
+// ROUTES
 try {
 
-    // GET /api/usuarios - Listar todos los usuarios
+    // GET /usuarios
     if ($method === 'GET' && !$param) {
-    echo json_encode($controller->index());
+        echo json_encode($controller->index());
         exit;
     }
 
-    // GET /api/usuarios/1 - Obtener usuario por ID
+    // GET /usuarios/1
     if ($method === 'GET' && $id) {
-    echo json_encode($controller->mostrarUsuarioID($id));
+        echo json_encode($controller->mostrarUsuarioID($id));
         exit;
     }
 
-    // GET /api/usuarios/email - Obtener usuario por email
+    // GET /usuarios/email/test@test.com
     if ($method === 'GET' && $param === 'email') {
         echo json_encode($controller->mostrarUsuarioEmail($segments[2] ?? ''));
         exit;
     }
 
-    // POST /api/usuarios - Crear nuevo usuario
+    // POST /usuarios
     if ($method === 'POST' && !$param) {
         echo json_encode($controller->guardar($body));
         exit;
     }
 
-    // PUT /api/usuarios/1 - Actualizar usuario existente
+    // PUT /usuarios/1
     if ($method === 'PUT' && $id) {
         echo json_encode($controller->actualizar($id, $body));
         exit;
     }
 
-    // DELETE /api/usuarios/1 - Eliminar usuario existente
+    // DELETE /usuarios/1
     if ($method === 'DELETE' && $id) {
         echo json_encode($controller->eliminar($id));
         exit;
     }
-    
+
+    // Ruta inválida dentro del módulo
+    http_response_code(404);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ruta de usuarios no válida'
+    ]);
+
 } catch (Exception $e) {
 
-    // Manejo global de errores con código 500 y mensaje de error
     http_response_code(500);
     echo json_encode([
         'success' => false,

@@ -1,112 +1,105 @@
-<?php 
-use App\Controllers\GeneroController;
-use App\Service\GeneroService;
+<?php
+
+use App\Controllers\PeliculaController;
+use App\Service\PeliculaService;
+use App\Models\Pelicula;
 use App\Models\Genero;
+use App\Models\PeliculaGenero;
 
-require_once __DIR__ . '/../../config/Database.php';
+// DEPENDENCIAS
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/Pelicula.php';
 require_once __DIR__ . '/../models/Genero.php';
-require_once __DIR__ . '/../service/GeneroService.php';
-require_once __DIR__ . '/../controllers/GeneroController.php';
+require_once __DIR__ . '/../models/PeliculaGenero.php';
+require_once __DIR__ . '/../service/PeliculaService.php';
+require_once __DIR__ . '/../controllers/PeliculaController.php';
 
-global $respuesta;
+// VARIABLES GLOBALES DEL ROUTER CENTRAL
+global $resource, $param, $action;
 
- // Conexión a base de datos y creación del controlador
+// CONEXIÓN E INYECCIÓN DE DEPENDENCIAS
 $conn = (new Database())->obtenerConexion();
 
-// Modelos necesarios para el controlador de géneros
+$peliculaModel = new Pelicula($conn);
 $generoModel = new Genero($conn);
+$peliculaGeneroModel = new PeliculaGenero($conn);
 
-// Servicio de géneros
-$generoService = new GeneroService($generoModel);
+$peliculaService = new PeliculaService(
+    $peliculaModel,
+    $peliculaGeneroModel,
+    $generoModel,
+    $conn
+);
 
-// Controlador de géneros
-$controller = new GeneroController($generoService);
+$controller = new PeliculaController($peliculaService);
 
-// Leer método HTTP utilizado
+// DATOS DE LA PETICIÓN
 $method = $_SERVER['REQUEST_METHOD'];
-
-// Leer JSON enviado desde el frontend
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
-
-// Obtener route enviada por Apache Rewrite
-$route = $_GET['route'] ?? '';
-$route = trim($route, '/'); // Eliminar barras sobrantes
-
-// Convertir la ruta en segmentos: peliculas/1/activar 
-// Ejemplo: "peliculas/1/activar" => ["peliculas", "1", "activar"]
-$segments = $route === '' ? [] : explode('/', $route);
-
-// Recurso principal
-$resource = $segments[0] ?? null; // Parámetro adicional (ID o acción)
-
-// Parámetro principal (normalmente ID) o acción (activar/desactivar)
-$param = $segments[1] ?? null;
-
-// Acción adicional para rutas como: /peliculas/1/activar
-$action = $segments[2] ?? null;
-
-// Convertir el parámetro a ID numérico si es posible, o dejarlo como null
 $id = is_numeric($param) ? (int) $param : null;
 
-/* SI NO ES ESTE MÓDULO, SALIR */
-if ($resource !== 'generos') {
-    return;
-}
-
-$respuesta = true; // este route de generos se encargará de manejar la solicitud actual
-
-    /**
- * MANEJO DE RUTAS Y RESPUESTAS
- * ===============================
- * Todas las operaciones se ejecutan dentro de
- * un bloque try/catch para manejar errores.
- */
+// ROUTES
 try {
-    
-    // GET /api/generos - Obtener listado de géneros
+
+    // GET /peliculas
     if ($method === 'GET' && !$param) {
         echo json_encode($controller->index());
         exit;
     }
 
-    // GET /api/generos/completas - Obtener géneros con relaciones completas
+    // GET /peliculas/completas
     if ($method === 'GET' && $param === 'completas') {
-        echo json_encode( $controller->index());
+        echo json_encode($controller->listarPeliculasCompletas());
         exit;
     }
 
-    // GET /api/generos/1 - Obtener género por ID
+    // GET /peliculas/1
     if ($method === 'GET' && $id) {
-        echo json_encode($controller->mostrarGenero($id));
+        echo json_encode($controller->mostrarPelicula($id));
         exit;
     }
 
-    // POST /api/generos - Crear nuevo género
+    // POST /peliculas
     if ($method === 'POST' && !$param) {
-        echo json_encode($controller->crearGenero($body));
+        echo json_encode($controller->guardarPelicula($body));
         exit;
     }
 
-    // PUT /api/generos/1 - Actualizar género existente
+    // PUT /peliculas/1
     if ($method === 'PUT' && $id) {
-        echo json_encode($controller->actualizarGenero($id, $body));
+        echo json_encode($controller->actualizarPelicula($id, $body));
         exit;
     }
 
-    // DELETE /api/generos/1 - Eliminar género
-    if ($method === 'DELETE' && $id) {
-        echo json_encode($controller->eliminarGenero($id));
+    // PATCH /peliculas/1/activar
+    if ($method === 'PATCH' && $id && $action === 'activar') 
+    {
+        echo json_encode(
+            $controller->activar($id)
+        );
+
         exit;
     }
+
+    // PATCH /peliculas/1/desactivar
+    if ($method === 'PATCH' && $id && $action === 'desactivar') 
+    {
+        echo json_encode($controller->desactivar($id));
+        exit;
+    }
+
+    // Ruta inválida dentro del módulo
+    http_response_code(404);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ruta de películas no válida'
+    ]);
 
 } catch (Exception $e) {
 
-    // Manejo global de errores con código 500 y mensaje de error
     http_response_code(500);
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
     ]);
 }
-
-?>
