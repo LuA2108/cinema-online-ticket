@@ -1,4 +1,3 @@
-```php id="2q8e4l"
 <?php
 
 use App\Models\Sala;

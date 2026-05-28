@@ -1,4 +1,3 @@
-```php id="r8m2qx"
 <?php
 
 use App\Controllers\FuncionController;
