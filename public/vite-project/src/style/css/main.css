@@ -494,7 +494,6 @@ footer .subtitulo {
   min-height: 70vh;
   background-image: url("../../../assets/fondo/fondo_login_register.png");
   background-repeat: no-repeat;
-  background-position: 50;
 }
 .container_login h1 {
   margin-bottom: 20px;
