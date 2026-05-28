@@ -1,0 +1,265 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cinema Online Ticket</title>
+    <meta name="description" content='Cinema Online Ticket'>
+    <meta name="author" content="Lucero Anay Cahuana Cornejo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="64x42" href="../public/assets/iconos/logo-limpio.png">
+    <!-- BootStrap - Font Awesome - Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b527a55e68.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="../src/style/css/main.css">
+
+</head>
+
+<body>
+    <!-- ======= Cabecera : Logo / Buscador / Menu  ======= -->
+    <header>
+        <div class="contenedor-logo-sesion">
+            <!-- LOGO -->
+            <div class="logo">
+                <a href="./index.html"><img src="../public/assets/iconos/logo_cine.png" alt="Icono logo cine"
+                        width="170px" height="100px"></a>
+            </div>
+
+            <!-- SUBMENU para SESION-->
+            <nav class="menu-sesion">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#"> <i class="fa-solid fa-user m-2" style="color: rgb(239, 244, 255);"></i></a>
+                        <ul class="submenu">
+                            <li><a href="./perfil.html">Iniciar sesión</a></li>
+                            <li>
+                                <a href="./registro.html">Registrarse</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Menu y buscador -->
+        <div class="container-menu-buscador">
+            <!-- MENU -->
+            <nav class="menu">
+                <ul class="">
+                    <li class="menu-item">
+                        <a class="item-peliculas" href="./cartelera.html"> <i class="fa-solid fa-clapperboard"></i>
+                            Películas</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-servicios" href="#"> <img class="icono"
+                                src="../public/assets/iconos/palomitas-de-maiz.png" alt="Icono de palomitas">
+                            Servicios</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-info" href="./informacion.html"> <i class="fa-solid fa-info"></i>Sobre Nosotros</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-reserva" href="#"> <i class="fa-solid fa-ticket"></i> Reservar película</a>
+                    </li>
+                    <li class="menu-item buscador">
+                        <img src="../public/assets/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
+                        <form action="#" method="get">
+                            <input type="search" name="buscador" placeholder="Buscar película...">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <hr>
+    <main class="container py-5 text-light">
+
+        <div class="card border-0 shadow-lg rounded-4" style="
+            background: linear-gradient(135deg, #0b0f1a, #1a1033, #0a1a2f);
+            border: 1px solid rgba(255, 209, 73, 0.25);
+        ">
+
+            <div class="card-body p-5">
+
+                <!-- TITULO -->
+                <h1 class="text-center mb-5" style="color: rgb(255, 209, 73); font-weight: 700;" id="inicio">
+                    Sobre Nosotros
+                </h1>
+
+                <!-- QUIÉNES SOMOS -->
+                <section id="quienes-somos" class="mb-4">
+                    <h2 class="mb-2 text-warning">¿Quiénes somos?</h2>
+                    <p class="text-light-emphasis">
+                        En <strong>Cinesa Online</strong> transformamos la experiencia del cine,
+                        uniendo la magia de la gran pantalla con la comodidad digital.
+                        Nuestra plataforma te permite descubrir películas, reservar entradas y vivir el cine sin
+                        complicaciones.
+                    </p>
+                </section>
+
+                <!-- HISTORIA -->
+                <section id="historia" class="mb-4">
+                    <h2 class="mb-2 text-warning">Nuestra historia</h2>
+                    <p class="text-light-emphasis">
+                        Cinesa nació con la idea de modernizar el cine en Europa.
+                        Lo que empezó como una red de salas físicas evolucionó hacia una plataforma digital completa
+                        donde millones de usuarios disfrutan de estrenos y experiencias únicas.
+                    </p>
+                </section>
+
+                <!-- MISIÓN -->
+                <section id="mision" class="mb-4">
+                    <h2 class="mb-2 text-warning">Misión</h2>
+                    <p class="text-light-emphasis">
+                        Acercar el cine a todas las personas, ofreciendo una experiencia rápida, intuitiva y accesible
+                        desde cualquier dispositivo.
+                    </p>
+                </section>
+
+                <!-- VISIÓN -->
+                <section id="vision" class="mb-4">
+                    <h2 class="mb-2 text-warning">Visión</h2>
+                    <p class="text-light-emphasis">
+                        Ser la plataforma líder en entretenimiento cinematográfico en Europa,
+                        innovando constantemente en la forma en que las personas disfrutan del cine.
+                    </p>
+                </section>
+
+                <!-- VALORES -->
+                <section id="valores" class="mb-4">
+                    <h2 class="mb-3 text-warning">Valores</h2>
+
+                    <div class="list-group list-group-flush">
+
+                        <div class="list-group-item bg-transparent text-light border-secondary">
+                            🎬 Pasión por el cine y la cultura audiovisual
+                        </div>
+
+                        <div class="list-group-item bg-transparent text-light border-secondary">
+                            🔒 Seguridad en cada transacción
+                        </div>
+
+                        <div class="list-group-item bg-transparent text-light border-secondary">
+                            ⚡ Innovación tecnológica constante
+                        </div>
+
+                        <div class="list-group-item bg-transparent text-light border-secondary">
+                            🤝 Cercanía con nuestros usuarios
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- CONTACTO -->
+                <section id="contacto" class="mt-5 p-4 rounded-4 text-center" style="
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 209, 73, 0.2);
+                ">
+
+                    <h2 class="mb-3 text-warning">Contacto</h2>
+
+                    <p class="mb-2 text-light-emphasis">
+                        ¿Tienes dudas, sugerencias o quieres colaborar con nosotros?
+                    </p>
+
+                    <p class="mb-1">📧 soporte@cinesa-online.com</p>
+                    <p class="mb-0">📍 Barcelona, España</p>
+
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+
+
+
+    <footer>
+        <hr>
+        <div class="container-footer">
+            <section class="container-redes-sociales">
+                <h2 class="footer-titulo titulo-logo">CineToon</h2>
+                <p>"Disfruta de las mejores películas y estrenos exclusivos"</p>
+
+                <div class="container-icons-redes">
+                    <h3 class="subtitulo">Siguenos en redes sociales:</h3>
+                    <ul class="iconos-redes-sociales">
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-facebook icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-instagram icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-x-twitter icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-youtube icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-tiktok icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="footer-titulo">Explorar</h2>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Peliculas</a></li>
+                    <li><a href="#">Estrenos</a></li>
+                    <li><a href="#">Cartelera</a></li>
+                    <li><a href="#">Reserva</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Cuenta</h2>
+                <ul>
+                    <li><a href="#">Iniciar sesion</a></li>
+                    <li><a href="#">Registrarse</a></li>
+                    <li><a href="#">Mi perfil</a></li>
+                    <li><a href="#">Mi lista</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Información</h2>
+                <ul>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Noticias</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Legal</h2>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Política de cookies</a></li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="copy">
+            <hr>
+            <p>&copy; 2026 <span>CineToon</span>. Todos los derechos reservados.</p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </footer>
+</body>
