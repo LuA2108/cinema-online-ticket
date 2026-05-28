@@ -1,5 +1,7 @@
 <?php
 
+use App\Controller\AuthController;
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config/database.php';
 
@@ -18,7 +20,7 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
 
 // Headers permitidos desde frontend
 header('Access-Control-Allow-Headers: Content-Type');
-
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 /**
  * El navegador envía una petición OPTIONS
  * antes de ciertos métodos HTTP.
@@ -99,16 +101,16 @@ switch ($resource) {
         require_once __DIR__ . '/src/routes/estadosReserva.routes.php';
         break;
 
-    case 'login':
-        require_once __DIR__ . '/src/routes/auth.routes.php';
+    case "login":
+        require_once __DIR__ . "/src/routes/auth.routes.php";
         break;
 
-    case 'perfil':
-        require_once __DIR__ . '/src/routes/perfil.routes.php';
+    case "perfil":
+        require_once __DIR__ . "/src/routes/user.routes.php";
         break;
 
-    case 'admin':
-        require_once __DIR__ . '/src/routes/admin.routes.php';
+    case "admin":
+        require_once __DIR__ . "/src/routes/admin.routes.php";
         break;
 
     default:
