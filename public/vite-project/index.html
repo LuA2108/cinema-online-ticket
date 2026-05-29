@@ -16,7 +16,7 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="src/style/css/main.css">
+    <link rel="stylesheet" href="./src/style/css/main.css">
 
 </head>
 
@@ -26,7 +26,7 @@
         <div class="contenedor-logo-sesion">
             <!-- LOGO -->
             <div class="logo">
-                <a href="./index.html"><img src="src/assets/iconos/logo_cine.png" alt="Icono logo cine" width="170px"
+                <a href="./index.html"><img src="public/assets/iconos/logo_cine.png" alt="Icono logo cine" width="170px"
                         height="100px"></a>
             </div>
 
@@ -50,20 +50,22 @@
             <nav class="menu">
                 <ul class="">
                     <li class="menu-item">
-                        <a class="item-peliculas" href="src/view/public/cartelera.html"> <i class="fa-solid fa-clapperboard"></i> Películas</a>
+                        <a class="item-peliculas" href="./cartelera.html"> <i class="fa-solid fa-clapperboard"></i>
+                            Películas</a>
                     </li>
                     <li class="menu-item">
                         <a class="item-servicios" href="#"> <img class="icono"
-                                src="src/assets/iconos/palomitas-de-maiz.png" alt="Icono de palomitas"> Servicios</a>
+                                src="./public/assets/iconos/palomitas-de-maiz.png" alt="Icono de palomitas">
+                            Servicios</a>
                     </li>
                     <li class="menu-item">
-                        <a class="item-info" href="#"> <i class="fa-solid fa-info"></i>Sobre Nosotros</a>
+                        <a class="item-info" href="./informacion.html"> <i class="fa-solid fa-info"></i>Sobre Nosotros</a>
                     </li>
                     <li class="menu-item">
                         <a class="item-reserva" href="#"> <i class="fa-solid fa-ticket"></i> Reservar película</a>
                     </li>
                     <li class="menu-item buscador">
-                        <img src="/src/assets/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
+                        <img src="./public/assets/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
                         <form action="#" method="get">
                             <input type="search" name="buscador" placeholder="Buscar película...">
                         </form>
@@ -176,18 +178,49 @@
 
         </section>
 
-        <section id="registro-info">
-            <h2>¡Mantente al Día con Nuestro Cine!</h2>
-            <p>Regístrate con tu correo electrónico y recibe información sobre estrenos, promociones y eventos
-                especiales.</p>
+        <section id="registro-info" class="py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div class="card border-0 rounded-4 shadow-lg text-light" style="
+                        background: linear-gradient(135deg, #0b0f1a, #1a1033, #0a1a2f);
+                        border: 1px solid rgba(255, 209, 73, 0.25);">
+                            <div class="card-body p-5 text-center">
 
-            <form action="suscripcion.php" method="post" class="newsletter-form d-flex justify-content-center">
-                <input type="email" name="email" placeholder="Tu correo electrónico" required
-                    class="form-control me-2" />
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-envelope"></i>Suscribirse
-                </button>
-            </form>
+                                <h2 class="card-title mb-3" style="color: rgb(255, 209, 73); font-weight: 700;">
+                                    ¡Mantente al Día con Nuestro Cine!
+                                </h2>
+
+                                <p class="card-text text-light-emphasis mb-4">
+                                    Regístrate con tu correo electrónico y recibe información sobre estrenos,
+                                    promociones y eventos especiales.
+                                </p>
+
+                                <form action="suscripcion.php" method="post" class="d-flex flex-column gap-3">
+
+                                    <input type="email" name="email" placeholder="Tu correo electrónico" required
+                                        class="form-control form-control-lg text-center text-light" style="
+                                    background-color: rgba(255,255,255,0.05);
+                                    border: 1px solid rgba(255, 209, 73, 0.3);" />
+
+                                    <button type="submit" class="btn btn-lg rounded-3" style="
+                                        background-color: rgb(255, 209, 73);
+                                        color: #0b0f1a;
+                                        font-weight: 600;
+                                        transition: 0.3s;
+                                    " onmouseover="this.style.transform='scale(1.03)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+
+                                        <i class="fa-solid fa-envelope me-2"></i>
+                                        Suscribirse
+                                    </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -252,7 +285,7 @@
             <section>
                 <h2 class="footer-titulo">Información</h2>
                 <ul>
-                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="./informacion.html">Sobre nosotros</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="#">Noticias</a></li>
                     <li><a href="#">Contacto</a></li>
@@ -273,6 +306,5 @@
             <p>&copy; 2026 <span>CineToon</span>. Todos los derechos reservados.</p>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script type="module" src="/src/main.js"></script>
     </footer>
 </body>
