@@ -1,7 +1,11 @@
 export default class TablaView {
 
     constructor(tbodyId) {
+        console.log("TablaView recibió:", tbodyId);
         this.tbody = document.getElementById(tbodyId);
+        if (!this.tbody) {
+            throw new Error(`No existe el elemento tbody con id: ${tbodyId}`);
+        }
     }
 
     limpiar() {
