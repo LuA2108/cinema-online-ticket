@@ -125,22 +125,111 @@
         <article>
             <h1 style="color: black">Imágenes de Películas</h1>
 
-            <div class="d-flex justify-content gap-2">
-                <button class="btn btn-success border-0 px-3 py-2 rounded-1 shadow-sm mb-2  ">
-                    Agregar Imagen
-                </button>
+            <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#modalImagen"
+                data-pelicula-id="" data-pelicula-titulo="">
+                Agregar Imagen
+            </button>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="modalImagen" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-md modal-dialog-centered">
+                    <div class="modal-content border-0 shadow-lg">
+
+                        <!-- HEADER -->
+                        <div class="modal-header text-white" style="background:#2c3e50;">
+
+                            <h4 class="modal-title">
+                                Agregar Imagen
+                            </h4>
+
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                            </button>
+
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="modal-body bg-light-subtle p-4" style="color:#111 !important;">
+                            <h6 class="p-2">
+                                <span id="textoModoImagen">Agregar Imagen</span>
+                                <span id="tituloPeliculaModal"></span>
+                            </h6>
+
+                            <div class="mb-3 d-none" id="grupoSelectPelicula">
+
+                                <select class="form-select" name="pelicula_id_select" id="pelicula_id_select">
+                                    <option value="">Seleccione una película</option>
+                                </select>
+                            </div>
+
+                            <form id="formImagen">
+                                <input type="hidden" name="pelicula_id" id="pelicula_id">
+                                <!-- TIPO -->
+                                <div class="mb-3">
+
+                                    <label class="form-label fw-semibold text-dark">
+                                        Tipo de imagen
+                                    </label>
+
+                                    <select class="form-select" name="tipo" required>
+
+                                        <option value="">Seleccione...</option>
+                                        <option value="poster">Poster</option>
+                                        <option value="banner">Banner</option>
+
+                                    </select>
+                                </div>
+
+                                <!-- IMAGEN -->
+                                <div class="mb-3">
+
+                                    <label class="form-label fw-semibold text-dark">
+                                        Imagen
+                                    </label>
+
+                                    <label id="uploadLabel"
+                                        class="border rounded d-flex flex-column justify-content-center align-items-center text-center"
+                                        style="height:220px; cursor:pointer; background:#f8f9fa;">
+
+                                        <i id="uploadIcon"
+                                            class="fa-solid fa-cloud-arrow-up fa-3x text-secondary mb-2"></i>
+
+                                        <span id="uploadText" class="text-muted">
+                                            Seleccionar imagen
+                                        </span>
+
+                                        <input type="file" name="imagen" accept="image/*" class="d-none" required>
+                                        <img id="previewImagen" class="img-fluid d-none" style="max-height:200px;">
+                                    </label>
+                                </div>
+
+                                <!-- BOTONES -->
+                                <div class="d-flex justify-content-end gap-2">
+
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+
+                                    <button type="submit" class="btn text-white" style="background:#2c3e50;">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <table border="1" class="tabla_panel tabla">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>pelicula_id</th>
+                        <th>Película</th>
                         <th>tipo</th>
                         <th>url</th>
                         <th>Imagen</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
-
                 <tbody id="tablaImagenesBody">
                     <!-- JS inyecta aquí -->
                 </tbody>
@@ -148,10 +237,9 @@
         </article>
 
     </main>
-    <footer>
-        <script type="module" src="../../src/admin/imagen.js"></script>
-        <script type="module" src="../../src/auth/admin.js" ></script>
-    </footer>
+    <script type="module" src="../../src/admin/imagen.js"></script>
+    <script type="module" src="../../src/auth/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
