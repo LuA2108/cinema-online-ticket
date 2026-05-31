@@ -29,7 +29,7 @@ export async function obtenerPeliculaPorId(id) {
 
 // Obtener películas completas
 export async function obtenerPeliculasCompletas() {
-    const res = await fetch(`${BASE_URL}/completas`);
+    const res = await fetch(`${BASE_URL}/peliculas/completas`);
     const data = await res.json();
 
     if (!data.success) {
