@@ -1,6 +1,8 @@
-import PeliculaControlador from "../controlador/peliculaControlador";
+import PeliculaControlador from "../controlador/peliculaControlador.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const controlador = new PeliculaControlador();
-    await controlador.cargarPeliculas();
+    controlador.init();
+    
 });
+
