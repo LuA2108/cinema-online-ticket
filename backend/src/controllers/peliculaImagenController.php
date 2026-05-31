@@ -56,14 +56,15 @@ class PeliculaImagenController
     /**
      * Crea una nueva imagen para una película utilizando los datos proporcionados
      * @param array $datos
+     * @param mixed $file Archivo de imagen
      * @return array Resultado de la operación de creación de imagen
      */
-    public function crearImagen(array $datos)
+    public function crearImagen(array $datos, $file = null)
     {
         return $this->peliculaImagenService->agregar(
             (int)$datos['pelicula_id'],
             $datos['tipo'],
-            $datos['url']
+            $file
         );
     }
 

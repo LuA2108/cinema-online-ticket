@@ -61,7 +61,9 @@ try {
 
     // POST /imagenes
     if ($method === 'POST' && !$param) {
-        echo json_encode($controller->crearImagen($body));
+        $datos = $_POST; // texto
+        $file = $_FILES['imagen'] ?? null;
+        echo json_encode($controller->crearImagen($datos, $file));
         exit;
     }
 
@@ -77,7 +79,6 @@ try {
         'success' => false,
         'message' => 'Ruta de imágenes no válida'
     ]);
-
 } catch (Exception $e) {
 
     http_response_code(500);

@@ -74,41 +74,47 @@ class PeliculaImagenService
     /**
      * Agregar imagen a película si la película existe y no hay una imagen duplicada
      * @param int $peliculaId ID de la película a la que se le agregará la imagen
+     * @param mixed $file Archivo de imagen
      * @param string $tipo Tipo de imagen (poster, banner, etc.)
-     * @param string $url URL o enlace de la imagen
      * @return array Resultado de la operación de creación de imagen
      */
-    public function agregar(int $peliculaId, string $tipo, string $url)
+    public function agregar(int $peliculaId, string $tipo, $file)
     {
-        // Validar que la película exista antes de agregar la imagen
         $pelicula = $this->peliculaModelo->peliculaId($peliculaId);
 
         if (!$pelicula) {
             return ["success" => false, "datos" => null, "error" => "La película no existe"];
         }
 
-        if (empty($tipo) || empty($url)) {
-            return ["success" => false, "datos" => null, "error" => "Tipo y URL son obligatorios"];
+        if (!$file) {
+            return ["success" => false, "datos" => null, "error" => "Imagen requerida"];
         }
 
-        $pelicula = $this->peliculaModelo->peliculaId($peliculaId);
+        // validar tipo imagen
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
 
-        if (!$pelicula) {
-            return ["success" => false, "datos" => null, "error" => "La película no existe"];
+        $nombre = uniqid("img_") . "." . $ext;
+
+        $ruta = __DIR__ . "/../../uploads/" . $nombre;
+
+        if (!move_uploaded_file($file['tmp_name'], $ruta)) {
+            return ["success" => false, "datos" => null, "error" => "Error al subir archivo"];
         }
 
-        // Validar que no exista una imagen con la misma URL para la misma película
+        // URL pública
+        $url = "/backend/uploads/" . $nombre;
+
         if ($this->imagenModelo->existeUrl($peliculaId, $url)) {
-            return ["success" => false, "datos" => null, "error" => "Esta imagen ya existe para esta película"];
+            return ["success" => false, "datos" => null, "error" => "Imagen duplicada"];
         }
 
         $id = $this->imagenModelo->crear($peliculaId, $tipo, $url);
 
-        if (!$id) {
-            return ["success" => false, "datos" => null, "error" => "No se pudo crear la imagen"];
-        }
-
-        return ["success" => true, "datos" => $id, "error" => null];
+        return [
+            "success" => true,
+            "datos" => $id,
+            "error" => null
+        ];
     }
 
     /**
