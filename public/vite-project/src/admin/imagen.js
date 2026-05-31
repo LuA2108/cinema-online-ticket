@@ -1,6 +1,6 @@
-import ImagenControlador from "../controlador/imagenControlador";
+import imagenAdminControlador from "../controlador/imagen/imagenAdminControlador";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const controlador = new ImagenControlador();
-    await controlador.cargarImagenes();
+    const controlador = new imagenAdminControlador();
+    controlador.init();
 });
