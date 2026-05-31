@@ -17,7 +17,7 @@ export async function obtenerImagenes() {
 
 // Obtener imagen por ID
 export async function obtenerImagenPorId(id) {
-    const res = await fetch(`${BASE_URL}/pelicula/${id}`);
+    const res = await fetch(`${BASE_URL}/imagenes/${id}`);
     const data = await res.json();
 
     if (!data.success) {
@@ -29,7 +29,7 @@ export async function obtenerImagenPorId(id) {
 
 // Obtener imagen por ID de película
 export async function obtenerImagenPorPelicula(id_pelicula) {
-    const res = await fetch(`${BASE_URL}/pelicula/${id_pelicula}`);
+    const res = await fetch(`${BASE_URL}/imagenes/${id_pelicula}`);
     const data = await res.json();
 
     if (!data.success) {
@@ -40,19 +40,16 @@ export async function obtenerImagenPorPelicula(id_pelicula) {
 }
 
 // Crear imagen
-export async function agregarImagen(datos) {
-    const res = await fetch(BASE_URL, {
+export async function agregarImagen(formData) {
+    const res = await fetch(`${BASE_URL}/imagenes`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
+        body: formData
     });
 
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.error || 'Error al crear la película');
+        throw new Error(data.error || 'Error al crear la imagen');
     }
 
     return data.datos;
@@ -60,7 +57,7 @@ export async function agregarImagen(datos) {
 
 // Eliminar una imagen
 export async function eliminarImagen(id) {
-    const res = await fetch(`${BASE_URL}/${id}`, {
+    const res = await fetch(`${BASE_URL}/imagenes/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -70,7 +67,7 @@ export async function eliminarImagen(id) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.error || `Error al eliminar la película ${id}`);
+        throw new Error(data.error || `Error al eliminar la imagen ${id}`);
     }
 
     return data.datos;
