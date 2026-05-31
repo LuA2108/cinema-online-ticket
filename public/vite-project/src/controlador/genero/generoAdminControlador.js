@@ -1,12 +1,11 @@
 import ModeloGenero from "../../models/modeloGenero.js";
 import renderizarTablaGeneros from "../../view/genero/generoTabla.js";
 
-class GenerosControlador {
+class GenerosAdminControlador {
 
     constructor(model) {
         this.model = new ModeloGenero();
 
-        // inicializa eventos
         this.init();
     }
 
@@ -44,7 +43,7 @@ class GenerosControlador {
 
             const btn = e.target.closest("button");
 
-            if (!btn) return; // 🔥 clave
+            if (!btn) return;   
 
             const id = btn.dataset.id;
 
@@ -128,6 +127,8 @@ class GenerosControlador {
     limpiarFormulario() {
         this.inputNombre.value = "";
     }
+
+    
 }
 
-export default GenerosControlador;
+export default GenerosAdminControlador;
