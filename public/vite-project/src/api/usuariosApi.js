@@ -27,18 +27,6 @@ export async function obtenerUsuarioPorId(id) {
     return data.datos;
 }
 
-// Obtener usuario por email
-export async function obtenerUsuarioPorEmail(email) {
-    const res = await fetch(`${BASE_URL}/email/${email}`);
-    const data = await res.json();
-
-    if (!data.success) {
-        throw new Error(data.error || 'Error al obtener usuario');
-    }
-
-    return data.datos;
-}
-
 // Crear usuario
 export async function crearUsuario(datos) {
     const res = await fetch(BASE_URL, {
