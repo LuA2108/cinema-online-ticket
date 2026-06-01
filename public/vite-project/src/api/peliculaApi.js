@@ -17,7 +17,7 @@ export async function getPeliculas() {
 
 // Obtener película por ID
 export async function obtenerPeliculaPorId(id) {
-    const res = await fetch(`${BASE_URL}/${id}`);
+    const res = await fetch(`${BASE_URL}/peliculas/${id}`);
     const data = await res.json();
 
     if (!data.success) {
@@ -41,7 +41,7 @@ export async function obtenerPeliculasCompletas() {
 
 // Crear película
 export async function crearPelicula(datos) {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(`${BASE_URL}/peliculas`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export async function crearPelicula(datos) {
 
 // Actualizar película
 export async function actualizarPelicula(id, datos) {
-    const res = await fetch(`${BASE_URL}/${id}`, {
+    const res = await fetch(`${BASE_URL}/peliculas/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export async function actualizarPelicula(id, datos) {
 
 // Activar película
 export async function activarPelicula(id) {
-    const res = await fetch(`${BASE_URL}/${id}/activar`, {
+    const res = await fetch(`${BASE_URL}/peliculas/${id}/activar`, {
         method: 'PATCH'
     });
 
@@ -94,7 +94,7 @@ export async function activarPelicula(id) {
 
 // Desactivar película
 export async function desactivarPelicula(id) {
-    const res = await fetch(`${BASE_URL}/${id}/desactivar`, {
+    const res = await fetch(`${BASE_URL}/peliculas/${id}/desactivar`, {
         method: 'PATCH'
     });
 
