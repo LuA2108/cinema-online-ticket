@@ -22,15 +22,6 @@ class UsuarioController
     {
         $this->usuarioService = $usuarioService;    
     }
-
-    public static function perfil() {
-        $user = AuthMiddleWare::verificarToken();
-
-        echo json_encode([
-            "mensaje" => "Acceso usuario permitido",
-            "usuario" => $user
-        ]);
-    }
     
     /**
      * Devuelve una lista de todos los usuarios
