@@ -119,9 +119,9 @@ class PeliculaService
         try {
             $this->conn->begin_transaction();
 
-            if (!$pelicula || !$generos) {
+            if (!$pelicula) {
                 $this->conn->rollback();
-                return ["success" => false, "datos" => null, "error" => "No se proporcionaron datos para actualizar la película con ID $id."];
+                return ["success" => false, "datos" => null, "error" => "No se proporcionaron datos de la película."];
             }
 
             // 1. Actualizar película
@@ -137,7 +137,7 @@ class PeliculaService
             );
 
             // 2. Actualizar géneros
-            $this->sincronizarGeneros($id, $generos);
+            $this->sincronizarGeneros($id, $generos ?? []);
 
             $this->conn->commit();
 
@@ -191,13 +191,13 @@ class PeliculaService
 
     public function activarPelicula(int $id)
     {
-        $resultado = $this->peliculaModelo->peliculaId($id);
+        $resultado = $this->peliculaModelo->cambiarEstado($id, true);
         return ["success" => $resultado, "datos" => $resultado, "error" => $resultado ? null : "No se encontró la película con ID: $id."];
     }
 
     public function desactivarPelicula(int $id)
     {
-        $resultado = $this->peliculaModelo->peliculaId($id);
+        $resultado = $this->peliculaModelo->cambiarEstado($id, false);
         return ["success" => $resultado, "datos" => $resultado, "error" => $resultado ? null : "No se encontró la película con ID: $id."];
     }
 }
