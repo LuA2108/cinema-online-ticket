@@ -1,10 +1,7 @@
 <?php 
+use App\Controller\PerfilController;
+require_once __DIR__ . '/../controllers/PerfilController.php';
 
-use App\authMiddleware\AuthMiddleWare;
-
-$user = AuthMiddleWare::verificarToken();
-echo json_encode([
-    "message" => "perfil",
-    "data" => $user
-]);
+$controller = new PerfilController();
+$controller->index();
 ?>
