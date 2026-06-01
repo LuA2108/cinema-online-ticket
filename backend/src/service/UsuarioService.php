@@ -85,7 +85,7 @@ class UsuarioService
     /**
      * Actualiza un usuario existente
      * @param int $id ID del usuario a actualizar
-     * @param array $datos Nuevos datos del usuario (nombre, email, contraseña, rol_id, ciudad, provincia)
+     * @param array $datos Nuevos datos del usuario (nombre, email, rol_id, ciudad, provincia)
      * @return array Resultado de la actualización, incluyendo un mensaje de éxito o error según corresponda
      */
     public function actualizarUsuario($id, $datos)
@@ -106,7 +106,7 @@ class UsuarioService
             }
         }
 
-        $resultado = $this->userModel->actualizarUsuario($id, $datos['rol_id'], $datos['nombre'], $datos['email'], $datos['contrasena'], $datos['ciudad'], $datos['provincia']);
+        $resultado = $this->userModel->actualizarUsuario($datos['rol_id'], $datos['nombre'], $datos['email'], $datos['ciudad'], $datos['provincia'], $id);
 
         if (!$resultado) {
             return ["success" => false, "datos" => null, "error" => "No se pudo actualizar el usuario"];
