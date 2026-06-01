@@ -88,15 +88,16 @@ class PeliculaTabla {
                 "btn btn-warning btn-sm btn-editar",
                 pelicula.id
             );
+            // Botón desactiva/activar
+            const btnEstado = document.createElement("button");
+            btnEstado.className = pelicula.disponible == 1 ? "btn btn-sm btn-danger btn-estado" : "btn btn-sm btn-success btn-estado";
 
-            // Botón eliminar
-            const btnEliminar = Boton.crear(
-                "Eliminar",
-                "btn btn-danger btn-sm btn-eliminar",
-                pelicula.id
-            );
+            btnEstado.textContent = pelicula.disponible == 1 ? "Desactivar" : "Activar";
 
-            div.append(btnEditar, btnEliminar);
+            btnEstado.dataset.id = pelicula.id;
+            btnEstado.dataset.estado = pelicula.disponible;
+
+            div.append(btnEditar, btnEstado);
             tdAcciones.appendChild(div);
             this.tabla.agregarCelda(tr, tdAcciones);
 
