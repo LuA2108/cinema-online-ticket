@@ -47,7 +47,7 @@ try {
         exit;
     }
 
-    // GET /usuarios/email/test@test.com
+    // GET /usuarios/email/{email}
     if ($method === 'GET' && $param === 'email') {
         echo json_encode($controller->mostrarUsuarioEmail($segments[2] ?? ''));
         exit;
