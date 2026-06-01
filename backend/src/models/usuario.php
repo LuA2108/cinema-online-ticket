@@ -25,12 +25,12 @@ class Usuario
     }
 
     /**
-     * Obtiene todos los usuarios de la base de datos
+     * Obtener todos los usuarios (SIN contraseña)
      * @return array Lista de usuarios
      */
     public function obtenerUsuarios()
     {
-        $sql = "SELECT * FROM usuario";
+        $sql = "SELECT id, rol_id, nombre, email, ciudad, provincia, create_time FROM usuario";
         $resultado = $this->conn->query($sql);
 
         return $resultado->fetch_all(MYSQLI_ASSOC);
@@ -43,7 +43,7 @@ class Usuario
      */
     public function buscarPorID($id)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE id = ? ");
+        $stmt = $this->conn->prepare("SELECT id, rol_id, nombre, email, ciudad, provincia, create_time FROM usuario WHERE id = ?");
         $stmt->bind_param("s", $id);
         $stmt->execute();
 
@@ -57,7 +57,7 @@ class Usuario
      */
     public function buscarPorEmail($email)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM usuario WHERE email = ? ");
+        $stmt = $this->conn->prepare("SELECT id, rol_id, nombre, email, contrasena FROM usuario WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
 
@@ -75,12 +75,12 @@ class Usuario
      */
     public function crearUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia)
     {
-        $sql = $this->conn->prepare("INSERT INTO usuario(rol_id, nombre, email, contrasena, ciudad, provincia) VALUES (?,?,?,?,?,?)");
         $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
+        $sql = $this->conn->prepare("INSERT INTO usuario(rol_id, nombre, email, contrasena, ciudad, provincia) VALUES (?,?,?,?,?,?)");
         $sql->bind_param("isssss", $rol_id, $nombre, $email, $contrasena, $ciudad, $provincia);
 
         if ($sql->execute()) {
-            return $this->conn->insert_id; // 👈 AQUÍ
+            return $this->conn->insert_id;
         }
 
         return -1;
@@ -91,17 +91,34 @@ class Usuario
      * @param int $rol_id
      * @param string $nombre
      * @param string $email
-     * @param string $contrasena
      * @param string $ciudad
      * @param string $provincia
      * @param int $id_usuario
      * @return bool True si se actualizo, False en caso contrario
      */
-    public function actualizarUsuario($rol_id, $nombre, $email, $contrasena, $ciudad, $provincia, $id_usuario)
+    public function actualizarUsuario($rol_id, $nombre, $email, $ciudad, $provincia, $id_usuario)
     {
-        $sql = $this->conn->prepare("UPDATE usuario SET rol_id = ?, email= ?, nombre = ?, contrasena = ?, ciudad = ?, provincia = ? WHERE id = ?");
-        $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
-        $sql->bind_param("isssssi", $rol_id, $email, $nombre, $contrasena, $ciudad, $provincia, $id_usuario);
+        $sql = $this->conn->prepare("UPDATE usuario SET rol_id = ?, nombre = ?, email = ?, ciudad = ?, provincia = ? WHERE id = ?");
+        $sql->bind_param("issssi", $rol_id, $email, $nombre, $ciudad, $provincia, $id_usuario);
+        return $sql->execute();
+    }
+
+    /**
+     * Actualiza solo contraseña
+     * @param mixed $id_usuario
+     * @param mixed $nuevaContrasena
+     */
+    public function actualizarContrasena($id_usuario, $nuevaContrasena)
+    {
+        $hash = password_hash($nuevaContrasena, PASSWORD_BCRYPT);
+
+        $sql = $this->conn->prepare("
+            UPDATE usuario
+            SET contrasena = ?
+            WHERE id = ?
+        ");
+
+        $sql->bind_param("si", $hash, $id_usuario);
 
         return $sql->execute();
     }
