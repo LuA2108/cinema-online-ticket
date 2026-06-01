@@ -47,12 +47,6 @@ try {
         exit;
     }
 
-    // GET /usuarios/email/{email}
-    if ($method === 'GET' && $param === 'email') {
-        echo json_encode($controller->mostrarUsuarioEmail($segments[2] ?? ''));
-        exit;
-    }
-
     // POST /usuarios
     if ($method === 'POST' && !$param) {
         echo json_encode($controller->guardar($body));
