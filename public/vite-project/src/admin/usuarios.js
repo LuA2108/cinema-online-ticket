@@ -1,6 +1,6 @@
-import UsuarioControlador from "../controlador/usuarioControlador";
+import UsuarioAdminControlador from "../controlador/usuario/usuarioAdminControlador.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const controlador = new UsuarioControlador();
-    await controlador.cargarUsuarios();
+    const controlador = new UsuarioAdminControlador();
+    await controlador.init();
 });
