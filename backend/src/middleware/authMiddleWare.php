@@ -17,7 +17,11 @@ class AuthMiddleWare
         // 1. comprobar que existe
         if (!$authHeader) {
             http_response_code(401);
-            exit("Token requerido");
+            echo json_encode([
+                "success" => false,
+                "error" => "Token requerido"
+            ]);
+            exit;
         }
 
         // Extraer token (quitar Bearer)
