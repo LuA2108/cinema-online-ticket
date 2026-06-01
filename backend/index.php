@@ -106,7 +106,7 @@ switch ($resource) {
         break;
 
     case "perfil":
-        require_once __DIR__ . "/src/routes/user.routes.php";
+        require_once __DIR__ . "/src/routes/perfil.routes.php";
         break;
 
     case "admin":
