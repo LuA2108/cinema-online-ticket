@@ -21,7 +21,8 @@ CREATE TABLE rol (
 CREATE TABLE sala (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT UNIQUE NOT NULL,
-    capacidad INT NOT NULL,
+    filas INT NOT NULL,
+    butacas_por_fila  INT NOT NULL,
     activa BOOLEAN DEFAULT TRUE
 );
 
@@ -113,27 +114,43 @@ CREATE TABLE butaca (
     sala_id INT NOT NULL,
     fila INT NOT NULL,
     numero INT NOT NULL,
+    
     UNIQUE (sala_id, fila, numero),
+
     FOREIGN KEY (sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
 
 -- =========================
--- FUNCIONES (PROYECCIONES)
+-- PROGRAMACIÓN (PRORAMACION DE FUNCIONES)
 -- =========================
 
-CREATE TABLE funcion (
+CREATE TABLE programacion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pelicula_id INT NOT NULL,
     sala_id INT NOT NULL,
     hora TIME NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    estado_id INT NOT NULL,
+    estado BOOLEAN DEFAULT TRUE,
 
     UNIQUE (sala_id, fecha_inicio, hora),
 
     FOREIGN KEY (pelicula_id) REFERENCES pelicula(id),
-    FOREIGN KEY (sala_id) REFERENCES sala(id),
+    FOREIGN KEY (sala_id) REFERENCES sala(id)
+);
+
+-- =========================
+-- FUNCIONES (PROYECCIONES)
+-- =========================
+CREATE TABLE funcion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    programacion_id INT NOT NULL,
+    fecha_hora DATETIME NOT NULL,
+    estado_id INT NOT NULL,
+    
+    UNIQUE(programacion_id, fecha_hora),
+
+    FOREIGN KEY (programacion_id) REFERENCES programacion(id),
     FOREIGN KEY (estado_id) REFERENCES estado_funcion(id)
 );
 
@@ -159,13 +176,11 @@ CREATE TABLE reserva (
 CREATE TABLE reserva_butaca (
     butaca_id INT NOT NULL,
     reserva_id INT NOT NULL,
-    funcion_id INT NOT NULL,
     precio DECIMAL(10,2),
-    PRIMARY KEY (funcion_id, butaca_id),
+    PRIMARY KEY (reserva_id, butaca_id),
 
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
-    FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE,
-    FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE
+    FOREIGN KEY (reserva_id) REFERENCES reserva(id) ON DELETE CASCADE
 );
 
 CREATE TABLE reserva_producto (
@@ -178,20 +193,7 @@ CREATE TABLE reserva_producto (
     FOREIGN KEY (producto_id) REFERENCES producto(id) ON DELETE CASCADE
 );
 
--- =========================
--- OPINIONES
--- =========================
 
-CREATE TABLE opinion (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pelicula_id INT NOT NULL,
-    usuario_id INT NOT NULL,
-    comentario VARCHAR(400) NOT NULL,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id) ON DELETE CASCADE,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
-);
 
 -- --------------------------------------------------------
 -- INSERTAR DATOS A LA BD ---------------------------------
@@ -217,9 +219,9 @@ INSERT INTO rol (tipo, descripcion) VALUES
 -- -------------------------------
 -- SALA
 -- -------------------------------
-INSERT INTO sala (numero, capacidad, activa) VALUES
-(1, 50),
-(2, 50);
+INSERT INTO sala (numero, filas, butacas_por_fila, activa) VALUES
+(1, 5, 10, TRUE),
+(2, 5, 10, TRUE);
 
 -- -------------------------------
 -- TIPO PRODUCTO
@@ -269,28 +271,28 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, dis
 -- ----------------------------------------------------
 INSERT INTO pelicula_imagen (pelicula_id, tipo, url) VALUES
 -- Inception
-(1, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/inception_poster.png'),
-(1, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/banner/inception_banner.png'),
+(1, 'poster', '/backend/uploads/inception_poster.png'),
+(1, 'banner', '/backend/uploads/inception_banner.jpg'),
 
 -- Interstellar
-(2, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/interestellar_poster.png'),
-(2, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/interestellar_baner.png'),
+(2, 'poster', '/backend/uploads/interestelar_poster.png'),
+(2, 'banner', '/backend/uploads/interestelar_banner.jpg'),
 
 -- Joker
-(3, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/jocker_poster.png'),
-(3, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/jocker_banner.png'),
+(3, 'poster', '/backend/uploads/joker_poster.png'),
+(3, 'banner', '/backend/uploads/jocker_banner.png'),
 
 -- Titanic
-(4, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/titanic_poster.png'),
-(4, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/titanic_banner.png'),
+(4, 'poster', '/backend/uploads/titanic_poster.png'),
+(4, 'banner', '/backend/uploads/titanic_banner.jpg'),
 
 -- Gladiator
-(5, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/gladiator_poster.png'),
-(5, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/gladiator_banner.png'),
+(5, 'poster', '/backend/uploads/gladiador_poster.png'),
+(5, 'banner', '/backend/uploads/gladiator_banner.jpg'),
 
 -- Avatar
-(6, 'poster', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/avatar_poster.png'),
-(6, 'banner', '/cinema-online-ticket/public/assets/imgs/pelicula_imagen/poster/avatar_banner.png');
+(6, 'poster', '/backend/uploads/avatar_poster.png'),
+(6, 'banner', '/backend/uploads/avatar_banner.jpg');
 
 -- -------------------------------
 -- PELICULA-GENERO
@@ -301,9 +303,7 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (4, 3), -- Titanic -> Drama
 (5, 1), -- Gladiator -> Acción
 (5, 3), -- Gladiator -> Drama
-(6, 5); -- Avatar -> Ciencia Ficción
-
-INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
+(6, 5), -- Avatar -> Ciencia Ficción
 (7, 4), -- La Maldicion de Green House: Terror
 (8, 1), -- Fin del Amanecer: Acción
 (9, 1), -- Aprueba de Balas: Accion
@@ -312,25 +312,30 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 (12, 3); -- Sin Rumbo: Drama
 
 -- -------------------------------
--- FUNCION
+-- Programaci
 -- -------------------------------
-INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
-(3, 2, '20:00:00', '2026-02-22', '2026-02-22', 1), -- Joker en sala 2
-(4, 1, '18:30:00', '2026-02-22', '2026-02-22', 1), -- Titanic en sala 1
-(5, 2, '21:00:00', '2026-02-23', '2026-02-23', 1), -- Gladiator en sala 2
-(6, 2, '19:00:00', '2026-02-23', '2026-02-23', 1), -- Avatar en sala 2
-(1, 1, '22:00:00', '2026-02-23', '2026-02-23', 1), -- Inception en sala 1
-(2, 1, '16:00:00', '2026-02-24', '2026-02-24', 1); -- Interstellar en sala 1
+INSERT INTO programacion
+(id, pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado)
+VALUES
+(1, 3, 2, '20:00:00', '2026-02-22', '2026-02-22', TRUE), -- Joker
+(2, 4, 1, '18:30:00', '2026-02-22', '2026-02-22', TRUE), -- Titanic
+(3, 5, 2, '21:00:00', '2026-02-23', '2026-02-23', TRUE), -- Gladiator
+(4, 6, 2, '19:00:00', '2026-02-23', '2026-02-23', TRUE), -- Avatar
+(5, 1, 1, '22:00:00', '2026-02-23', '2026-02-23', TRUE), -- Inception
+(6, 2, 1, '16:00:00', '2026-02-24', '2026-02-24', TRUE); -- Interstellar
 
--- Proyecciones (funciones) de películas no disponibles
+
+-- Funciones (proyecciones)
 -- -------------------------------
-INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
-(7, 1, '20:00:00', '2026-03-15', '2026-04-15', 1),
-(8, 2, '18:00:00', '2026-06-16', '2026-07-16', 1),
-(9, 1, '22:00:00', '2026-06-16', '2026-07-16', 1),
-(10, 2, '16:00:00', '2026-01-17', '2026-02-17', 1),
-(11, 1, '19:00:00', '2026-03-18', '2026-04-18', 1),
-(12, 2, '21:00:00', '2026-02-18', '2026-03-18', 1);
+INSERT INTO funcion
+(id, programacion_id, fecha_hora, estado_id)
+VALUES
+(1, 1, '2026-02-22 20:00:00', 1),
+(2, 2, '2026-02-22 18:30:00', 1),
+(3, 3, '2026-02-23 21:00:00', 1),
+(4, 4, '2026-02-23 19:00:00', 1),
+(5, 5, '2026-02-23 22:00:00', 1),
+(6, 6, '2026-02-24 16:00:00', 1);
 
 
 -- Insertar Butacas en sala 1
@@ -349,22 +354,10 @@ INSERT INTO butaca (sala_id, fila, numero) VALUES
 (2,4,1),(2,4,2),(2,4,3),(2,4,4),(2,4,5),(2,4,6),(2,4,7),(2,4,8),(2,4,9),(2,4,10),
 (2,5,1),(2,5,2),(2,5,3),(2,5,4),(2,5,5),(2,5,6),(2,5,7),(2,5,8),(2,5,9),(2,5,10);
 
--- Insertar pelicula genero
-INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
-(1,5),(1,1),
-(2,5),
-(3,2);
-
 -- Insertar producto
 INSERT INTO producto (tipo_id, nombre, precio, comentario) VALUES
 (1, 'Palomitas', 4.50, 'Tamaño grande'),
 (2, 'Refresco', 2.50, '500ml');
-
--- Insertar Funcion
-INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES
-(1, 1, '18:00:00', '2026-02-20', '2026-02-20', 1),
-(2, 1, '21:00:00', '2026-02-20', '2026-02-20', 1),
-(3, 2, '19:00:00', '2026-02-21', '2026-02-21', 1);
 
 INSERT INTO usuario (rol_id, nombre, email, contrasena)
 VALUES
@@ -377,22 +370,15 @@ VALUES
 -- Insertar reservas de la película
 INSERT INTO reserva (usuario_id, nombre_cliente, email_cliente, funcion_id, estado_id, total)
 VALUES
-(2, 'Juan Perez', 'juan@mail.com', 1, 2, 8.50),
-(3, 'Maria Lopez', 'maria@mail.com', 3, 1, 7.50);
+(1, 'Juan Perez', 'juan@mail.com', 1, 2, 8.50),
+(2, 'Maria Lopez', 'maria@mail.com', 3, 1, 7.50);
 
 -- Insertar reserva butaca
-INSERT INTO reserva_butaca (butaca_id, reserva_id, funcion_id, precio) VALUES
-(1, 1, 1, 8.50),
-(51, 2, 3, 7.50);
+INSERT INTO reserva_butaca (butaca_id, reserva_id, precio) VALUES
+(1, 1, 8.50),
+(51, 2, 7.50);
 
 -- Insertar reserva producto
 INSERT INTO reserva_producto (reserva_id, producto_id, precio_total) VALUES
 (1, 1, 4.50),
 (2, 2, 2.50);
-
--- Insertar opinión
-INSERT INTO opinion (pelicula_id, usuario_id, comentario) VALUES
-(1, 2, 'Excelente película'),
-(3, 3, 'Muy buena actuación');
-
-
