@@ -44,65 +44,53 @@ class Sala
     }
 
     /**
-     * Obtiene una lista de todas las salas activas
-     * @param boolean $activa
+     * Obtiene una lista de todas por estado
+     * @param boolean $estado
      */
-    public function listarSalaPorActivo($activa)
+    public function listarSalaPorEstado($estado)
     {
         $sql = $this->conn->prepare("SELECT * FROM sala WHERE activa = ?");
 
-        $activa = $activa ? 1 : 0;
+        $estado = $estado ? 1 : 0;
 
-        $sql->bind_param("i", $activa);
+        $sql->bind_param("i", $estado);
         $sql->execute();
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
      * Agrega una nueva sala
-     * @param mixed $numero Numero de sala
-     * @param mixed $capacidad Capacidad de la sala
+     * @param int $numero Numero de sala
+     * @param int $filas las filas presentes de la sala
+     * @param int $butacaPorFila cantidad de butacas por fila
+     * @param boolean $activa 
      * @return int ID de la sala creada, -1 si hubo un error
      */
-    public function agregarSala($numero, $capacidad)
+    public function agregarSala($numero, $filas, $butacaPorFila, $activa)
     {
-        $sql = $this->conn->prepare("INSERT INTO sala(numero, capacidad) VALUES(?, ?)");
-        $sql->bind_param("ii", $numero, $capacidad);
-
+        $activa = (int)$activa;
+        $sql = $this->conn->prepare("INSERT INTO sala(numero, filas, butacas_por_fila, activa) VALUES(?, ?, ?, ?)");
+        $sql->bind_param("iiii", $numero, $filas, $butacaPorFila, $activa);
         $resultado = $sql->execute();
 
         if($resultado) {
             return $this->conn->insert_id;
         }
-
         return -1;
-    }
-
-    /**
-     * Edita una sala existente
-     * @param int $sala_id ID de la sala
-     * @param int $numero Numero de sala
-     * @param int $capacidad Capacidad de la sala
-     * @param boolean $activa Estado de la sala
-     * @return bool True al ser actualizada, false al fallar
-     */
-    public function actualizarSala($sala_id, $numero, $capacidad, $activa)
-    {
-        $sql = $this->conn->prepare("UPDATE sala SET numero = ?, capacidad = ?, activa = ? WHERE id = ?");
-        $activa = $activa ? 1 : 0;
-        $sql->bind_param("iiii", $numero, $capacidad, $activa, $sala_id);
-        return $sql->execute();
     }
 
     /**
      * Desactiva una sala existente
      * @param int $sala_id ID de la sala
+     * @param boolean $activa
      * @return bool True al ser desactivada, false al fallar
      */
-    public function desactivarSala($sala_id)
+    public function cambiarEstadoSala($sala_id, $activa)
     {
-        $sql = $this->conn->prepare("UPDATE sala SET activa = FALSE WHERE id = ?");
-        $sql->bind_param("i", $sala_id);
+        $activa = (int)$activa;
+        $sql = $this->conn->prepare("UPDATE sala SET activa = ? WHERE id = ?");
+        $sql->bind_param("ii", $activa, $sala_id);
         return $sql->execute();
     }
+
 }
