@@ -150,7 +150,7 @@ CREATE TABLE funcion (
     
     UNIQUE(programacion_id, fecha_hora),
 
-    FOREIGN KEY (programacion_id) REFERENCES programacion(id),
+    FOREIGN KEY (programacion_id) REFERENCES programacion(id) ON DELETE CASCADE,
     FOREIGN KEY (estado_id) REFERENCES estado_funcion(id)
 );
 
@@ -168,8 +168,8 @@ CREATE TABLE reserva (
     fecha_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
 
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (funcion_id) REFERENCES funcion(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+    FOREIGN KEY (funcion_id) REFERENCES funcion(id),
     FOREIGN KEY (estado_id) REFERENCES estado_reserva(id) ON DELETE CASCADE
 );
 
