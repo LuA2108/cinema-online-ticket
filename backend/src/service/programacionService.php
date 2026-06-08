@@ -72,7 +72,7 @@ class ProgramacionService
     public function crearProgramacion(array $datos): array
     {
         // Campos obligatorios
-        $campos = ['pelicula_id', 'sala_id', 'hora', 'fecha_inicio', 'fecha_fin'];
+        $campos = ['pelicula_id', 'sala_id', 'hora', 'fecha_inicio', 'fecha_fin', 'precio'];
 
         // Recorre cada campo
         foreach ($campos as $campo) {
@@ -111,7 +111,11 @@ class ProgramacionService
             return ["success" => false, "datos" => null, "error" => "Ya existe una programación con ese horario en esa sala"];
         }
 
-        $programacion_id = $this->programacionModel->agregarProgramacion($datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin']);
+        if($datos['precio'] <= 0) {
+            return ["success" => false, "datos" => null, "error" => "El precio no puede ser inferior igual o inferior 0"];
+        }
+
+        $programacion_id = $this->programacionModel->agregarProgramacion($datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin'], $datos['precio']);
 
         if ($programacion_id === -1) {
             return ["success" => false, "datos" => null, "error" => "Error al crear la programacion"];
@@ -151,7 +155,7 @@ class ProgramacionService
         }
 
         // Campos obligatorios
-        $campos = ['pelicula_id', 'sala_id', 'hora', 'fecha_inicio', 'fecha_fin', 'estado'];
+        $campos = ['pelicula_id', 'sala_id', 'hora', 'fecha_inicio', 'fecha_fin', 'precio'];
 
         // Recorre cada campo
         foreach ($campos as $campo) {
@@ -198,10 +202,14 @@ class ProgramacionService
             return ["success" => false, "datos" => null, "error" => "La sala ya está ocupada en ese rango de fechas"];
         }
 
+        if($datos['precio'] <= 0) {
+            return ["success" => false, "datos" => null, "error" => "El precio no puede ser inferior igual o inferior 0"];
+        }
+
         try {
 
             $this->conn->begin_transaction();
-            $ok = $this->programacionModel->actualizarProgramacion($id, $datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin']);
+            $ok = $this->programacionModel->actualizarProgramacion($id, $datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin'], $datos['precio']);
 
             if (!$ok) {
                 throw new \Exception("No se pudo actualizar la programación");
