@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\Sala;
+use App\Models\Butaca;
 use App\Service\SalaService;
 use App\Controllers\SalaController;
 
-require_once __DIR__ . '/../../config/database.php';
 
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/butaca.php';
 require_once __DIR__ . '/../models/Sala.php';
 require_once __DIR__ . '/../service/SalaService.php';
 require_once __DIR__ . '/../controllers/SalaController.php';
@@ -18,9 +20,10 @@ $conn = (new Database())->obtenerConexion();
 
 // MODELO
 $salaModel = new Sala($conn);
+$butacaModel = new Butaca($conn);
 
 // SERVICE
-$salaService = new SalaService($salaModel);
+$salaService = new SalaService($salaModel, $butacaModel, $conn);
 
 // CONTROLLER
 $salaController = new SalaController($salaService);
@@ -45,38 +48,28 @@ try {
         exit;
     }
 
-    // GET /salas/activas
-    if ($method === 'GET' && $param === 'activas') {
+    // GET /salas/estado/1
+    if ($method === 'GET' && $param === 'estado') {
         $estado = isset($segments[2]) ? (bool) $segments[2] : true;
 
-        echo json_encode($salaController->listarActivas($estado));
+        echo json_encode($salaController->listarPorEstado($estado));
         exit;
     }
 
     // POST /salas
     if ($method === 'POST' && !$param) {
         $numero = $body['numero'] ?? null;
-        $capacidad = $body['capacidad'] ?? null;
+        $filas = $body['filas'] ?? null;
+        $butacasPorFila = $body['butacasPorFila'] ?? null;
 
-        echo json_encode($salaController->crearSala($numero, $capacidad));
+        echo json_encode($salaController->crearSala($numero, $filas, $butacasPorFila));
         exit;
     }
 
-    // PUT /salas/1
-    if ($method === 'PUT' && $id) {
-        echo json_encode($salaController->actualizarSala(
-            $id,
-            $body['numero'] ?? null,
-            $body['capacidad'] ?? null,
-            $body['activa'] ?? null
-        ));
-
-        exit;
-    }
-
-    // DELETE /salas/1
-    if ($method === 'DELETE' && $id) {
-        echo json_encode($salaController->desactivarSala($id));
+    // PUT /salas/1/estado
+    if ($method === 'PUT' && $id && isset($segments[2]) && $segments[2] === 'estado') {
+        $estado = $body['estado'] ?? null;
+        echo json_encode($salaController->cambiarEstadoSala($id, $estado));
         exit;
     }
 
