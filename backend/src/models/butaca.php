@@ -40,7 +40,7 @@ class Butaca
      */
     public function obtenerPorId($butaca_id)
     {
-        $sql = $this->conn->prepare("SELECT * FROM butaca WHERE id = ?");
+        $sql = $this->conn->prepare("SELECT * FROM butaca WHERE id = ? ORDER BY fila, numero");
         $sql->bind_param("i", $butaca_id);
         $sql->execute();
 
@@ -50,27 +50,20 @@ class Butaca
     /**
      * Agrega una butaca a una sala específica con número y fila
      * @param int $sala_id
-     * @param int $numero
      * @param int $fila
+     * @param int $numero
      * @return int ID de la butaca insertada o -1 en caso de error
      */
-    public function insertarButaca($sala_id, $numero, $fila)
+    public function insertarButaca($sala_id, $fila, $numero)
     {
-        $sql = $this->conn->prepare("INSERT INTO butaca (sala_id, numero, fila) VALUES (?, ?, ?)");
+        $sql = $this->conn->prepare("INSERT INTO butaca (sala_id, fila, numero) VALUES (?, ?, ?)");
 
-        $sql->bind_param("iii", $sala_id, $numero, $fila);
+        $sql->bind_param("iii", $sala_id, $fila, $numero);
         $resultado = $sql->execute();
 
         if ($resultado) {
             return $this->conn->insert_id;
         }
         return -1;
-    }
-
-    public function eliminarPorSala($sala_id)
-    {
-        $sql = $this->conn->prepare("DELETE FROM butaca WHERE sala_id = ?");
-        $sql->bind_param("i", $sala_id);
-        return $sql->execute();
     }
 }
