@@ -95,13 +95,14 @@ class Programacion
      * @param mixed $hora
      * @param mixed $fecha_inicio
      * @param mixed $fecha_fin
+     * @param float $precio
      * @param boolean $estado
      */
-    public function agregarProgramacion($pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado = false)
+    public function agregarProgramacion($pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $precio, $estado = false)
     {
         $estado = (int)$estado;
-        $sql = $this->conn->prepare("INSERT INTO programacion(pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?)");
-        $sql->bind_param("iisssi", $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado);
+        $sql = $this->conn->prepare("INSERT INTO programacion(pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, precio,estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $sql->bind_param("iisssdi", $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $precio, $estado);
         $ok = $sql->execute();
 
         if ($ok) {
@@ -118,13 +119,14 @@ class Programacion
      * @param string $hora
      * @param string $fechaInicio
      * @param string $fechaFin
+     * @param float $precio
      * @return bool
      */
-    public function actualizarProgramacion($id, $peliculaId, $salaId, $hora, $fechaInicio, $fechaFin): bool
+    public function actualizarProgramacion($id, $peliculaId, $salaId, $hora, $fechaInicio, $fechaFin, $precio): bool
     {
-        $sql = $this->conn->prepare("UPDATE programacion SET pelicula_id = ?, sala_id = ?, hora = ?, fecha_inicio = ?, fecha_fin = ? WHERE id = ?");
+        $sql = $this->conn->prepare("UPDATE programacion SET pelicula_id = ?, sala_id = ?, hora = ?, fecha_inicio = ?, fecha_fin = ?, precio = ? WHERE id = ?");
 
-        $sql->bind_param("iisssi", $peliculaId, $salaId, $hora, $fechaInicio, $fechaFin, $id);
+        $sql->bind_param("iisssdi", $peliculaId, $salaId, $hora, $fechaInicio, $fechaFin, $precio, $id);
         return $sql->execute();
     }
 
