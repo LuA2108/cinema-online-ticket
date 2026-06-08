@@ -81,6 +81,10 @@ switch ($resource) {
         require_once __DIR__ . '/src/routes/funcion.routes.php';
         break;
 
+    case 'programaciones':
+        require_once __DIR__ . '/src/routes/programacion.routes.php';
+        break;
+
     case 'productos':
         require_once __DIR__ . '/src/routes/producto.routes.php';
         break;
