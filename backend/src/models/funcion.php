@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 /**
  * Clase Función
  * Gestiona las funciones (proyecciones) que tiene una pelicula con metodos CRUD y filtrados
@@ -25,16 +27,8 @@ class Funcion
      */
     public function listar()
     {
-        $sql = $this->conn->prepare("SELECT f.*, p.titulo AS pelicula, s.numero AS sala, e.nombre AS estado
-            FROM funcion f
-            INNER JOIN pelicula p ON f.pelicula_id = p.id
-            INNER JOIN sala s ON f.sala_id = s.id
-            INNER JOIN estado_funcion e ON f.estado_id = e.id
-        ");
-
-        $sql->execute();
-
-        return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        $result = $this->conn->query("SELECT * FROM funcion");
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
@@ -51,41 +45,33 @@ class Funcion
 
     /**
      * Crear una nueva función
-     * @param int $pelicula_id ID película
-     * @param int $sala_id ID sala
-     * @param string $hora Hora de estreno
-     * @param string $fecha_inicio Fecha in
-     * @param string $fecha_fin
-     * @param int $estado_id
+     * @param int $programacion_id ID película
+     * @param string $fecha_hora Hora de estreno
+     * @param int $estado_id Fecha in
      */
-    public function crear($pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id)
+    public function crear($programacion_id, $fecha_hora, $estado_id)
     {
-        $sql = $this->conn->prepare("INSERT INTO funcion (pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado_id) VALUES (?, ?, ?, ?, ?, ?)");
-        $sql->bind_param("iisssi", $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id);
+        $sql = $this->conn->prepare("INSERT INTO funcion (programacion_id, fecha_hora, estado_id) VALUES (?, ?, ?)");
+        $sql->bind_param("isi", $programacion_id, $fecha_hora, $estado_id);
         $resultado = $sql->execute();
 
-        if(!$resultado) {
+        if (!$resultado) {
             return -1;
         }
-
         return $this->conn->insert_id;
     }
-
     /**
      * Actualiza los datos de una función existente
      * @param int $id
-     * @param int $pelicula_id
-     * @param int $sala_id
-     * @param string $hora
-     * @param string $fecha_inicio
-     * @param string $fecha_fin
-     * @param int $estado_id
+     * @param int $programacion_id ID película
+     * @param string $fecha_hora Hora de estreno
+     * @param int $estado_id Fecha in
      * @return bool
      */
-    public function actualizar($id, $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id)
+    public function actualizar($id, $programacion_id, $fecha_hora, $estado_id)
     {
-        $sql = $this->conn->prepare("UPDATE funcion SET pelicula_id = ?, sala_id = ?, hora = ?, fecha_inicio = ?, fecha_fin = ?, estado_id = ? WHERE id = ?");
-        $sql->bind_param("iiisssi", $pelicula_id, $sala_id, $hora, $fecha_inicio, $fecha_fin, $estado_id, $id);
+        $sql = $this->conn->prepare("UPDATE funcion SET programacion_id = ?, fecha_hora = ?, estado_id = ? WHERE id = ?");
+        $sql->bind_param("isii", $programacion_id, $fecha_hora, $estado_id, $id);
         return $sql->execute();
     }
 
@@ -100,7 +86,7 @@ class Funcion
         return $sql->execute();
     }
 
-    /** 
+    /**
      * Filtrar funciones por estado
      * estado_id (1 ->activa, 2 -> cancelada, 3 -> finalizada)
      * @param int $estado_id ID del estado de la función
@@ -108,8 +94,33 @@ class Funcion
     public function obtenerPorEstado($estado_id)
     {
         $sql = $this->conn->prepare("SELECT * FROM funcion WHERE estado_id = ?");
-
         $sql->bind_param("i", $estado_id);
+        $sql->execute();
+
+        return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Cambia el estado de una funcion
+     * @param int $id
+     * @param int $estado_id
+     * @return bool
+     */
+    public function cambiarEstado($id, $estado_id)
+    {
+        $sql = $this->conn->prepare("UPDATE funcion SET estado_id = ? WHERE id = ?");
+        $sql->bind_param("ii", $estado_id, $id);
+        return $sql->execute();
+    }
+
+    /**
+     * Obtener funciones por programacion
+     * @param mixed $programacion_id
+     */
+    public function obtenerPorProgramacion($programacion_id)
+    {
+        $sql = $this->conn->prepare("SELECT * FROM funcion WHERE programacion_id = ?");
+        $sql->bind_param("i", $programacion_id);
         $sql->execute();
 
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -121,12 +132,21 @@ class Funcion
      */
     public function obtenerPorPelicula($pelicula_id)
     {
-        $sql = $this->conn->prepare("SELECT * FROM funcion WHERE pelicula_id = ?");
+        $sql = $this->conn->prepare("SELECT f.* FROM funcion f INNER JOIN programacion p ON f.programacion_id = p.id WHERE p.pelicula_id = ?");
         $sql->bind_param("i", $pelicula_id);
         $sql->execute();
 
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    
+    /**
+     * 
+     * @param int $programacion_id
+     */
+    public function eliminarPorProgramacion($programacion_id)
+    {
+        $sql = $this->conn->prepare("DELETE FROM funcion WHERE programacion_id = ?");
+        $sql->bind_param("i", $programacion_id);
+        return $sql->execute();
+    }
 }
