@@ -14,9 +14,9 @@ class ButacaController
 
     /**
      * Constructor
-     * @param butacaService $service
+     * @param ButacaService $butacaService
      */
-    public function __construct($butacaService)
+    public function __construct(ButacaService $butacaService)
     {
         $this->butacaService = $butacaService;
     }
@@ -53,27 +53,5 @@ class ButacaController
     {
         // Convierte el ID a entero y llama al service
         return $this->butacaService->obtenerMapaButacas((int)$funcionId);
-    }
-
-    /**
-     * Genera automáticamente butacas para una sala
-     * @param array $data Datos necesarios:
-     * sala_id, filas, porFila
-     * @return array
-     */
-    public function generarButacas($data)
-    {
-        return $this->butacaService->generarButacas((int)$data['sala_id'], (int)$data['filas'], (int)$data['porFila']);
-    }
-
-    /**
-     * Elimina todas las butacas de una sala
-     * @param int $salaId ID de la sala
-     * @return array
-     */
-    public function eliminarButacasSala($salaId)
-    {
-        // Convierte el ID a entero y llama al service
-        return $this->butacaService->eliminarButacasSala((int)$salaId);
     }
 }
