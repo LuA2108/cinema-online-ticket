@@ -6,12 +6,13 @@ use App\Models\Funcion;
 use App\Models\Pelicula;
 use App\Models\Sala;
 use App\Models\EstadoFuncion;
+use App\Models\Programacion;
 
 require_once __DIR__ . "/../../config/database.php";
 
 require_once __DIR__ . "/../controllers/funcionController.php";
 require_once __DIR__ . "/../service/funcionService.php";
-
+require_once __DIR__ . "/../models/programacion.php";
 require_once __DIR__ . "/../models/pelicula.php";
 require_once __DIR__ . "/../models/funcion.php";
 require_once __DIR__ . "/../models/sala.php";
@@ -26,17 +27,11 @@ $conn = (new Database())->obtenerConexion();
 
 // MODELOS
 $funcion = new Funcion($conn);
-$pelicula = new Pelicula($conn);
-$sala = new Sala($conn);
 $estadoFuncion = new EstadoFuncion($conn);
+$programacion = new Programacion($conn);
 
 // SERVICE
-$funcionService = new FuncionService(
-    $funcion,
-    $pelicula,
-    $estadoFuncion,
-    $sala
-);
+$funcionService = new FuncionService($funcion, $estadoFuncion, $programacion);
 
 // CONTROLLER
 $controller = new FuncionController($funcionService);
@@ -69,45 +64,6 @@ try {
         exit;
     }
 
-    // GET /funciones/pelicula/1
-    if ($method === 'GET' && $param === 'pelicula' && isset($segments[2])) {
-        $pelicula_id = (int) $segments[2];
-
-        echo json_encode($controller->obtenerFuncionesPorPelicula($pelicula_id));
-        exit;
-    }
-
-    // GET /funciones/estados
-    if ($method === 'GET' && $param === 'estados') {
-        echo json_encode($controller->obtenerEstados());
-        exit;
-    }
-
-    // GET /funciones/estado-id/1
-    if ($method === 'GET' && $param === 'estado-id' && isset($segments[2])) {
-        $estado_id = (int) $segments[2];
-
-        echo json_encode($controller->obtenerEstado($estado_id));
-        exit;
-    }
-
-    // POST /funciones
-    if ($method === 'POST' && !$param) {
-        echo json_encode($controller->crearFuncion($body));
-        exit;
-    }
-
-    // PUT /funciones/1
-    if ($method === 'PUT' && $id) {
-        echo json_encode($controller->actualizarFuncion($id, $body));
-        exit;
-    }
-
-    // DELETE /funciones/1
-    if ($method === 'DELETE' && $id) {
-        echo json_encode($controller->eliminarFuncion($id));
-        exit;
-    }
 
     // Ruta inválida dentro del módulo
     http_response_code(404);
@@ -115,7 +71,6 @@ try {
         'success' => false,
         'message' => 'Ruta de funciones no válida'
     ]);
-
 } catch (Exception $e) {
 
     http_response_code(500);
