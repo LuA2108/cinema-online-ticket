@@ -22,7 +22,6 @@ class PeliculaTabla {
                 pelicula.director,
                 pelicula.anio,
                 `${pelicula.duracion} min`,
-                `${pelicula.precio} €`,
                 pelicula.fecha_registro
             ];
 
