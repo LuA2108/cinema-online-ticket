@@ -53,7 +53,6 @@ CREATE TABLE pelicula (
     director VARCHAR(100) NOT NULL,
     anio INT NOT NULL,
     duracion INT NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
     disponible BOOLEAN DEFAULT FALSE,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -131,6 +130,7 @@ CREATE TABLE programacion (
     hora TIME NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
+    precio DECIMAL(10,2) NOT NULL DEFAULT 8.00,
     estado BOOLEAN DEFAULT TRUE,
 
     UNIQUE (sala_id, fecha_inicio, hora),
@@ -249,22 +249,22 @@ INSERT INTO estado_funcion (nombre) VALUES
 -- -------------------------------
 -- PELICULA
 -- -------------------------------
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible) VALUES
-('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, 8.00, TRUE),
-('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, 8.00, TRUE),
-('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, 8.00, TRUE),
-('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, 8.00, TRUE),
-('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, 8.00, TRUE),
-('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, 8.00, TRUE);
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible) VALUES
+('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, TRUE),
+('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, TRUE),
+('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, TRUE),
+('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, TRUE),
+('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, TRUE),
+('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, TRUE);
 
 -- Peliculas no disponibles
 INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible) VALUES
-('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155, 8.00, FALSE),
-('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, 8.00, FALSE),
-('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, 8.00, FALSE),
-('Caida en Picada', 'Aventura caótica de amigos.', 'Greta Gerwig', 2026, 115, 8.00, FALSE),
-('Hombre sin rostro', 'Distopía y rebelión.', 'Francis Lawrence', 2026, 140, 8.00, FALSE),
-('Sin Rumbo', 'Viaje de supervivencia.', 'Francis Lawrence', 2026, 140, 8.00, FALSE);
+('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155,FALSE),
+('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, FALSE),
+('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, FALSE),
+('Caida en Picada', 'Aventura caótica de amigos.', 'Greta Gerwig', 2026, 115, FALSE),
+('Hombre sin rostro', 'Distopía y rebelión.', 'Francis Lawrence', 2026, 140, FALSE),
+('Sin Rumbo', 'Viaje de supervivencia.', 'Francis Lawrence', 2026, 140, FALSE);
 
 -- ----------------------------------------------------
 -- IMAGENES DE PELICULAS ------------------------------
@@ -317,12 +317,12 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 INSERT INTO programacion
 (id, pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado)
 VALUES
-(1, 3, 2, '20:00:00', '2026-02-22', '2026-02-22', TRUE), -- Joker
-(2, 4, 1, '18:30:00', '2026-02-22', '2026-02-22', TRUE), -- Titanic
-(3, 5, 2, '21:00:00', '2026-02-23', '2026-02-23', TRUE), -- Gladiator
-(4, 6, 2, '19:00:00', '2026-02-23', '2026-02-23', TRUE), -- Avatar
-(5, 1, 1, '22:00:00', '2026-02-23', '2026-02-23', TRUE), -- Inception
-(6, 2, 1, '16:00:00', '2026-02-24', '2026-02-24', TRUE); -- Interstellar
+(1, 3, 2, '20:00:00', '2026-02-22', '2026-02-22', 8.0, TRUE), -- Joker
+(2, 4, 1, '18:30:00', '2026-02-22', '2026-02-22', 8.0, TRUE), -- Titanic
+(3, 5, 2, '21:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Gladiator
+(4, 6, 2, '19:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Avatar
+(5, 1, 1, '22:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Inception
+(6, 2, 1, '16:00:00', '2026-02-24', '2026-02-24', 8.0, TRUE); -- Interstellar
 
 
 -- Funciones (proyecciones)
