@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Models\Sala;
+use App\Models\Butaca;
+use Exception;
 
 /**
  * Clase servicio de Sala
@@ -13,125 +15,122 @@ use App\Models\Sala;
 class SalaService
 {
     private Sala $salaModel;
+    private Butaca $butacaModel;
+    private $conn;
 
     /**
      * Constructor de la clase SalaService
-     * @param mixed $salaModel
+     * @param Sala $salaModel
+     * @param Butaca $butacaModel
+     * @param mysqli $conn
      */
-    public function __construct($salaModel)
+    public function __construct($salaModel, $butacaModel, $conn)
     {
+        $this->conn = $conn;
         $this->salaModel = $salaModel;
+        $this->butacaModel = $butacaModel;
     }
 
     /**
      * Listar todas las salas 
-     * @return array{data: array, error: null, success: bool}
+     * @return array
      */
     public function listarSalas()
     {
+
         return ["success" => true, "datos" => $this->salaModel->listarSalas(), "error" => null];
     }
 
     /**
      * Listar una sala por su ID
      * @param mixed $sala_id
-     * @return array{datos: array, error: null, success: bool|array{datos: null, error: string, success: bool}}
+     * @return array
      */
-    public function listarSala($sala_id)
+    public function obtenerSala($sala_id)
     {
-        if ($sala_id <= 0) {
-            return ["success" => false, "datos" => null, "error" => "ID inválido"];
+        $sala = $this->salaModel->listarSala($sala_id);
+
+        if (!$sala) {
+            return ["success" => false, "datos" => null, "error" => "Sala no encontrada"];
         }
 
-        return ["success" => true, "datos" => $this->salaModel->listarSala($sala_id), "error" => null];
+        return ["success" => true, "datos" => $sala, "error" => null];
     }
 
     /**
-     * Listar todas las salas disponibles
-     * @param boolean $activa
-     * @return array{data: mixed, error: null, success: bool}
+     * Listar todas las salas por estado
+     * @param boolean $estado
+     * @return array
      */
-    public function listarActivas($activa)
+    public function listarPorEstado($estado)
     {
-        return ["success" => true, "datos" => $this->salaModel->listarSalaPorActivo($activa),"error" => null];
+        return ["success" => true, "datos" => $this->salaModel->listarSalaPorEstado($estado), "error" => null];
     }
 
     /**
      * Crea una nueva sala con el número y capacidad proporcionados
      * @param int $numero
-     * @param int $capacidad
-     * @return array{data: mixed, error: string|null, success: mixed|array{data: null, error: string, success: bool}}
+     * @param int $filas
+     * @param int $butacasPorFila
+     * @return array
      */
-    public function crearSala($numero, $capacidad)
+    public function crearSala($numero, $filas, $butacasPorFila)
     {
-        if (empty($numero) || empty($capacidad)) {
-            return ["success" => false, "datos" => null, "error" => "Número y capacidad son requeridos"];
+        if ($numero <= 0 || $filas <= 0 || $butacasPorFila <= 0) {
+            return ["success" => false, "datos" => null, "error" => "Datos invalidos."];
         }
 
-        $resultado = $this->salaModel->agregarSala($numero, $capacidad);
+        try {
+            $this->conn->begin_transaction();
+            $salaId = $this->salaModel->agregarSala($numero, $filas, $butacasPorFila, true);
 
-        if ($resultado > 0) {
-            return [
-                "success" => true,
-                "data" => $resultado,
-                "error" => null
-            ];
-        } else {
-            return [
-                "success" => false,
-                "data" => null,
-                "error" => "No se pudo crear la sala"
-            ];
+            if ($salaId < 0) {
+                throw new Exception("No se pudo crear la sala");
+            }
+
+            for ($fila = 1; $fila <= $filas; $fila++) {
+                for ($numeroButaca = 1; $numeroButaca <=  $butacasPorFila; $numeroButaca++) {
+                    $resultado = $this->butacaModel->insertarButaca($salaId, $fila, $numeroButaca);
+
+                    if ($resultado < 0) {
+                        throw new Exception("Error creando butaca");
+                    }
+                }
+            }
+
+            $this->conn->commit();
+            return ["success" => true, "datos" => $salaId, "error" => null];
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            return ["success" => false, "datos" => null, "error" => $e->getMessage()];
         }
-    }
-
-    /**
-     * Actualiza los datos de una sala existente
-     * @param int $id
-     * @param int $numero
-     * @param int $capacidad
-     * @param boolean $activa
-     * @return array{data: mixed, error: string|null, success: mixed|array{data: null, error: string, success: bool}}
-     */
-    public function actualizarSala($id, $numero, $capacidad, $activa)
-    {
-        if ($id <= 0) {
-            return [
-                "success" => false,
-                "data" => null,
-                "error" => "ID inválido"
-            ];
-        }
-
-        $ok = $this->salaModel->actualizarSala($id, $numero, $capacidad, $activa);
-
-        return [
-            "success" => $ok,
-            "data" => $ok,
-            "error" => $ok ? null : "No se pudo actualizar la sala"
-        ];
     }
 
     /**
      * Desactiva una sala existente
-     * @param int $id ID de la sala a desactivar
-     * @return array{data: mixed, error: string|null, success: mixed|array{data: null, error: string, success: bool}}
+     * @param int $sala_id ID de la sala a desactivar
+     * @param boolean $estado
+     * @return array
      */
-    public function desactivarSala($id)
+    public function cambiarEstadoSala($sala_id, $estado)
     {
-        if ($id <= 0) {
-            return [
-                "success" => false,
-                "data" => null,
-                "error" => "ID inválido"
-            ];
+        if ($sala_id <= 0) {
+            return ["success" => false, "datos" => null, "error" => "ID inválido"];
         }
 
-        $ok = $this->salaModel->desactivarSala($id);
+        // Obtener sala y comprobar que existe
+        $sala = $this->salaModel->listarSala($sala_id);
+
+        if (!$sala) {
+            return ["success" => false, "datos" => null, "error" => "Sala no encontrada"];
+        }
+
+        $estado = (int) $estado;
+        $ok = $this->salaModel->cambiarEstadoSala($sala_id, $estado);
 
         return [
             "success" => $ok,
-            "data" => $ok,
+            "datos" => $ok,
             "error" => $ok ? null : "No se pudo desactivar la sala"
         ];
     }
