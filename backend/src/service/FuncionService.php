@@ -4,8 +4,7 @@ namespace App\Service;
 
 use App\Models\Funcion;
 use App\Models\EstadoFuncion;
-use App\Models\Pelicula;
-use App\Models\Sala;
+use App\Models\Programacion;
 
 /**
  * Clase FuncionService
@@ -16,25 +15,22 @@ use App\Models\Sala;
 class FuncionService
 {
     private Funcion $funcionModel;
-    private Pelicula $peliculaModel;
     private EstadoFuncion $estadoFuncion;
-    private Sala $salaModel;
+    private Programacion $programacionModel;
 
     /**
      * Contructor de la clase Funcion
      * Se inyectan los modelos necesarios para poder realizar validaciones
      * y operaciones relacionadas entre entidades.
      * @param Funcion $funcionModel
-     * @param Pelicula $peliculaModel
      * @param EstadoFuncion $estadoFuncion
-     * @param Sala $salaModel
+     * @param Programacion $programacionModel
      */
-    public function __construct(Funcion $funcionModel, Pelicula $peliculaModel, EstadoFuncion $estadoFuncion, Sala $salaModel)
+    public function __construct(Funcion $funcionModel, EstadoFuncion $estadoFuncion, Programacion $programacionModel)
     {
         $this->funcionModel = $funcionModel;
-        $this->peliculaModel = $peliculaModel;
         $this->estadoFuncion = $estadoFuncion;
-        $this->salaModel = $salaModel;
+        $this->programacionModel = $programacionModel;
     }
 
     /**
@@ -53,6 +49,10 @@ class FuncionService
      */
     public function obtenerFuncionId(int $id): array
     {
+        if ($id <= 0) {
+            return ["success" => false, "datos" => null, "error" => "ID inválido"];
+        }
+
         $funcion = $this->funcionModel->obtenerPorId($id);
 
         if (!$funcion) {
@@ -63,63 +63,42 @@ class FuncionService
     }
 
     /**
-     * Crea una nueva función (proyección de película)
-     * Valida datos obligatorios, existencia de película y sala, además de formato de fecha y hora.
+     * Crea una nueva función asociada a una programación.
+     * Valida programación, estado y formato de fecha_hora.
      * @param array $datos Datos de la función
      * @return array Resultado de la operación
      */
     public function crearFuncion(array $datos): array
     {
-        // Campos obligatorios
-        $campos = ['pelicula_id', 'sala_id', 'hora', 'fecha_inicio', 'fecha_fin', 'estado_id'];
+        $campos = ['programacion_id', 'fecha_hora', 'estado_id'];
 
-        // Recorre cada campo
         foreach ($campos as $campo) {
-            // valida que ningun datos este vacío 
             if (!isset($datos[$campo])) {
-                return ["success" => false, "datos" => null, "error" => "El campo {$campo} es obligatorio"];
+                return [
+                    "success" => false,
+                    "datos" => null,
+                    "error" => "El campo {$campo} es obligatorio"
+                ];
             }
         }
 
-        // Se busca una pelicula existente
-        $pelicula = $this->peliculaModel->peliculaId($datos['pelicula_id']);
-
-        // Si no existe devueve el error, sin datos y que fallo
-        if (!$pelicula) {
-            return ["success" => false, "datos" => null, "error" => "La película no existe"];
+        if (!$this->existeProgramacion($datos['programacion_id'])) {
+            return ["success" => false, "datos" => null, "error" => "La programación no existe"];
         }
 
-        // Busca la sala según el ID
-        $sala = $this->salaModel->listarSala($datos['sala_id']);
-
-        // Si no existe devueve el error, sin datos y que fallo
-        if (!$sala) {
-            return ["success" => false, "datos" => null, "error" => "La sala no existe"];
+        if (!$this->existeEstado($datos['estado_id'])) {
+            return ["success" => false, "datos" => null, "error" => "El estado no existe"];
         }
 
-        // VALIDAR FORMATO: HORA -> HH:MM:SS - FORMATO FECHA (inicio y fin) -> YYYY-MM-DD 
-        // Comprobar hora
-        if (!$this->validarHora($datos['hora'])) {
-            return ["success" => false, "datos" => null, "error" => "Formato de hora inválido. Usar HH:MM:SS"];
+        if (!$this->validarFechaHora($datos['fecha_hora'])) {
+            return ["success" => false, "datos" => null, "error" => "Formato fecha_hora inválido (YYYY-MM-DD HH:MM:SS)"];
         }
 
-        // Comprobar fecha inicio y fecha fin
-        if (!$this->validarFecha($datos['fecha_inicio']) || !$this->validarFecha($datos['fecha_fin'])) {
-            return ["success" => false, "datos" => null, "error" => "Fecha inválida (YYYY-MM-DD)"];
-        }
+        $funcionId = $this->funcionModel->crear($datos['programacion_id'], $datos['fecha_hora'], $datos['estado_id']);
 
-        // Comprobar que las fechas sean coherentes
-        if (!$this->validarRangoFechas($datos['fecha_inicio'], $datos['fecha_fin'])) {
-            return ["success" => false, "datos" => null, "error" => "La fecha_fin no puede ser menor que fecha_inicio"];
-        }
+        if ($funcionId < 0) return ["success" => false, "datos" => null, "error" => "Error al crear la función"];
 
-        $funcion_id = $this->funcionModel->crear($datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin'], $datos['estado_id']);
-
-        if ($funcion_id === -1) {
-            return ["success" => false, "datos" => null, "error" => "Error al crear la función"];
-        }
-
-        return ["success" => true, "datos" => ["id" => $funcion_id], "error" => null];
+        return ["success" => true, "datos" => ["id" => $funcionId], "error" => null];
     }
 
     /**
@@ -130,16 +109,40 @@ class FuncionService
      */
     public function actualizarFuncion($id, $datos): array
     {
+        $campos = ['programacion_id', 'fecha_hora', 'estado_id'];
+
+        foreach ($campos as $campo) {
+            if (!isset($datos[$campo])) {
+                return ["success" => false, "datos" => null, "error" => "El campo {$campo} es obligatorio"];
+            }
+        }
+
         $funcion = $this->funcionModel->obtenerPorId($id);
 
         if (!$funcion) {
-            return ["success" => false, "datos" => null, "error" => "La Función no existe"];
+            return ["success" => false, "datos" => null, "error" => "La función no existe"];
         }
 
-        $respuesta = $this->funcionModel->actualizar($id, $datos['pelicula_id'], $datos['sala_id'], $datos['hora'], $datos['fecha_inicio'], $datos['fecha_fin'], $datos['estado_id']);
+        if (!$this->existeProgramacion($datos['programacion_id'])) {
+            return ["success" => false, "datos" => null, "error" => "La programación no existe"];
+        }
 
-        return $respuesta ? ["success" => true, "datos" => true, "error" => null] :
-            ["success" => false, "datos" => null, "error" => "Error al actualizar"];
+        if (!$this->existeEstado($datos['estado_id'])) {
+            return ["success" => false, "datos" => null, "error" => "El estado no existe"];
+        }
+
+        if (!$this->validarFechaHora($datos['fecha_hora'])) {
+            return ["success" => false, "datos" => null, "error" => "Formato fecha_hora inválido"];
+        }
+
+        $ok = $this->funcionModel->actualizar($id, $datos['programacion_id'], $datos['fecha_hora'], $datos['estado_id']);
+
+        return $ok ? ["success" => true, "datos" => true, "error" => null] :
+            [
+                "success" => false,
+                "datos" => null,
+                "error" => "Error al actualizar"
+            ];
     }
 
     /**
@@ -178,79 +181,60 @@ class FuncionService
     }
 
     /**
-     * Obtiene funciones por película
-     * @param int $pelicula_id ID de película
-     * @return array Resultado
-     */
-    public function obtenerFuncionesPorPelicula($pelicula_id): array
-    {
-        $pelicula = $this->peliculaModel->peliculaId($pelicula_id);
-
-        if (!$pelicula) {
-            return ["success" => false, "datos" => null, "error" => "No existe la película"];
-        }
-
-        return ["success" => true, "datos" => $this->funcionModel->obtenerPorPelicula($pelicula_id), "error" => null];
-    }
-
-    /**
-     * Obtiene todos los estados
-     * @return array Lista de estados
-     */
-    public function obtenerEstados(): array
-    {
-        return ["success" => true, "datos" => $this->estadoFuncion->obtenerEstados(), "error" => null];
-    }
-
-    /**
      * Obtiene un estado por ID
      * @param int $estadoId ID del estado
      * @return array Resultado
      */
-    public function obtenerEstado($estadoId): array
+    public function cambiarEstadoFuncion($id, $estadoId): array
     {
+        if (!$this->existeEstado($estadoId)) {
+            return ["success" => false, "datos" => null, "error" => "El estado no existe"];
+        }
+
+        $funcion = $this->funcionModel->obtenerPorId($id);
+        if (!$funcion) {
+            return ["success" => false, "datos" => null, "error" => "La función no existe"];
+        }
+
         $estado = $this->estadoFuncion->obtenerEstadoPorId($estadoId);
 
         if (!$estado) {
             return ["success" => false, "datos" => null, "error" => "El estado no existe."];
         }
 
-        return ["success" => true, "datos" => $estado, "error" => null];
+        $ok = $this->funcionModel->cambiarEstado($id, $estadoId);
+
+        return ["success" => true, "datos" => $ok, "error" => null];
     }
 
     /**
-     * Valida una fecha con formato YYYY-MM-DD
-     * @param string $fecha
+     * Valida formato datetime
+     * YYYY-MM-DD HH:MM:SS
+     */
+    private function validarFechaHora(string $fechaHora): bool
+    {
+        $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $fechaHora);
+
+        return $dt && $dt->format('Y-m-d H:i:s') === $fechaHora;
+    }
+
+    /**
+     * Comprueba si existe estado
+     * @param int $estadoId
      * @return bool
      */
-    private function validarFecha(string $fecha): bool
+    private function existeEstado($estadoId): bool
     {
-        $fechaFormato = \DateTime::createFromFormat('Y-m-d', $fecha);
-        return $fechaFormato && $fechaFormato->format('Y-m-d') === $fecha;
+        return (bool)$this->estadoFuncion->obtenerEstadoPorId($estadoId);
     }
 
     /**
-     * Valida una hora con formato HH:MM:SS
-     * @param string $hora
+     * Comprueba si existe programacion
+     * @param int $programacionId
      * @return bool
      */
-    private function validarHora(string $hora): bool
+    private function existeProgramacion($programacionId): bool
     {
-        $horaFormato = \DateTime::createFromFormat('H:i:s', $hora);
-
-        return $horaFormato && $horaFormato->format('H:i:s') === $hora;
-    }
-
-    /**
-     * Valida que una fecha fin no sea menor a la fecha inicio
-     * @param string $fechaInicio Formato YYYY-MM-DD
-     * @param string $fechaFin Formato YYYY-MM-DD
-     * @return bool 
-     */
-    private function validarRangoFechas(string $fechaInicio, string $fechaFin): bool
-    {
-        $inicio = \DateTime::createFromFormat('Y-m-d', $fechaInicio);
-        $fin = \DateTime::createFromFormat('Y-m-d', $fechaFin);
-        return $fin >= $inicio;
+        return (bool) $this->programacionModel->obtenerProgramacion($programacionId);
     }
 }
