@@ -1,4 +1,4 @@
-import FuncionControlador from "../controlador/funcionesControlador";
+import FuncionControlador from "../controlador/funcion/funcionesControlador";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const controlador = new FuncionControlador();
