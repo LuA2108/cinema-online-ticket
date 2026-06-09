@@ -176,7 +176,7 @@ CREATE TABLE reserva (
 CREATE TABLE reserva_butaca (
     butaca_id INT NOT NULL,
     reserva_id INT NOT NULL,
-    precio DECIMAL(10,2),
+    precio DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (reserva_id, butaca_id),
 
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
