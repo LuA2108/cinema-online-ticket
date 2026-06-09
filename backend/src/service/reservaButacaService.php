@@ -14,7 +14,7 @@ class ReservaButacaService
     private Funcion $funcionModel;
     private Sala $salaModel;
 
-    public function __construct($reservaButacaModel, $butacaModel, $funcionModel, $salaModel)
+    public function __construct(ReservaButaca $reservaButacaModel, Butaca $butacaModel,Funcion $funcionModel, Sala $salaModel)
     {
         $this->reservaButacaModel = $reservaButacaModel;
         $this->butacaModel = $butacaModel;
@@ -22,6 +22,14 @@ class ReservaButacaService
         $this->salaModel = $salaModel;
     }
 
+    /**
+     * Agrega butacas a la reserva
+     * @param mixed $reserva_id
+     * @param mixed $funcion_id
+     * @param mixed $butaca_id
+     * @param mixed $precio
+     * @return array
+     */
     public function agregarButacaAReserva($reserva_id, $funcion_id, $butaca_id, $precio)
     {
         // 1. validar butaca
@@ -56,29 +64,46 @@ class ReservaButacaService
         }
 
         // 6. insertar
-        $ok = $this->reservaButacaModel->crear($butaca_id, $reserva_id, $funcion_id, $precio
-        );
+        $ok = $this->reservaButacaModel->crear($butaca_id, $reserva_id, $precio);
 
         return $ok
             ? ["success" => true, "datos" => true]
             : ["success" => false, "error" => "Error al reservar butaca"];
     }
 
+    /**
+     * Elimina butacas en la reserva de butacas
+     * @param mixed $reserva_id
+     * @param mixed $funcion_id
+     * @param mixed $butaca_id
+     * @return array
+     */
     public function eliminarButacaDeReserva($reserva_id, $funcion_id, $butaca_id)
     {
-        $ok = $this->reservaButacaModel->eliminar($reserva_id, $funcion_id, $butaca_id);
+        $ok = $this->reservaButacaModel->eliminar($reserva_id, $butaca_id);
 
         return $ok
             ? ["success" => true, "datos" => true]
             : ["success" => false, "error" => "Error al eliminar butaca"];
     }
 
+
+    /**
+     * Obtiene butacas por reserva según el ID
+     * @param mixed $reserva_id
+     * @return array
+     */
     public function obtenerButacasPorReserva($reserva_id)
     {
         $data = $this->reservaButacaModel->obtenerPorReserva($reserva_id);
         return ["success" => true, "datos" => $data, "error" => null];
     }
 
+    /**
+     * Obtiene butacas segun la función
+     * @param mixed $funcion_id
+     * @return array
+     */
     public function obtenerButacasPorFuncion($funcion_id)
     {
         $funcion = $this->funcionModel->obtenerPorId($funcion_id);
