@@ -1,33 +1,14 @@
-import {
-    obtenerFunciones,
-    obtenerFuncionPorId,
-    obtenerFuncionesPorEstado,
-    obtenerFuncionesPorPelicula,
-    obtenerEstadosFuncion,
-    obtenerEstadoFuncion,
-    agregarFuncion,
-    actualizarFuncion,
-    eliminarFuncion
-} from "../api/funcionesApi.js";
+import { obtenerFunciones, obtenerFuncionPorId, obtenerFuncionesPorEstado } from "../api/funcionesApi.js";
 
 class ModeloFuncion {
 
-    constructor(
-        id,
-        pelicula_id,
-        sala_id,
-        hora,
-        fecha_inicio,
-        fecha_fin,
-        estado_id
-    ) {
+    constructor(id, pelicula_titulo, sala_id, fecha_hora, estado_id, programacion_id) {
         this.id = id;
-        this.pelicula_id = pelicula_id;
+        this.pelicula_titulo = pelicula_titulo;
         this.sala_id = sala_id;
-        this.hora = hora;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
+        this.fecha_hora = fecha_hora;
         this.estado_id = estado_id;
+        this.programacion_id = programacion_id;
     }
 
     async obtenerFunciones() {
@@ -40,30 +21,6 @@ class ModeloFuncion {
 
     async obtenerFuncionesPorEstado(estadoId) {
         return await obtenerFuncionesPorEstado(estadoId);
-    }
-
-    async obtenerFuncionesPorPelicula(peliculaId) {
-        return await obtenerFuncionesPorPelicula(peliculaId);
-    }
-
-    async obtenerEstadosFuncion() {
-        return await obtenerEstadosFuncion();
-    }
-
-    async obtenerEstadoFuncion(id) {
-        return await obtenerEstadoFuncion(id);
-    }
-
-    async agregarFuncion(datos) {
-        return await agregarFuncion(datos);
-    }
-
-    async actualizarFuncion(id, datos) {
-        return await actualizarFuncion(id, datos);
-    }
-
-    async eliminarFuncion(id) {
-        return await eliminarFuncion(id);
     }
 }
 
