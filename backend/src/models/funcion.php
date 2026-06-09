@@ -27,7 +27,13 @@ class Funcion
      */
     public function listar()
     {
-        $result = $this->conn->query("SELECT * FROM funcion");
+        $result = $this->conn->query("SELECT f.id, f.fecha_hora, ef.nombre AS estado, p.id AS programacion_id, pe.titulo, s.numero AS sala
+                FROM funcion f
+                INNER JOIN programacion p ON f.programacion_id = p.id
+                INNER JOIN pelicula pe ON p.pelicula_id = pe.id
+                INNER JOIN sala s ON p.sala_id = s.id
+                INNER JOIN estado_funcion ef ON f.estado_id = ef.id");
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -37,9 +43,14 @@ class Funcion
      */
     public function obtenerPorId($id)
     {
-        $sql = $this->conn->prepare("SELECT * FROM funcion WHERE id = ? LIMIT 1");
+        $sql = $this->conn->prepare("SELECT f.*,p.sala_id,p.pelicula_id FROM funcion f
+            INNER JOIN programacion p ON f.programacion_id = p.id
+            WHERE f.id = ?
+            LIMIT 1");
+
         $sql->bind_param("i", $id);
         $sql->execute();
+
         return $sql->get_result()->fetch_assoc();
     }
 
