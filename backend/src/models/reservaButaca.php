@@ -21,18 +21,15 @@ class ReservaButaca
     /**
      * Asigna una butaca a una reserva
      * @param int $butaca_id
-     * @param int $funcion_id
+     * @param int $reserva_id
      * @param float $precio
      */
-    public function crear($butaca_id, $reserva_id, $funcion_id, $precio)
+    public function crear($butaca_id, $reserva_id, $precio): bool
     {
-        $sql = $this->conn->prepare("INSERT INTO reserva_butaca (butaca_id, reserva_id, funcion_id, precio) VALUES (?, ?, ?, ?) ");
-        $sql->bind_param("iiid", $butaca_id, $reserva_id, $funcion_id, $precio);
+        $sql = $this->conn->prepare("INSERT INTO reserva_butaca (butaca_id, reserva_id, precio) VALUES (?, ?, ?)");
+        $sql->bind_param("iid", $butaca_id, $reserva_id, $precio);
 
-        if ($sql->execute()) {
-            return true;
-        }
-        return false;
+        return $sql->execute();
     }
 
     /**
@@ -53,7 +50,7 @@ class ReservaButaca
      */
     public function obtenerPorFuncion($funcion_id)
     {
-        $sql = $this->conn->prepare("SELECT butaca_id FROM reserva_butaca WHERE funcion_id = ?");
+        $sql = $this->conn->prepare("SELECT rb.butaca_id FROM reserva_butaca rb INNER JOIN reserva r ON rb.reserva_id = r.id WHERE r.funcion_id = ?");
         $sql->bind_param("i", $funcion_id);
         $sql->execute();
 
@@ -63,14 +60,13 @@ class ReservaButaca
     /**
      * Elimina una butaca de la reserva de una funcion
      * @param int $reserva_id
-     * @param int $funcion_id
      * @param int $butaca_id
      */
-    public function eliminar($reserva_id, $funcion_id, $butaca_id)
+    public function eliminar($reserva_id, $butaca_id)
     {
-        $sql = $this->conn->prepare("DELETE FROM reserva_butaca WHERE reserva_id = ? AND funcion_id = ? AND butaca_id = ?");
+        $sql = $this->conn->prepare("DELETE FROM reserva_butaca WHERE reserva_id = ? AND butaca_id = ?");
+        $sql->bind_param("ii", $reserva_id, $butaca_id);
 
-        $sql->bind_param("iii", $reserva_id, $funcion_id, $butaca_id);
         return $sql->execute();
     }
 
@@ -79,13 +75,16 @@ class ReservaButaca
      * @param int $funcion_id
      * @param int $butaca_id
      */
-    public function estaOcupada($funcion_id, $butaca_id)
+    public function estaOcupada($funcion_id, $butaca_id): bool
     {
-        $sql = $this->conn->prepare("SELECT COUNT(*) as total FROM reserva_butaca WHERE funcion_id = ? AND butaca_id = ?");
+        $sql = $this->conn->prepare("SELECT COUNT(*) total FROM reserva_butaca rb INNER JOIN reserva r ON rb.reserva_id = r.id
+        WHERE r.funcion_id = ? AND rb.butaca_id = ?");
+
         $sql->bind_param("ii", $funcion_id, $butaca_id);
         $sql->execute();
 
-        $result = $sql->get_result()->fetch_assoc();
-        return $result['total'] > 0;
+        $resultado = $sql->get_result()->fetch_assoc();
+
+        return $resultado['total'] > 0;
     }
 }
