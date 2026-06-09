@@ -50,7 +50,8 @@ try {
 
     // GET /salas/estado/1
     if ($method === 'GET' && $param === 'estado') {
-        $estado = isset($segments[2]) ? (bool) $segments[2] : true;
+        $estado = $segments[2] ?? 1;
+        $estado = (int)$estado;
 
         echo json_encode($salaController->listarPorEstado($estado));
         exit;
@@ -79,7 +80,6 @@ try {
         'success' => false,
         'message' => 'Ruta de salas no válida'
     ]);
-
 } catch (Exception $e) {
 
     http_response_code(500);
@@ -88,4 +88,3 @@ try {
         'message' => $e->getMessage()
     ]);
 }
-
