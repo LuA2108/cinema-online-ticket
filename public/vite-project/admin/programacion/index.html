@@ -50,6 +50,7 @@
         <hr>
 
         <ul class="sidebar-menu-inner">
+
             <li>Panel de control</li>
 
             <li>
@@ -86,9 +87,9 @@
                     Géneros películas
                 </a>
             </li>
-
+            
             <li>
-                <a href="./admin/programacion/index.html">
+                <a href="./index.html">
                     <i class="fa-solid fa-tv"></i>
                     Programación
                 </a>
@@ -102,7 +103,7 @@
             </li>
 
             <li>
-                <a href="./index.html">
+                <a href="../reservas/index.html">
                     <i class="fa-solid fa-calendar"></i>
                     Reservas
                 </a>
@@ -130,23 +131,23 @@
     <!-- CONTENIDO -->
     <main class="main-admin">
         <article>
-            <h1 style="color: black">Reservas</h1>
+            <h1 style="color: black">Gestión de Programaciones</h1>
 
             <table border="1" class="tabla_panel tabla">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>ID Usuario</th>
-                        <th>Nombre cliente</th>
-                        <th>Email</th>
-                        <th>ID Funcion</th>
-                        <th>ID Estado</th>
-                        <th>Fecha Reserva</th>
-                        <th>Total</th>
+                        <th>Película</th>
+                        <th>Sala</th>
+                        <th>Hora</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
 
-                <tbody id="tablaReservasBody">
+                <tbody id="tablaProgramacionesBody">
                     <!-- JS inyecta aquí -->
                 </tbody>
             </table>
@@ -154,7 +155,7 @@
 
     </main>
     <footer>
-        <script type="module" src="../../src/admin/reservas.js"></script>
+        <script type="module" src="../../src/admin/funciones.js"></script>
         <script type="module" src="../../src/auth/admin.js" ></script>
     </footer>
 </body>
