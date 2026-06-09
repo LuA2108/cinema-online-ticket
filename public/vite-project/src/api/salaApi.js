@@ -24,10 +24,9 @@ export async function obtenerSalaPorId(id) {
 
     return data.datos;
 }
-
-// Obtener salas activas/inactivas
-export async function obtenerSalasActivas(estado = true) {
-    const res = await fetch(`${BASE_URL}/activas/${estado}`);
+// Obtener salas /salas/estado/1
+export async function obtenerSalasPorEstado(estado) {
+    const res = await fetch(`${BASE_URL}/estado/${estado}`);
     const data = await res.json();
 
     if (!data.success) {
