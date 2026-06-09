@@ -1,4 +1,3 @@
-```php id="b6k3pn"
 <?php
 
 use App\Service\ReservaButacaService;
