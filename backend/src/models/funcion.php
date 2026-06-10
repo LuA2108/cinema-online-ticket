@@ -27,7 +27,7 @@ class Funcion
      */
     public function listar()
     {
-        $result = $this->conn->query("SELECT f.id, f.fecha_hora, ef.nombre AS estado, p.id AS programacion_id, pe.titulo, s.numero AS sala
+        $result = $this->conn->query("SELECT f.id, f.fecha_hora, ef.nombre AS estado, p.id AS programacion_id, pe.titulo, s.id AS sala
                 FROM funcion f
                 INNER JOIN programacion p ON f.programacion_id = p.id
                 INNER JOIN pelicula pe ON p.pelicula_id = pe.id
