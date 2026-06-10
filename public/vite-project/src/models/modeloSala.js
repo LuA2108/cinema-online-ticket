@@ -1,18 +1,17 @@
 import {
     obtenerSalas,
     obtenerSalaPorId,
-    obtenerSalasActivas,
+    obtenerSalasPorEstado,
     agregarSala,
-    actualizarSala,
-    eliminarSala
+    cambiarEstadoSala
 } from "../api/salaApi.js";
 
 class ModeloSala {
 
-    constructor(id, numero, capacidad, activa) {
+    constructor(id, filas, butacas_por_fila, activa) {
         this.id = id;
-        this.numero = numero;
-        this.capacidad = capacidad;
+        this.filas = filas;
+        this.butacas_por_fila = butacas_por_fila;
         this.activa = activa;
     }
 
@@ -24,21 +23,18 @@ class ModeloSala {
         return await obtenerSalaPorId(id);
     }
 
-    async obtenerSalasActivas(estado = true) {
-        return await obtenerSalasActivas(estado);
+    async obtenerSalasPorEstado(estado = true) {
+        return await obtenerSalasPorEstado(estado);
     }
 
     async agregarSala(datos) {
         return await agregarSala(datos);
     }
 
-    async actualizarSala(id, datos) {
-        return await actualizarSala(id, datos);
+    async cambiarEstadoSala(id, estado) {
+        return await cambiarEstadoSala(id, estado);
     }
 
-    async eliminarSala(id) {
-        return await eliminarSala(id);
-    }
 }
 
 export default ModeloSala;
