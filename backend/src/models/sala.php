@@ -60,17 +60,16 @@ class Sala
 
     /**
      * Agrega una nueva sala
-     * @param int $numero Numero de sala
      * @param int $filas las filas presentes de la sala
      * @param int $butacaPorFila cantidad de butacas por fila
      * @param boolean $activa 
      * @return int ID de la sala creada, -1 si hubo un error
      */
-    public function agregarSala($numero, $filas, $butacaPorFila, $activa)
+    public function agregarSala($filas, $butacaPorFila, $activa = false)
     {
         $activa = (int)$activa;
-        $sql = $this->conn->prepare("INSERT INTO sala(numero, filas, butacas_por_fila, activa) VALUES(?, ?, ?, ?)");
-        $sql->bind_param("iiii", $numero, $filas, $butacaPorFila, $activa);
+        $sql = $this->conn->prepare("INSERT INTO sala(filas, butacas_por_fila, activa) VALUES(?, ?, ?)");
+        $sql->bind_param("iii", $filas, $butacaPorFila, $activa);
         $resultado = $sql->execute();
 
         if($resultado) {
