@@ -20,7 +20,6 @@ CREATE TABLE rol (
 
 CREATE TABLE sala (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    numero INT UNIQUE NOT NULL,
     filas INT NOT NULL,
     butacas_por_fila  INT NOT NULL,
     activa BOOLEAN DEFAULT TRUE
@@ -219,9 +218,9 @@ INSERT INTO rol (tipo, descripcion) VALUES
 -- -------------------------------
 -- SALA
 -- -------------------------------
-INSERT INTO sala (numero, filas, butacas_por_fila, activa) VALUES
-(1, 5, 10, TRUE),
-(2, 5, 10, TRUE);
+INSERT INTO sala (filas, butacas_por_fila) VALUES
+(5, 10),
+(5, 10);
 
 -- -------------------------------
 -- TIPO PRODUCTO
@@ -258,7 +257,7 @@ INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible)
 ('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, TRUE);
 
 -- Peliculas no disponibles
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, precio, disponible) VALUES
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible) VALUES
 ('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155,FALSE),
 ('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, FALSE),
 ('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, FALSE),
@@ -315,14 +314,14 @@ INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES
 -- Programaci
 -- -------------------------------
 INSERT INTO programacion
-(id, pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, estado)
+(id, pelicula_id, sala_id, hora, fecha_inicio, fecha_fin, precio)
 VALUES
-(1, 3, 2, '20:00:00', '2026-02-22', '2026-02-22', 8.0, TRUE), -- Joker
-(2, 4, 1, '18:30:00', '2026-02-22', '2026-02-22', 8.0, TRUE), -- Titanic
-(3, 5, 2, '21:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Gladiator
-(4, 6, 2, '19:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Avatar
-(5, 1, 1, '22:00:00', '2026-02-23', '2026-02-23', 8.0, TRUE), -- Inception
-(6, 2, 1, '16:00:00', '2026-02-24', '2026-02-24', 8.0, TRUE); -- Interstellar
+(1, 3, 2, '20:00:00', '2026-02-22', '2026-02-22', 8.0), -- Joker
+(2, 4, 1, '18:30:00', '2026-02-22', '2026-02-22', 8.0), -- Titanic
+(3, 5, 2, '21:00:00', '2026-02-23', '2026-02-23', 8.0), -- Gladiator
+(4, 6, 2, '19:00:00', '2026-02-23', '2026-02-23', 8.0), -- Avatar
+(5, 1, 1, '22:00:00', '2026-02-23', '2026-02-23', 8.0), -- Inception
+(6, 2, 1, '16:00:00', '2026-02-24', '2026-02-24', 8.0); -- Interstellar
 
 
 -- Funciones (proyecciones)
