@@ -1,6 +1,6 @@
-import SalaControlador from "../controlador/salaControlador";
+import SalaControlador from "../controlador/sala/salaAdminControlador";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const controlador = new SalaControlador();
-    await controlador.cargarSalas();
+    await controlador.init();
 });
