@@ -5,11 +5,13 @@
 @use 'maquetacion/cabecera';
 @use 'maquetacion/footer';
 
+// Componentes
 @use 'componentes/carousel';
 @use 'componentes/button';
 @use 'componentes/sidebar';
 @use 'componentes/auth';
 @use 'componentes/table';
+@use 'componentes/mapa';
 
 // Paginas
 @use 'paginas/index';

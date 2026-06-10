@@ -1,0 +1,52 @@
+.sala-mapa {
+
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 12px;
+
+    &__fila {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__label {
+        width: 50px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    &__butaca {
+        width: 40px;
+        height: 40px;
+
+        border: 1px solid #a9ffdda8;
+        border-radius: 6px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #c5fbe8;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+}
+
+.pantalla-cine {
+
+    width: 80%;
+    margin: 0 auto 30px;
+
+    text-align: center;
+    font-weight: bold;
+
+    background: #343a40;
+    color: white;
+
+    padding: 10px;
+
+    border-radius: 8px;
+}
