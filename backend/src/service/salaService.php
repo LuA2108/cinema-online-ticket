@@ -69,20 +69,19 @@ class SalaService
 
     /**
      * Crea una nueva sala con el número y capacidad proporcionados
-     * @param int $numero
      * @param int $filas
      * @param int $butacasPorFila
      * @return array
      */
-    public function crearSala($numero, $filas, $butacasPorFila)
+    public function crearSala($filas, $butacasPorFila)
     {
-        if ($numero <= 0 || $filas <= 0 || $butacasPorFila <= 0) {
+        if ($filas <= 0 || $butacasPorFila <= 0) {
             return ["success" => false, "datos" => null, "error" => "Datos invalidos."];
         }
 
         try {
             $this->conn->begin_transaction();
-            $salaId = $this->salaModel->agregarSala($numero, $filas, $butacasPorFila, true);
+            $salaId = $this->salaModel->agregarSala($filas, $butacasPorFila, false);
 
             if ($salaId < 0) {
                 throw new Exception("No se pudo crear la sala");

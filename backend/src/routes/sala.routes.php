@@ -59,11 +59,10 @@ try {
 
     // POST /salas
     if ($method === 'POST' && !$param) {
-        $numero = $body['numero'] ?? null;
         $filas = $body['filas'] ?? null;
         $butacasPorFila = $body['butacasPorFila'] ?? null;
 
-        echo json_encode($salaController->crearSala($numero, $filas, $butacasPorFila));
+        echo json_encode($salaController->crearSala($filas, $butacasPorFila));
         exit;
     }
 

@@ -43,9 +43,9 @@ class SalaController
     /**
      * Crea una nueva sala
      */
-    public function crearSala(int $numero, int $filas, int $butacasPorFila): array
+    public function crearSala(int $filas, int $butacasPorFila): array
     {
-        return $this->salaService->crearSala($numero, $filas, $butacasPorFila);
+        return $this->salaService->crearSala($filas, $butacasPorFila);
     }
 
     /**
