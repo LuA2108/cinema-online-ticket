@@ -1,11 +1,11 @@
-import ModeloFuncion from "../models/modeloFuncion.js";
-import FuncionView from "../view/funcionView.js";
+import ModeloFuncion from "../../models/modeloFuncion.js";
+import TablaFuncion from "../../view/funcion/TablaFuncion.js";
 
 class FuncionControlador {
 
     constructor() {
         this.modelo = new ModeloFuncion();
-        this.vista = new FuncionView();
+        this.vista = new TablaFuncion();
     }
 
     async cargarFunciones() {
