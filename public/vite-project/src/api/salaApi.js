@@ -7,7 +7,7 @@ export async function obtenerSalas() {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al cargar las salas');
+        throw new Error(data.error || data.message || 'Error al cargar las salas');
     }
 
     return data.datos;
@@ -19,18 +19,20 @@ export async function obtenerSalaPorId(id) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al obtener la sala');
+        throw new Error(data.error || data.message || 'Error al obtener la sala');
     }
 
     return data.datos;
 }
-// Obtener salas /salas/estado/1
+
+// Obtener salas por estado
+// GET /salas/estado/1
 export async function obtenerSalasPorEstado(estado) {
     const res = await fetch(`${BASE_URL}/estado/${estado}`);
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al obtener salas activas');
+        throw new Error(data.error || data.message || 'Error al obtener salas');
     }
 
     return data.datos;
@@ -49,41 +51,27 @@ export async function agregarSala(datos) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al crear la sala');
+        throw new Error(data.error || data.message || 'Error al crear la sala');
     }
 
     return data.datos;
 }
 
-// Actualizar sala
-export async function actualizarSala(id, datos) {
-    const res = await fetch(`${BASE_URL}/${id}`, {
+// Cambiar estado de sala
+// PUT /salas/{id}/estado
+export async function cambiarEstadoSala(id, estado) {
+    const res = await fetch(`${BASE_URL}/${id}/estado`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(datos)
+        body: JSON.stringify({ estado })
     });
 
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al actualizar la sala');
-    }
-
-    return data.datos;
-}
-
-// Eliminar (desactivar) sala
-export async function eliminarSala(id) {
-    const res = await fetch(`${BASE_URL}/${id}`, {
-        method: 'DELETE'
-    });
-
-    const data = await res.json();
-
-    if (!data.success) {
-        throw new Error(data.message || 'Error al eliminar la sala');
+        throw new Error(data.error || data.message || 'Error al cambiar estado de la sala');
     }
 
     return data.datos;
