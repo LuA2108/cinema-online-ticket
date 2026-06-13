@@ -53,6 +53,7 @@ CREATE TABLE pelicula (
     anio INT NOT NULL,
     duracion INT NOT NULL,
     disponible BOOLEAN DEFAULT FALSE,
+    destacado BOOLEAN DEFAULT FALSE,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -241,29 +242,29 @@ INSERT INTO estado_reserva (nombre) VALUES
 -- -----------------------
 -- ESTADO FUNCION
 INSERT INTO estado_funcion (nombre) VALUES
+('inactiva'),
 ('activa'),
-('cancelada'),
 ('finalizada');
 
 -- -------------------------------
 -- PELICULA
 -- -------------------------------
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible) VALUES
-('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, TRUE),
-('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, TRUE),
-('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, TRUE),
-('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, TRUE),
-('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, TRUE),
-('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, TRUE);
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible, destacado) VALUES
+('Inception', 'Un ladrón que roba secretos a través de los sueños.', 'Christopher Nolan', 2010, 148, TRUE, TRUE),
+('Interstellar', 'Viaje espacial para salvar a la humanidad.', 'Christopher Nolan', 2014, 169, TRUE, TRUE),
+('Joker', 'Historia de origen del villano Joker.', 'Todd Phillips', 2019, 122, TRUE, FALSE),
+('Titanic', 'Romance a bordo del famoso transatlántico.', 'James Cameron', 1997, 195, TRUE, FALSE),
+('Gladiator', 'Un general romano busca venganza.', 'Ridley Scott', 2000, 155, TRUE, FALSE),
+('Avatar', 'Humanos en Pandora y conflictos con los nativos.', 'James Cameron', 2009, 162, TRUE, TRUE);
 
 -- Peliculas no disponibles
-INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible) VALUES
-('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155,FALSE),
-('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, FALSE),
-('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, FALSE),
-('Caida en Picada', 'Aventura caótica de amigos.', 'Greta Gerwig', 2026, 115, FALSE),
-('Hombre sin rostro', 'Distopía y rebelión.', 'Francis Lawrence', 2026, 140, FALSE),
-('Sin Rumbo', 'Viaje de supervivencia.', 'Francis Lawrence', 2026, 140, FALSE);
+INSERT INTO pelicula (titulo, descripcion, director, anio, duracion, disponible, destacado) VALUES
+('La Maldicion de Green House', 'Misterios en una antigua mansión.', 'Denis Villeneuve', 2026, 155, FALSE, FALSE),
+('Fin del Amanecer', 'Héroes contra un cataclismo.', 'Nia DaCosta', 2026, 120, FALSE, FALSE),
+('Aprueba de Balas', 'Ciencia y ética en conflicto.', 'Christopher Nolan', 2026, 180, FALSE, FALSE),
+('Caida en Picada', 'Aventura caótica de amigos.', 'Greta Gerwig', 2026, 115, FALSE, FALSE),
+('Hombre sin rostro', 'Distopía y rebelión.', 'Francis Lawrence', 2026, 140, FALSE, FALSE),
+('Sin Rumbo', 'Viaje de supervivencia.', 'Francis Lawrence', 2026, 140, FALSE, FALSE);
 
 -- ----------------------------------------------------
 -- IMAGENES DE PELICULAS ------------------------------
@@ -329,12 +330,12 @@ VALUES
 INSERT INTO funcion
 (id, programacion_id, fecha_hora, estado_id)
 VALUES
-(1, 1, '2026-02-22 20:00:00', 1),
-(2, 2, '2026-02-22 18:30:00', 1),
-(3, 3, '2026-02-23 21:00:00', 1),
-(4, 4, '2026-02-23 19:00:00', 1),
-(5, 5, '2026-02-23 22:00:00', 1),
-(6, 6, '2026-02-24 16:00:00', 1);
+(1, 1, '2026-02-22 20:00:00', 2),
+(2, 2, '2026-02-22 18:30:00', 2),
+(3, 3, '2026-02-23 21:00:00', 2),
+(4, 4, '2026-02-23 19:00:00', 2),
+(5, 5, '2026-02-23 22:00:00', 2),
+(6, 6, '2026-02-24 16:00:00', 2);
 
 
 -- Insertar Butacas en sala 1
