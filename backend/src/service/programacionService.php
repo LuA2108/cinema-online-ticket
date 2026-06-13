@@ -285,7 +285,7 @@ class ProgramacionService
 
 
     /**
-     * Cambia el estado de programación y tambien de funciones
+     * Cambia el estado de programación a Activa y tambien de funciones
      * @param int $programacion_id;
      * @param boolean $estado ID del estado
      * @return array Resultado
@@ -301,9 +301,9 @@ class ProgramacionService
         $ok = $this->programacionModel->cambiarEstado($programacion_id, $estado);
         $funciones = $this->funcionModel->obtenerPorProgramacion($programacion_id);
 
-        // Recorre las funciones y cambia el estado de cada una de ellas
+        // Recorre las funciones y cambia el estado a activa (2)
         foreach ($funciones as $funcion) {
-            $this->funcionModel->cambiarEstado($funcion['id'], $estado);
+            $this->funcionModel->cambiarEstado($funcion['id'], 2);
         }
 
         if (!$ok) {
