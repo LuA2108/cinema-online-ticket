@@ -1,6 +1,6 @@
-import ModeloPelicula from "../models/modeloPelicula.js";
-import ModeloGenero from "../models/modeloGenero.js";
-import PeliculaTabla from "../view/pelicula/peliculaTabla.js";
+import ModeloPelicula from "../../models/modeloPelicula.js";
+import ModeloGenero from "../../models/modeloGenero.js";
+import PeliculaTabla from "../../view/pelicula/peliculaTabla.js";
 
 class PeliculaControlador {
 
@@ -149,9 +149,6 @@ class PeliculaControlador {
             generos
         };
 
-        console.log("PAYLOAD CONTROLADOR:");
-        console.log(payload);
-
         await this.modeloPelicula.actualizarPelicula(id, payload);
         this.cerrarModal();
         await this.cargarPeliculas();
@@ -168,7 +165,8 @@ class PeliculaControlador {
             anio: formData.get("anio"),
             duracion: formData.get("duracion"),
             precio: formData.get("precio"),
-            disponible: formData.get("disponible") ? 1 : 0
+            disponible: formData.get("disponible") ? 1 : 0,
+            destacado: formData.get("destacado") ? 1 : 0
         };
     }
 
@@ -178,8 +176,8 @@ class PeliculaControlador {
         document.getElementById("director").value = p.director || "";
         document.getElementById("anio").value = p.anio || "";
         document.getElementById("duracion").value = p.duracion || "";
-        document.getElementById("precio").value = p.precio || "";
         document.getElementById("disponible").checked = p.disponible == 1;
+        document.getElementById("destacado").checked = p.destacado == 1;
     }
 
     cerrarModal() {
