@@ -2,17 +2,16 @@ import { getPeliculas, obtenerPeliculasCompletas, crearPelicula, obtenerPelicula
 
 class ModeloPelicula {
 
-    constructor(id, titulo, descripcion, director, anio, duracion, precio, disponible, create_time) 
-    {
-        this._id = id;
-        this._titulo = titulo;
-        this._descripcion = descripcion;
-        this._director = director;
-        this._anio = anio;
-        this._duracion = duracion;
-        this._precio = precio;
-        this._disponible = disponible;
-        this._create_time = create_time;
+    constructor(id, titulo, descripcion, director, anio, duracion, disponible, destacado, create_time) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.director = director;
+        this.anio = anio;
+        this.duracion = duracion;
+        this.disponible = disponible;
+        this.destacado = destacado;
+        this.create_time = create_time;
     }
 
     // MÉTODOS API
@@ -102,15 +101,6 @@ class ModeloPelicula {
         this._duracion = value;
     }
 
-    // PRECIO
-    get precio() {
-        return this._precio;
-    }
-
-    set precio(value) {
-        this._precio = value;
-    }
-
     // DISPONIBLE
     get disponible() {
         return this._disponible;
@@ -127,6 +117,15 @@ class ModeloPelicula {
 
     set create_time(value) {
         this._create_time = value;
+    }
+
+    // DESTACADO
+    get destacado() {
+        return this._destacado;
+    }
+
+    set destacado(value) {
+        this._destacado = value;
     }
 }
 
