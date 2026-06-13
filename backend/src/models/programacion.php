@@ -26,7 +26,7 @@ class Programacion
      */
     public function listarProgramaciones()
     {
-        $sql = $this->conn->query("SELECT * FROM programacion ORDER BY fecha_inicio ASC, hora ASC");
+        $sql = $this->conn->query("SELECT * FROM programacion ORDER BY id ASC, hora ASC");
         return $sql->fetch_all(MYSQLI_ASSOC);
     }
 
