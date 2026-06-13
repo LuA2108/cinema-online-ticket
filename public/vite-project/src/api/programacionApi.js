@@ -9,7 +9,7 @@ export async function obtenerProgramaciones() {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al cargar programaciones');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
@@ -23,7 +23,7 @@ export async function obtenerProgramacionPorId(id) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al obtener programación');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
@@ -38,7 +38,7 @@ export async function obtenerProgramacionesPorPelicula(peliculaId) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al obtener programaciones por película');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
@@ -59,7 +59,7 @@ export async function crearProgramacion(datos) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al crear programación');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
@@ -80,7 +80,7 @@ export async function actualizarProgramacion(id, datos) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al actualizar programación');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
@@ -119,7 +119,7 @@ export async function eliminarProgramacion(id) {
     const data = await res.json();
 
     if (!data.success) {
-        throw new Error(data.message || 'Error al eliminar programación');
+        throw new Error(data.error || data.message);
     }
 
     return data.datos;
