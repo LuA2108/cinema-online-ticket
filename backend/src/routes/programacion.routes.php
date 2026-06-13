@@ -70,17 +70,17 @@ try {
         exit;
     }
 
-    // PUT /programaciones/1
-    if ($method === 'PUT' && $id) {
-        echo json_encode($controller->actualizarProgramacion($id, $body));
-        exit;
-    }
-
     // PUT /programaciones/1/estado
     if ($method === 'PUT' && $id && isset($segments[2]) && $segments[2] === 'estado') {
         $estado = $body['estado'] ?? null;
 
         echo json_encode($controller->cambiarEstado($id, $estado));
+        exit;
+    }
+
+    // PUT /programaciones/1
+    if ($method === 'PUT' && $id) {
+        echo json_encode($controller->actualizarProgramacion($id, $body));
         exit;
     }
 
@@ -93,7 +93,6 @@ try {
     // Ruta inválida dentro del módulo
     http_response_code(404);
     echo json_encode(['success' => false, 'message' => 'Ruta de programaciones no válida']);
-    
 } catch (Exception $e) {
 
     http_response_code(500);
