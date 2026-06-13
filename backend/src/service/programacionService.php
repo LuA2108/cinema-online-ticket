@@ -287,7 +287,7 @@ class ProgramacionService
     /**
      * Cambia el estado de programación a Activa y tambien de funciones
      * @param int $programacion_id;
-     * @param boolean $estado ID del estado
+     * @param boolean $estado estado de programacion
      * @return array Resultado
      */
     public function cambiarEstado($programacion_id, $estado): array
