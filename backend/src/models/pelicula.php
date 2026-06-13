@@ -43,12 +43,15 @@ class Pelicula
      */
     public function listarPeliculasCompletas()
     {
-        $sql = " SELECT p.id, p.titulo, p.descripcion, pi.url AS poster, GROUP_CONCAT(g.nombre SEPARATOR ', ') AS generos,
-        p.director, p.anio, p.duracion, p.disponible, p.create_time AS fecha_registro
+        $sql = "SELECT p.id, p.titulo, p.descripcion,pi.url AS poster,GROUP_CONCAT(g.nombre SEPARATOR ', ') AS generos, p.director, p.anio, p.duracion, p.disponible, p.destacado, p.create_time AS fecha_registro
         FROM pelicula p
-        LEFT JOIN pelicula_imagen pi ON p.id = pi.pelicula_id AND pi.tipo = 'poster'
-        LEFT JOIN pelicula_genero pg ON p.id = pg.pelicula_id
-        LEFT JOIN genero g ON pg.genero_id = g.id
+        LEFT JOIN pelicula_imagen pi
+            ON p.id = pi.pelicula_id
+            AND pi.tipo = 'poster'
+        LEFT JOIN pelicula_genero pg
+            ON p.id = pg.pelicula_id
+        LEFT JOIN genero g
+            ON pg.genero_id = g.id
         GROUP BY p.id";
 
         $resultado = $this->conn->query($sql);
@@ -81,13 +84,15 @@ class Pelicula
      * @param int $anio
      * @param int $duracion
      * @param boolean $disponible
+     * @param boolean $destacado
      * @return int ID de la nueva película o -1 si falla
      */
-    public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible)
+    public function agregarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $destacado)
     {
-        $sql = $this->conn->prepare("INSERT INTO pelicula(titulo, descripcion, director, anio, duracion, disponible) VALUES(?,?,?,?,?,?)");
+        $sql = $this->conn->prepare("INSERT INTO pelicula(titulo, descripcion, director, anio, duracion, disponible, destacado)VALUES (?, ?, ?, ?, ?, ?, ?)");
         $disponible = (int)$disponible;
-        $sql->bind_param("sssiidi", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible);
+        $destacado = (int)$destacado;
+        $sql->bind_param("sssiiii", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $destacado);
 
         // Ejecutar
         $resultado = $sql->execute();
@@ -108,19 +113,21 @@ class Pelicula
      * @param int $anio
      * @param int $duracion
      * @param boolean $disponible
+     * @param boolean $destacado
      * @param int $pelicula_id
      * @return bool True al editarse correctamente, False al fallar
      */
-    public function actualizarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $pelicula_id)
+    public function actualizarPelicula($titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $destacado, $pelicula_id)
     {
-        $sql = $this->conn->prepare("UPDATE pelicula SET titulo = ?, descripcion = ?, director = ?, anio = ?, duracion = ?, disponible = ? WHERE id = ?");
+        $sql = $this->conn->prepare("UPDATE pelicula SET titulo = ?, descripcion = ?, director = ?, anio = ?, duracion = ?, disponible = ?, destacado = ? WHERE id = ?");
         $disponible = (int)$disponible;
-        $sql->bind_param("sssiiii", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $pelicula_id);
+        $destacado = (int)$destacado;
+        $sql->bind_param("sssiiiii", $titulo_pelicula, $descripcion, $director, $anio, $duracion, $disponible, $destacado, $pelicula_id);
 
         return $sql->execute();
     }
 
-    
+
     /**
      * Cambia el estado de disponibilidad de una película según su ID
      * @param int $peliculaId
