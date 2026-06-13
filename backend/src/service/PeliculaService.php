@@ -80,7 +80,7 @@ class PeliculaService
             }
 
             // 1. Crear película
-            $peliculaId = $this->peliculaModelo->agregarPelicula($pelicula['titulo'], $pelicula['descripcion'], $pelicula['director'], $pelicula['anio'], $pelicula['duracion'], $pelicula['precio'], $pelicula['disponible']);
+            $peliculaId = $this->peliculaModelo->agregarPelicula($pelicula['titulo'], $pelicula['descripcion'], $pelicula['director'], $pelicula['anio'], $pelicula['duracion'], $pelicula['disponible'], $pelicula['destacado']);
 
             // 2. Asociar géneros
             foreach ($generos as $generoId) {
@@ -131,8 +131,8 @@ class PeliculaService
                 $pelicula['director'],
                 $pelicula['anio'],
                 $pelicula['duracion'],
-                $pelicula['precio'],
                 $pelicula['disponible'],
+                $pelicula['destacado'],
                 $id
             );
 
