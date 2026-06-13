@@ -13,20 +13,39 @@ class PeliculaTabla {
 
         peliculas.forEach(pelicula => {
 
+            const descripcionCorta = pelicula.descripcion.length > 50
+                ? pelicula.descripcion.substring(0, 50) + "..."
+                : pelicula.descripcion;
+
             // COLUMNAS BASE con datos de película
             const columnas = [
                 pelicula.id,
                 pelicula.titulo,
-                pelicula.descripcion,
+                descripcionCorta,
                 pelicula.generos || "Sin géneros",
                 pelicula.director,
                 pelicula.anio,
                 `${pelicula.duracion} min`,
-                pelicula.fecha_registro
+                pelicula.fecha_registro,
             ];
 
             // Crear fila base
             const tr = this.tabla.crearFila(columnas);
+
+            // DESTACADO //////////////////////////
+            const tdDestacado = document.createElement("td");
+            const badgeDestacado = document.createElement("span");
+
+            badgeDestacado.className = pelicula.destacado == 1
+                ? "badge bg-warning text-dark"
+                : "badge bg-secondary";
+
+            badgeDestacado.textContent = pelicula.destacado == 1
+                ? "⭐ Destacada"
+                : "Normal";
+
+            tdDestacado.appendChild(badgeDestacado);
+            this.tabla.agregarCelda(tr, tdDestacado);
 
             // IMAGEN POSTER //////////////////////////////
 
