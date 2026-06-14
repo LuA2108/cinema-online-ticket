@@ -1,0 +1,58 @@
+.peliculas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.pelicula-card {
+    background: #0f0f1a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    &:hover .pelicula-img {
+        transform: scale(1.05);
+    }
+}
+
+.pelicula-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.pelicula-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    padding: 0.75rem 0.75rem 0.25rem;
+    text-align: center;
+}
+
+.pelicula-boton {
+    display: block;
+    margin: 0.75rem;
+    padding: 0.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd149, #ffb300);
+    color: #0f0f1a;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+        transform: scale(1.03);
+        opacity: 0.9;
+    }
+}
