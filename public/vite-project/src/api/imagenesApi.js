@@ -29,7 +29,7 @@ export async function obtenerImagenPorId(id) {
 
 // Obtener imagen por ID de película
 export async function obtenerImagenPorPelicula(id_pelicula) {
-    const res = await fetch(`${BASE_URL}/imagenes/${id_pelicula}`);
+    const res = await fetch(`${BASE_URL}/imagenes/pelicula/${id_pelicula}`);
     const data = await res.json();
 
     if (!data.success) {
