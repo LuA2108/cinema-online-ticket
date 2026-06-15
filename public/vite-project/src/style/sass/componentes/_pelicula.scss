@@ -39,20 +39,166 @@
     text-align: center;
 }
 
-.pelicula-boton {
-    display: block;
-    margin: 0.75rem;
-    padding: 0.5rem;
-    text-align: center;
-    background: linear-gradient(135deg, #ffd149, #ffb300);
-    color: #0f0f1a;
-    font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: transform 0.2s ease, opacity 0.2s ease;
 
-    &:hover {
-        transform: scale(1.03);
+.relacion-peliculas {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: auto;
+
+    h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        color: white
+    }
+
+    .peliculas-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+    }
+}
+
+.pelicula-detalle {
+
+    background: #0b0b0f;
+    color: #fff;
+
+    /* =========================
+    HERO
+  ========================= */
+    .hero {
+        position: relative;
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+
+        &-backdrop {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                filter: blur(12px) brightness(0.35);
+                transform: scale(1.1);
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(11, 11, 15, 0.95),
+                    rgba(43, 43, 63, 0.6),
+                    rgba(11, 11, 15, 0.95));
+            z-index: 1;
+        }
+    }
+}
+
+.poster {
+    img {
+        width: 260px;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+}
+
+/* =========================
+    CONTENIDO
+  ========================= */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px;
+    align-items: center;
+}
+
+/* =========================
+    INFO
+  ========================= */
+.info {
+
+    flex: 1;
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        h1 {
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .badge-destacado {
+            background: #ffcc00;
+            color: #000;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    }
+
+    .meta {
+        display: flex;
+        gap: 15px;
+        margin: 10px 0;
+        opacity: 0.8;
+        font-size: 14px;
+    }
+
+    .descripcion {
+        margin-top: 20px;
+        line-height: 1.6;
         opacity: 0.9;
+        max-width: 600px;
+    }
+
+    .detalles {
+        margin-top: 25px;
+        display: flex;
+        gap: 40px;
+
+        .detalle-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .label {
+                font-size: 12px;
+                opacity: 0.6;
+            }
+        }
+    }
+}
+
+.generos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+
+    .genero {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: #fff;
+        backdrop-filter: blur(6px);
     }
 }
