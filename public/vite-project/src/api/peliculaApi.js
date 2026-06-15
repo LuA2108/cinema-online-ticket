@@ -16,6 +16,18 @@ export async function getPeliculas() {
 }
 
 // Obtener película por ID
+export async function obtenerPeliculaCompletaPorId(id) {
+    const res = await fetch(`${BASE_URL}/peliculas/${id}/completa`);
+    const data = await res.json();
+
+    if (!data.success) {
+        throw new Error(data.error || 'Error al obtener película');
+    }
+
+    return data.datos;
+}
+
+// Obtener película por ID
 export async function obtenerPeliculaPorId(id) {
     const res = await fetch(`${BASE_URL}/peliculas/${id}`);
     const data = await res.json();
