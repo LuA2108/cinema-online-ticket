@@ -18,7 +18,6 @@ class CatalogoPeliculasControlador {
     }
 
     init() {
-
         this.cargarCarouselPrincipal();
         this.cargarCarouselTarjetas();
     }
@@ -26,7 +25,6 @@ class CatalogoPeliculasControlador {
     async cargarCarouselPrincipal() {
         const peliculasDestacadas = await this.obtenerPeliculasDestacadas();
 
-        console.log("DESTACADAS:", peliculasDestacadas);
         if (!peliculasDestacadas.length) {
             console.warn("No hay películas destacadas");
             return;
@@ -39,10 +37,6 @@ class CatalogoPeliculasControlador {
         const peliculasDisponibles = await this.obtenerPeliculasDisponibles();
         const limitadas = peliculasDisponibles.slice(0, 7);
         this.tarjetasCarousel.renderizar(limitadas);
-    }
-
-    async obtenerPeliculasNoDisponibles() {
-        
     }
 
     async obtenerPeliculasDisponibles() {
@@ -105,7 +99,7 @@ class CatalogoPeliculasControlador {
                     : p.banner,
 
                 poster: tipo === "poster"
-                    ? (img ? `http://localhost/cinema-online-ticket${img.url}` : null)
+                    ? (img ? `${img.url}` : null)
                     : p.poster
             };
         });
