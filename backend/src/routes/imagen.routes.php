@@ -52,7 +52,7 @@ try {
     }
 
     // GET /imagenes/pelicula/1
-    if ($method === 'GET' && $param === 'pelicula') {
+    if ($method === 'GET' && isset($segments[1]) && $segments[1] === 'pelicula') {
         $peliculaId = (int)($segments[2] ?? 0);
 
         echo json_encode($controller->imagenesPorPelicula($peliculaId));
