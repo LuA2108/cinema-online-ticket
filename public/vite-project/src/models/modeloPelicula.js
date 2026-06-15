@@ -1,4 +1,4 @@
-import { getPeliculas, obtenerPeliculasCompletas, crearPelicula, obtenerPeliculaPorId, actualizarPelicula, activarPelicula, desactivarPelicula } from "../api/peliculaApi.js";
+import { getPeliculas, obtenerPeliculasCompletas, crearPelicula, obtenerPeliculaPorId, actualizarPelicula, activarPelicula, desactivarPelicula, obtenerPeliculaCompletaPorId } from "../api/peliculaApi.js";
 
 class ModeloPelicula {
 
@@ -41,6 +41,10 @@ class ModeloPelicula {
 
     async desactivarPelicula(id) {
         return await desactivarPelicula(id);
+    }
+
+    async obtenerPeliculaCompletaPorId(id) {
+        return await obtenerPeliculaCompletaPorId(id);
     }
 
     // =========================
