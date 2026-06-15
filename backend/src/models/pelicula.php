@@ -142,15 +142,4 @@ class Pelicula
         return $sql->execute();
     }
 
-    /**
-     * Agregar un genero existente a una película
-     * @param int $pelicula_id
-     * @param int $genero_id
-     */
-    public function agregarGeneroPelicula($pelicula_id, $genero_id)
-    {
-        $sql = $this->conn->prepare("INSERT INTO pelicula_genero (pelicula_id, genero_id) VALUES (?, ?)");
-        $sql->bind_param("ii", $pelicula_id, $genero_id);
-        return $sql->execute();
-    }
 }
