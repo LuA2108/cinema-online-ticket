@@ -40,7 +40,7 @@ class CarouselPrincipal {
                             ${pelicula.titulo}
                         </h2>
 
-                        <a href="#"
+                        <a href="/reserva/seleccionar_funcion.html?id=${pelicula.id}"
                             class="btn-reservar">
                             ¡Compra ya tus entradas!
                         </a>
