@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\Pelicula;
 use App\Models\Genero;
 use App\Models\PeliculaGenero;
+use App\Models\PeliculaImagen;
 use Exception;
 
 class PeliculaService
@@ -12,6 +13,7 @@ class PeliculaService
     private $conn;
     private Pelicula $peliculaModelo;
     private PeliculaGenero $peliculaGeneroModelo;
+    private PeliculaImagen $pelicula_imagen;
     private Genero $generoModelo;
 
     /**
@@ -20,13 +22,15 @@ class PeliculaService
      * @param mysqli $conn Conexión a la base de datos
      * @param Pelicula $peliculaModelo Modelo de película para realizar operaciones CRUD
      * @param PeliculaGenero $peliculaGeneroModelo Modelo de relación película-género
+     * @param PeliculaImagen $pelicula_imagen
      * @param Genero $generoModelo Modelo de género para realizar operaciones CRUD relacionadas con géneros de películas
      * 
      */
-    public function __construct($peliculaModelo, $peliculaGeneroModelo, $generoModelo, $conn)
+    public function __construct($peliculaModelo, $peliculaGeneroModelo, $pelicula_imagen, $generoModelo, $conn)
     {
         $this->conn = $conn;
         $this->peliculaModelo = $peliculaModelo;
+        $this->pelicula_imagen = $pelicula_imagen;
         $this->generoModelo = $generoModelo;
         $this->peliculaGeneroModelo = $peliculaGeneroModelo;
     }
@@ -58,10 +62,43 @@ class PeliculaService
      */
     public function obtenerPeliculaPorId($id)
     {
-        return ["success" => true, "datos" => $this->peliculaModelo->peliculaId($id), "error" => null];
+        $pelicula = $this->peliculaModelo->peliculaId($id);
+
+        if (!$pelicula) {
+            return ["success" => false, "datos" => null, "error" => "No se encontró la película"];
+        }
+
+        $pelicula["generos"] = $this->peliculaGeneroModelo->obtenerGenerosDePelicula($id);
+
+        return ["success" => true, "datos" => $pelicula, "error" => null];
+    }
+
+    /**
+     * Funcion que devuelve los datos de peliculas y todas sus relaciones
+     * @param int $id ID pelicula
+     * @return array
+     */
+    public function obtenerPeliculaCompletaPorId($id)
+    {
+        $pelicula = $this->peliculaModelo->peliculaId($id);
+
+        if (!$pelicula) {
+            return ["success" => false, "datos" => null, "error" => "No encontrada"];
+        }
+
+        // géneros (ya lo tienes funcionando)
+        $pelicula["generos"] = $this->peliculaGeneroModelo->obtenerGenerosDePelicula($id);
+
+        // si tienes imagenes model, si no, deja vacío
+        $pelicula["imagenes"] = $this->pelicula_imagen
+            ? $this->pelicula_imagen->obtenerPorPelicula($id)
+            : [];
+
+        return ["success" => true, "datos" => $pelicula, "error" => null];
     }
 
     // CREAR PELÍCULA
+
     /**
      * Crea una nueva película en la base de datos utilizando los datos proporcionados
      * @param array $pelicula Un array con los datos de la película a crear
@@ -80,10 +117,19 @@ class PeliculaService
             }
 
             // 1. Crear película
-            $peliculaId = $this->peliculaModelo->agregarPelicula($pelicula['titulo'], $pelicula['descripcion'], $pelicula['director'], $pelicula['anio'], $pelicula['duracion'], $pelicula['disponible'], $pelicula['destacado']);
+            $peliculaId = $this->peliculaModelo->agregarPelicula(
+                $pelicula['titulo'],
+                $pelicula['descripcion'],
+                $pelicula['director'],
+                $pelicula['anio'],
+                $pelicula['duracion'],
+                $pelicula['disponible'],
+                $pelicula['destacado']
+            );
 
             // 2. Asociar géneros
             foreach ($generos as $generoId) {
+                //  uso consistente del modelo de relación
                 $this->peliculaGeneroModelo->agregarGenero($peliculaId, $generoId);
             }
 
@@ -167,7 +213,10 @@ class PeliculaService
     public function sincronizarGeneros(int $peliculaId, array $nuevosGeneros)
     {
         // géneros actuales en DB
-        $actuales = array_column($this->peliculaGeneroModelo->obtenerGenerosDePelicula($peliculaId), 'id');
+        $actuales = array_column(
+            $this->peliculaGeneroModelo->obtenerGenerosDePelicula($peliculaId),
+            'id'
+        );
 
         // calcular diferencias
         $agregar = array_diff($nuevosGeneros, $actuales);
@@ -175,15 +224,14 @@ class PeliculaService
 
         // eliminar relaciones
         foreach ($eliminar as $generoId) {
-            $this->peliculaGeneroModelo
-                ->quitarGenero($peliculaId, $generoId);
+            //  se centraliza en PeliculaGenero
+            $this->peliculaGeneroModelo->quitarGenero($peliculaId, $generoId);
         }
 
         // agregar relaciones nuevas
         foreach ($agregar as $generoId) {
-
-            $this->peliculaGeneroModelo
-                ->agregarGenero($peliculaId, $generoId);
+            // se centraliza en PeliculaGenero
+            $this->peliculaGeneroModelo->agregarGenero($peliculaId, $generoId);
         }
     }
 
