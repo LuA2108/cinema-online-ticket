@@ -40,6 +40,15 @@ class PeliculaController
     }
 
     /**
+     * Funcion que obtiene el metodo del service, devuelve todos los datos relacionados con pelicula (imagen y genero)
+     * @param int $id
+     * @return array
+     */
+    public function obtenerPeliculaCompletaPorId($id) {
+        return $this->peliculaService->obtenerPeliculaCompletaPorId($id);
+    }
+
+    /**
      * Obtiene los detalles de una película específica utilizando su ID
      * @param int $id ID de la película que se desea obtener
      * @return array Un array con los detalles de la película, incluyendo sus géneros e imágenes asociadas
