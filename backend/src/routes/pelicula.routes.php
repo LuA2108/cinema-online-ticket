@@ -7,6 +7,7 @@ use App\Service\PeliculaService;
 use App\Models\Pelicula;
 use App\Models\Genero;
 use App\Models\PeliculaGenero;
+use App\Models\PeliculaImagen;
 
 // ======================================
 // DEPENDENCIAS
@@ -18,8 +19,10 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/Pelicula.php';
 require_once __DIR__ . '/../models/Genero.php';
 require_once __DIR__ . '/../models/PeliculaGenero.php';
+require_once __DIR__ . "/../models/peliculaImagen.php";
 require_once __DIR__ . '/../service/PeliculaService.php';
 require_once __DIR__ . '/../controllers/PeliculaController.php';
+
 
 // VARIABLES GLOBALES DEL ROUTER CENTRAL
 global $resource, $param, $action;
@@ -31,11 +34,13 @@ $conn = (new Database())->obtenerConexion();
 $peliculaModel = new Pelicula($conn);
 $generoModel = new Genero($conn);
 $peliculaGeneroModel = new PeliculaGenero($conn);
+$imagen = new PeliculaImagen($conn);
 
 // Crear servicio con inyección de dependencias
 $peliculaService = new PeliculaService(
     $peliculaModel,
     $peliculaGeneroModel,
+    $imagen,
     $generoModel,
     $conn
 );
@@ -49,10 +54,10 @@ $controller = new PeliculaController($peliculaService);
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Leer JSON enviado desde el frontend
-$body = json_decode(file_get_contents('php://input'),true) ?? [];
+$body = json_decode(file_get_contents('php://input'), true) ?? [];
 
 // Convertir el parámetro a ID numérico si es posible, o dejarlo como null
-$id = is_numeric($param)? (int) $param: null;
+$id = is_numeric($param) ? (int) $param : null;
 
 // ========
 // ROUTES
@@ -62,6 +67,12 @@ try {
     // GET /peliculas
     if ($method === 'GET' && !$param) {
         echo json_encode($controller->index());
+        exit;
+    }
+
+    // GET /peliculas/1/completa
+    if ($method === 'GET' && $id && $action === 'completa') {
+        echo json_encode($controller->obtenerPeliculaCompletaPorId($id));
         exit;
     }
 
@@ -90,21 +101,18 @@ try {
     }
 
     // PATCH /peliculas/1/activar
-    if ($method === 'PATCH' && $id && $action === 'activar') 
-    {
+    if ($method === 'PATCH' && $id && $action === 'activar') {
         echo json_encode($controller->activar($id));
         exit;
     }
 
     // PATCH /peliculas/1/desactivar
-    if ($method === 'PATCH' && $id && $action === 'desactivar') 
-    {
+    if ($method === 'PATCH' && $id && $action === 'desactivar') {
         echo json_encode($controller->desactivar($id));
         exit;
     }
-
 } catch (Exception $e) {
-    
+
     // Manejo global de errores con código 500 y mensaje de error
     http_response_code(500);
     echo json_encode([
