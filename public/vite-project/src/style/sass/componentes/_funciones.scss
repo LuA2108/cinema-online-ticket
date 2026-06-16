@@ -1,0 +1,118 @@
+.funcion-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+.tarjeta-fecha-hora {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 15px;
+    width: 220px; /* clave para que se comporten como cards */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column; /* 👈 importante: columna interna */
+    gap: 12px;
+    transition: transform 0.2s ease;
+}
+
+.tarjeta-fecha-hora:hover {
+    transform: scale(1.02);
+}
+
+/* TARJETA */
+.funcion-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 10px 30px 30px 30px;
+    color: white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    margin: 0px 30px 40px 30px;
+    transition: transform 0.2s ease;
+    min-width: 200px;
+
+    &:hover {
+        transform: scale(1.01);
+    }
+}
+
+/* HEADER (TÍTULO ARRIBA) */
+.funcion-header {
+    margin-bottom: 10px;
+}
+
+.funcion-titulo {
+    margin: 0;
+    font-weight: bold;
+    color: #ffd000;
+    text-align: center;
+    transition: color 0.8s ease;
+
+    &:hover{
+        color: #ffde4e;
+    }
+}
+
+/* CUERPO FLEX */
+.funcion-body {
+    display: flex;
+    gap: 40px;
+}
+
+/* POSTER */
+.funcion-poster {
+    width: 180px;
+    flex-shrink: 0;
+
+    img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+}
+
+/* FECHA */
+.funcion-fecha {
+    background: #ffcc00;
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    align-self: flex-start;
+    text-transform: capitalize;
+}
+
+/* HORAS */
+.funcion-horas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hora-btn {
+    background: transparent;
+    border: 1px solid #555;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        background: #ffcc00;
+        color: black;
+        border-color: #ffcc00;
+    }
+
+    &:active {
+        background: #ffcc00;
+        color: black;
+        border-color: #ffcc00;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        transform: scale(1.05);
+    }
+}
