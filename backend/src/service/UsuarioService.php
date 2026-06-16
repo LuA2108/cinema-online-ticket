@@ -106,10 +106,15 @@ class UsuarioService
             }
         }
 
-        $resultado = $this->userModel->actualizarUsuario($datos['rol_id'], $datos['nombre'], $datos['email'], $datos['ciudad'], $datos['provincia'], $id);
+        $resultado = $this->userModel->actualizarUsuario($datos['nombre'], $datos['email'], $datos['ciudad'], $datos['provincia'], $id);
 
         if (!$resultado) {
             return ["success" => false, "datos" => null, "error" => "No se pudo actualizar el usuario"];
+        }
+
+        // 2. contraseña opcional
+        if (!empty($datos['contrasena'])) {
+            $this->userModel->actualizarContrasena($id, $datos['contrasena']);
         }
 
         return ["success" => true, "datos" => null, "error" => null];
