@@ -17,6 +17,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         return;
     }
     
+    console.log(data.token);
     localStorage.setItem("token", data.token);
 
     const payload = JSON.parse(atob(data.token.split(".")[1]));
@@ -24,6 +25,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     if (payload.rol === 1) {
         location.href = "../../admin.html";
     } else {
-        location.href = "../../user/perfil.html";
+        location.href = "./perfil.html";
     }
 });
