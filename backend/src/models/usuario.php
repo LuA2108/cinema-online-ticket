@@ -88,7 +88,6 @@ class Usuario
 
     /**
      * Actualiza los datos de un usuario existente
-     * @param int $rol_id
      * @param string $nombre
      * @param string $email
      * @param string $ciudad
@@ -96,10 +95,10 @@ class Usuario
      * @param int $id_usuario
      * @return bool True si se actualizo, False en caso contrario
      */
-    public function actualizarUsuario($rol_id, $nombre, $email, $ciudad, $provincia, $id_usuario)
+    public function actualizarUsuario($nombre, $email, $ciudad, $provincia, $id_usuario)
     {
-        $sql = $this->conn->prepare("UPDATE usuario SET rol_id = ?, nombre = ?, email = ?, ciudad = ?, provincia = ? WHERE id = ?");
-        $sql->bind_param("issssi", $rol_id, $email, $nombre, $ciudad, $provincia, $id_usuario);
+        $sql = $this->conn->prepare("UPDATE usuario SET nombre = ?, email = ?, ciudad = ?, provincia = ? WHERE id = ?");
+        $sql->bind_param("ssssi", $nombre, $email, $ciudad, $provincia, $id_usuario);
         return $sql->execute();
     }
 
