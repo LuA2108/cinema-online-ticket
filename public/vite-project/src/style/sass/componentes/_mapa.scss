@@ -50,3 +50,158 @@
 
     border-radius: 8px;
 }
+
+// Estilo de mapa dinamico
+.container-main {
+    padding: 20px;
+}
+
+/* LAYOUT PRINCIPAL */
+.cine-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* ZONA ASIENTOS */
+.cine-asientos {
+    background: #141414cb;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+}
+
+/* HEADER */
+.cine-header {
+    text-align: center;
+    margin-bottom: 15px;
+    background-color: transparent;
+}
+
+.cine-titulo {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cine-subtitulo {
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+/* PANTALLA */
+.cine-screen {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 25px auto;
+    height: 40px;
+    background: linear-gradient(to right, #222, #444, #222);
+    border-radius: 50px;
+    text-align: center;
+    line-height: 40px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+/* MAPA */
+.cine-mapa {
+    display: flex;
+    justify-content: center;
+}
+
+.mapa-sala {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* FILAS */
+.fila {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* BUTACAS */
+.butaca {
+    width: clamp(18px, 2vw, 28px);
+    height: clamp(18px, 2vw, 28px);
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease;
+}
+
+.butaca.libre { background: #2ecc71; }
+.butaca.ocupada { background: #e74c3c; }
+.butaca.seleccionada { background: #f1c40f; }
+
+/* 🎟 RESUMEN */
+.cine-resumen {
+    background: #1e1e1ee7;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    position: sticky;
+    top: 20px;
+}
+
+.resumen-titulo {
+    margin-bottom: 10px;
+}
+
+.resumen-vacio {
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.resumen-lista {
+    list-style: none;
+    padding: 0;
+}
+
+/* FOOTER */
+.resumen-footer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* BOTÓN */
+.btn-confirmar {
+    background: #f1c40f;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* cuando haces click (focus real del teclado o JS) */
+.butaca:focus {
+    background-color: #6cb3fb !important;
+    transform: scale(1.1);
+}
+
+/* estado seleccionado */
+.butaca.seleccionada {
+    background: #3498db;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(52,152,219,0.8);
+}
+
+/* ocupada bloqueada */
+.butaca.ocupada {
+    background: #e74c3c;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
