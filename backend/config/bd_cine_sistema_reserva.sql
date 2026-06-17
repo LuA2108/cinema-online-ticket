@@ -176,7 +176,6 @@ CREATE TABLE reserva (
 CREATE TABLE reserva_butaca (
     butaca_id INT NOT NULL,
     reserva_id INT NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (reserva_id, butaca_id),
 
     FOREIGN KEY (butaca_id) REFERENCES butaca(id) ON DELETE CASCADE,
@@ -374,9 +373,9 @@ VALUES
 (2, 'Maria Lopez', 'maria@mail.com', 3, 1, 7.50);
 
 -- Insertar reserva butaca
-INSERT INTO reserva_butaca (butaca_id, reserva_id, precio) VALUES
-(1, 1, 8.50),
-(51, 2, 7.50);
+INSERT INTO reserva_butaca (butaca_id, reserva_id) VALUES
+(1, 1),
+(51, 2);
 
 -- Insertar reserva producto
 INSERT INTO reserva_producto (reserva_id, producto_id, precio_total) VALUES
