@@ -1,26 +1,10 @@
-import {
-    obtenerReservas,
-    obtenerReservaPorId,
-    obtenerReservasPorUsuario,
-    obtenerReservasPorFuncion,
-    agregarReserva,
-    actualizarReserva,
-    cambiarEstadoReserva,
-    eliminarReserva
+import { obtenerReservas, obtenerReservaPorId, obtenerReservasPorUsuario, obtenerReservasPorFuncion,
+    agregarReserva, actualizarReserva, cambiarEstadoReserva, eliminarReserva
 } from "../api/reservasApi.js";
 
 class ModeloReserva {
-
-    constructor(
-        id,
-        usuario_id,
-        nombre_cliente,
-        email_cliente,
-        funcion_id,
-        estado_id,
-        fecha_reserva,
-        total
-    ) {
+    constructor(id, usuario_id, nombre_cliente, email_cliente, funcion_id, estado_id, fecha_reserva, total) 
+    {
         this.id = id;
         this.usuario_id = usuario_id;
         this.nombre_cliente = nombre_cliente;
