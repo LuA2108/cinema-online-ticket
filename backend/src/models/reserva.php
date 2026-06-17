@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use mysqli;
+
 class Reserva
 {
 
-    private $conn;
+    private mysqli $conn;
 
     /**
      * Constructor de la clase
      * Recibe la conexión a la base de datos (mysqli)
+     * @param mysqli $conn
      *
     */
     public function __construct($conn)
@@ -88,8 +91,13 @@ class Reserva
     }
 
     /**
-     * Crea una nueva reserva
-     * @return int ID de la reserva creada o -1 si falla
+     * Crea una reserva
+     * @param mixed $usuario_id
+     * @param mixed $nombre_cliente
+     * @param mixed $email_cliente
+     * @param mixed $funcion_id
+     * @param mixed $estado_id
+     * @param mixed $total
      */
     public function crearReserva($usuario_id, $nombre_cliente, $email_cliente, $funcion_id, $estado_id, $total)
     {
