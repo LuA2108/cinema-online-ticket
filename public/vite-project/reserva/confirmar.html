@@ -1,0 +1,232 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cinema Online Ticket</title>
+    <meta name="description" content='Cinema Online Ticket'>
+    <meta name="author" content="Lucero Anay Cahuana Cornejo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="64x42" href="../public/assets/iconos/logo-limpio.png">
+    <!-- BootStrap - Font Awesome - Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b527a55e68.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,50₀;1,6₀;1,7₀;1,8₀;1,9₀&family=Roboto:ital,wght@₀,1₀₀..9₀₀;1,1₀₀..9₀₀&display=swap">
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="../src/style/css/main.css">
+
+</head>
+
+<body>
+    <!-- ======= Cabecera : Logo / Buscador / Menu  ======= -->
+    <header>
+        <div class="contenedor-logo-sesion">
+            <!-- LOGO -->
+            <div class="logo">
+                <a href="../index.html"><img src="../public/assets/iconos/logo_cine.png" alt="Icono logo cine"
+                        width="170px" height="100px"></a>
+            </div>
+
+            <!-- SUBMENU para SESION-->
+            <nav class="menu-sesion">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#"> <i class="fa-solid fa-user" style="color: rgb(239, 244, 255);"></i></a>
+                        <ul class="submenu" id="submenu">
+                            <!--Aqui se insertir el icono de usuario con js  -->
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Menu y buscador -->
+        <div class="container-menu-buscador">
+            <!-- MENU -->
+            <nav class="menu">
+                <ul class="">
+                    <li class="menu-item">
+                        <a class="item-peliculas" href="../cartelera.html"> <i class="fa-solid fa-clapperboard"></i>
+                            Películas</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-servicios" href="#"> <img class="icono"
+                                src="../public/assets/iconos/palomitas-de-maiz.png" alt="Icono de palomitas">
+                            Servicios</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-info" href="../informacion.html"> <i class="fa-solid fa-info"></i>Sobre
+                            Nosotros</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="item-reserva" href="#"> <i class="fa-solid fa-ticket"></i> Reservar película</a>
+                    </li>
+                    <li class="menu-item buscador">
+                        <img src="../public/assets/iconos/buscar.png" alt="Icono buscador" width="30" height="30">
+                        <form action="#" method="get">
+                            <input type="search" name="buscador" placeholder="Buscar película...">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <hr>
+    <main class="container-main- confirmacion">
+
+        <section class="confirmacion-wrapper">
+
+            <!-- TÍTULO -->
+            <header class="confirmacion-header">
+                <h1><span>Confirmar datos</span></h1>
+                <p>Revisa tu reserva antes de finalizar la compra</p>
+            </header>
+
+            <div class="confirmacion-grid">
+
+                <!-- FORMULARIO -->
+                <div class="confirmacion-form">
+
+                    <h2>Datos del comprador</h2>
+
+                    <div class="input-group">
+                        <label>Nombre (opcional)</label>
+                        <input type="text" id="nombre" placeholder="Tu nombre">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email *</label>
+                        <input type="email" id="email" placeholder="correo@ejemplo.com" required>
+                    </div>
+
+                    <!-- usuario logueado -->
+                    <div class="usuario-logueado" id="usuario-logueado">
+                        <!-- se rellena con JS -->
+                    </div>
+
+                    <button class="btn-confirmar-reserva">
+                        Confirmar y pagar
+                    </button>
+
+                    <small class="nota">
+                        Recibirás tu entrada en el email indicado 📩
+                    </small>
+
+                </div>
+
+                <!-- RESUMEN -->
+                <aside class="confirmacion-resumen">
+
+                    <h2>Tu entrada</h2>
+
+                    <div class="resumen-card">
+
+                        <p><strong>Película:</strong> <span id="res-pelicula"></span></p>
+                        <p><strong>Sala:</strong> <span id="res-sala"></span></p>
+                        <p><strong>Fecha / Hora:</strong> <span id="res-fecha"></span></p>
+
+                        <hr>
+
+                        <p><strong>Butacas:</strong></p>
+                        <ul id="res-butacas"></ul>
+
+                        <hr>
+
+                        <p class="total">
+                            Total: <span id="res-total">0€</span>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <hr>
+        <div class="container-footer">
+            <section class="container-redes-sociales">
+                <h2 class="footer-titulo titulo-logo">CineToon</h2>
+                <p>"Disfruta de las mejores películas y estrenos exclusivos"</p>
+
+                <div class="container-icons-redes">
+                    <h3 class="subtitulo">Siguenos en redes sociales:</h3>
+                    <ul class="iconos-redes-sociales">
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-facebook icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-instagram icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-x-twitter icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-youtube icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa-brands fa-tiktok icon" style="color: rgb(255, 209, 73);"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="footer-titulo">Explorar</h2>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Peliculas</a></li>
+                    <li><a href="#">Estrenos</a></li>
+                    <li><a href="#">Cartelera</a></li>
+                    <li><a href="#">Reserva</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Cuenta</h2>
+                <ul>
+                    <li><a href="#">Iniciar sesion</a></li>
+                    <li><a href="#">Registrarse</a></li>
+                    <li><a href="#">Mi perfil</a></li>
+                    <li><a href="#">Mi lista</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Información</h2>
+                <ul>
+                    <li><a href="./informacion.html">Sobre nosotros</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Noticias</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2 class="footer-titulo">Legal</h2>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Política de cookies</a></li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="copy">
+            <hr>
+            <p>&copy; 2026 <span>CineToon</span>. Todos los derechos reservados.</p>
+        </div>
+        <script type="module" src="../src/paginas/confirmacionReserva.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../src/paginas/sesion.js" type="module"></script>
+    </footer>
+</body>
