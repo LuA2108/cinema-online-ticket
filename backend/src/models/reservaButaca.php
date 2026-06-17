@@ -22,12 +22,11 @@ class ReservaButaca
      * Asigna una butaca a una reserva
      * @param int $butaca_id
      * @param int $reserva_id
-     * @param float $precio
      */
-    public function crear($butaca_id, $reserva_id, $precio): bool
+    public function crear($butaca_id, $reserva_id): bool
     {
-        $sql = $this->conn->prepare("INSERT INTO reserva_butaca (butaca_id, reserva_id, precio) VALUES (?, ?, ?)");
-        $sql->bind_param("iid", $butaca_id, $reserva_id, $precio);
+        $sql = $this->conn->prepare("INSERT INTO reserva_butaca (butaca_id, reserva_id) VALUES (?, ?)");
+        $sql->bind_param("ii", $butaca_id, $reserva_id);
 
         return $sql->execute();
     }
@@ -85,6 +84,6 @@ class ReservaButaca
 
         $resultado = $sql->get_result()->fetch_assoc();
 
-        return $resultado['total'] > 0;
+        return (float)$resultado['total'] > 0;
     }
 }
