@@ -33,6 +33,7 @@ class AuthController
 
         $payload = [
             "id" => $usuario["id"],
+            "nombre" => $usuario["nombre"] ? $usuario["nombre"] : "-",
             "email" => $usuario["email"],
             "rol" => $usuario["rol_id"],
             "exp" => time() + 3600
