@@ -16,27 +16,47 @@ class SeleccionFuncionControlador {
     async init() {
         const peliculaId = this.obtenerParametro();
         const imagenPelicula = await this.obtenerImagen();
+        console.log(peliculaId);
 
         const pelicula = await this.pelicula.obtenerPeliculaPorId(peliculaId);
-        console.log("Pelicula",pelicula);
+        console.log("Pelicula", pelicula);
+
+        const reserva = JSON.parse(sessionStorage.getItem("reserva")) || {};
+        reserva.pelicula = { id: pelicula.id, titulo: pelicula.titulo };
+        sessionStorage.setItem("reserva", JSON.stringify(reserva));
 
         const programaciones = await this.programacion.obtenerProgramacionesPorPelicula(peliculaId);
-        console.log("programaciones" ,programaciones);
+        console.log("programaciones", programaciones);
+
+        const programacionMap = {};
+
+        programaciones.forEach(p => {
+            programacionMap[p.id] = p;
+        });
+
+        console.log("Programacion map: " + programacionMap);
 
         const funciones = await this.funcion.obtenerFunciones();
-        console.log("funciones: ",funciones);
+        console.log("funciones: ", funciones);
 
         const idsProgramacion = programaciones.map(p => Number(p.id));
         console.log("Ids programaciones", idsProgramacion);
 
-        const funcionesFiltradas =
-        funciones.filter(f => f.estado == 'activa' &&
-            idsProgramacion.includes(
-                Number(f.programacion_id)
+        const funcionesFiltradas = funciones
+            .filter(f =>
+                f.estado == 'activa' &&
+                idsProgramacion.includes(Number(f.programacion_id))
             )
-        );
+            .map(f => {
+                const prog = programacionMap[Number(f.programacion_id)];
+
+                return {
+                    ...f,
+                    sala: prog?.sala_id //
+                };
+            });;
         console.log("funciones filtradas: ", funcionesFiltradas);
-        
+
         this.vista.renderizarTituloPelicula(pelicula);
         this.vista.renderizarPoster(imagenPelicula[0].url);
         this.vista.renderizarFunciones(funcionesFiltradas);
@@ -51,15 +71,26 @@ class SeleccionFuncionControlador {
 
     seleccionarFuncion() {
         document.querySelector(".funcion-info")
-            .addEventListener("click", (e) => {
+            .addEventListener("click", async (e) => {
 
-                if (e.target.classList.contains("hora-btn")) {
+                const btn = e.target.closest(".hora-btn");
 
-                    const idFuncion = e.target.dataset.id;
-                    console.log("Seleccionada:", idFuncion);
+                if (btn) {
+                    const idFuncion = btn.dataset.id;
+                    console.log("Seleccionada: ", idFuncion);
 
-                    // aquí se navega a butacas
-                    window.location.href = `./seleccionar_butaca.html?id=${idFuncion}`;
+                    // reconstruyes la función
+                    const reserva = JSON.parse(sessionStorage.getItem("reserva")) || {};
+                    const funcion = await this.funcion.obtenerFuncionPorId(idFuncion);
+
+                    reserva.funcion = funcion;
+                    reserva.butacas = [];
+
+                    sessionStorage.setItem("reserva", JSON.stringify(reserva));
+                    console.log("Reserva", reserva);
+
+
+                    window.location.href = `./seleccionar_butaca.html`;
                 }
             });
     }
