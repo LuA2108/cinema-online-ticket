@@ -1,11 +1,13 @@
 class ReservaFuncion {
 
+    // Muestra el título de la película en la interfaz
     renderizarTituloPelicula(pelicula) {
         let titulo = document.querySelector(".funcion-titulo");
         titulo.replaceChildren("");
         titulo.innerText = pelicula.titulo;
     }
 
+    // Renderiza el póster de la película
     renderizarPoster(url) {
         const BASE_URL = "http://localhost/cinema-online-ticket/";
         const img = document.querySelector(".funcion-poster img");
@@ -14,19 +16,26 @@ class ReservaFuncion {
     }
 
     renderizarSala(idSala) {
-        
+        // (pendiente de implementación)
     }
 
+    // Crea un botón para una función (hora + sala)
     crearBotonHora(funcion) {
         const btn = document.createElement("button");
         btn.classList.add("hora-btn");
 
-        btn.textContent = funcion.hora;
         btn.dataset.id = funcion.id;
+
+        // Contenido del botón con hora y sala
+        btn.innerHTML = `
+            <span class="hora">${funcion.hora}</span>
+            <span class="sala">Sala ${funcion.sala}</span>
+        `;
 
         return btn;
     }
 
+    // Renderiza las funciones agrupadas por fecha
     renderizarFunciones(funciones) {
 
         const info = document.querySelector(".funcion-info");
@@ -38,28 +47,28 @@ class ReservaFuncion {
             let contenedorFechaHora = document.createElement("div");
             contenedorFechaHora.classList.add("tarjeta-fecha-hora");
 
-            // etiqueta fecha
+            // Fecha formateada
             const fechaSpan = document.createElement("span");
             fechaSpan.classList.add("funcion-fecha");
             fechaSpan.textContent = this.formatearFecha(fecha);
 
-            // contenedor horas
+            // Contenedor de horas
             const horasDiv = document.createElement("div");
             horasDiv.classList.add("funcion-horas");
 
-            // botones
+            // Crear botones por función
             for (const funcion of agrupadas[fecha]) {
-
                 const btn = this.crearBotonHora(funcion);
                 horasDiv.appendChild(btn);
-
             }
+
             contenedorFechaHora.appendChild(fechaSpan);
-            contenedorFechaHora.appendChild(horasDiv)
+            contenedorFechaHora.appendChild(horasDiv);
             info.appendChild(contenedorFechaHora);
         }
     }
 
+    // Agrupa funciones por fecha
     agruparPorFecha(funciones) {
         const agrupadas = {};
 
@@ -72,6 +81,7 @@ class ReservaFuncion {
             agrupadas[fecha].push({
                 id: f.id,
                 hora,
+                sala: f.sala, // ahora se incluye la sala
                 titulo: f.titulo
             });
         });
@@ -79,6 +89,7 @@ class ReservaFuncion {
         return agrupadas;
     }
 
+    // Formatea la fecha a formato legible en español
     formatearFecha(fechaStr) {
         const fecha = new Date(fechaStr);
 
