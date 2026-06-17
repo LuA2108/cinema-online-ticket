@@ -5,13 +5,13 @@ use App\Controllers\ReservaButacaController;
 use App\Models\ReservaButaca;
 use App\Models\Butaca;
 use App\Models\Funcion;
-use App\Models\Sala;
+use App\Models\Reserva;
 
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/ReservaButaca.php';
 require_once __DIR__ . '/../models/Butaca.php';
 require_once __DIR__ . '/../models/Funcion.php';
-require_once __DIR__ . '/../models/Sala.php';
+require_once __DIR__ . '/../models/reserva.php';
 require_once __DIR__ . '/../service/ReservaButacaService.php';
 require_once __DIR__ . '/../controllers/ReservaButacaController.php';
 
@@ -26,14 +26,14 @@ $conn = (new Database())->obtenerConexion();
 $reservaButacaModel = new ReservaButaca($conn);
 $butacaModel = new Butaca($conn);
 $funcionModel = new Funcion($conn);
-$salaModel = new Sala($conn);
+$reserva = new Reserva($conn);
 
 // SERVICE
 $reservaButacaService = new ReservaButacaService(
     $reservaButacaModel,
     $butacaModel,
     $funcionModel,
-    $salaModel
+    $reserva
 );
 
 // CONTROLLER
