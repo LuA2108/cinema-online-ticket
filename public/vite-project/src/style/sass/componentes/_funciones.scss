@@ -116,3 +116,20 @@
         transform: scale(1.05);
     }
 }
+
+.hora-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.hora-btn .hora {
+    font-weight: bold;
+}
+
+.hora-btn .sala {
+    font-size: 12px;
+    opacity: 0.7;
+}
