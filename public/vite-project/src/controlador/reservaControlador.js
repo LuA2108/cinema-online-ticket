@@ -1,4 +1,4 @@
-import ModeloReserva from "../models/modelReservas.js";
+import ModeloReserva from "../models/modelReserva.js";
 import ReservaView from "../view/reservaView.js";
 
 class ReservaControlador {
