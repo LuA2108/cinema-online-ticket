@@ -27,10 +27,9 @@ class ReservaButacaService
      * Agrega butacas a la reserva
      * @param mixed $reserva_id
      * @param mixed $butaca_id
-     * @param mixed $precio
      * @return array
      */
-    public function agregarButacaAReserva($reserva_id, $butaca_id, $precio)
+    public function agregarButacaAReserva($reserva_id, $butaca_id)
     {
         // 1. Validar reserva
         $reserva = $this->reservaModel->obtenerReservaPorId($reserva_id);
@@ -73,7 +72,7 @@ class ReservaButacaService
         }
 
         // 7. Insertar
-        $ok = $this->reservaButacaModel->crear($butaca_id, $reserva_id, $precio);
+        $ok = $this->reservaButacaModel->crear($butaca_id, $reserva_id);
 
         if (!$ok) {
             return ["success" => false, "error" => "Error al reservar la butaca"];
