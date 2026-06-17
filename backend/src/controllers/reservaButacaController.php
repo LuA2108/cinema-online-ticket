@@ -21,9 +21,7 @@ class ReservaButacaController
     {
         return $this->service->agregarButacaAReserva(
             $data['reserva_id'] ?? null,
-            $data['funcion_id'] ?? null,
             $data['butaca_id'] ?? null,
-            $data['precio'] ?? 0
         );
     }
 
@@ -35,7 +33,6 @@ class ReservaButacaController
     {
         return $this->service->eliminarButacaDeReserva(
             $data['reserva_id'] ?? null,
-            $data['funcion_id'] ?? null,
             $data['butaca_id'] ?? null
         );
     }
